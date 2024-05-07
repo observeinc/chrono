@@ -61,7 +61,7 @@ export interface ParsingReference {
      * Date/time implication will account the difference between input timezone and the current system timezone.
      * (default = current timezone)
      */
-    timezone?: string | number;
+    ianaTimezone?: string;
 }
 
 /**

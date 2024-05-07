@@ -68,7 +68,7 @@ export default class NLMonthNameMiddleEndianParser extends AbstractParserWithWor
             const year = parseYear(match[YEAR_GROUP]);
             components.assign("year", year);
         } else {
-            const year = findYearClosestToRef(context.refDate, day, month);
+            const year = findYearClosestToRef(context.reference.instant, day, month);
             components.imply("year", year);
         }
 

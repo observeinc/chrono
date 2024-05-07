@@ -37,7 +37,7 @@ export default class ZHHantDateParser extends AbstractParserWithWordBoundaryChec
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        const startMoment = dayjs(context.refDate);
+        const startMoment = dayjs(context.reference.instant);
         const result = context.createParsingResult(match.index, match[0]);
 
         //Month

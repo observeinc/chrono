@@ -27,7 +27,7 @@ export default class JPStandardParser implements Parser {
         });
 
         if (match[SPECIAL_YEAR_GROUP] && match[SPECIAL_YEAR_GROUP].match("同|今|本")) {
-            const moment = dayjs(context.refDate);
+            const moment = dayjs(context.reference.instant);
             components.assign("year", moment.year());
         }
 
@@ -45,7 +45,7 @@ export default class JPStandardParser implements Parser {
 
             components.assign("year", year);
         } else {
-            const year = findYearClosestToRef(context.refDate, day, month);
+            const year = findYearClosestToRef(context.reference.instant, day, month);
             components.imply("year", year);
         }
 

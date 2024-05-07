@@ -12,7 +12,7 @@ export default class FRCasualDateParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
-        let targetDate = dayjs(context.refDate);
+        let targetDate = dayjs(context.reference.instant);
         const lowerText = match[0].toLowerCase();
         const component = context.createParsingComponents();
 

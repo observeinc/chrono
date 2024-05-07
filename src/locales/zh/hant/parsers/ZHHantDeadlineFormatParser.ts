@@ -41,7 +41,7 @@ export default class ZHHantDeadlineFormatParser extends AbstractParserWithWordBo
             }
         }
 
-        let date = dayjs(context.refDate);
+        let date = dayjs(context.reference.instant);
         const unit = match[UNIT_GROUP];
         const unitAbbr = unit[0];
 

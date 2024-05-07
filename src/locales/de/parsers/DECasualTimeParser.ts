@@ -12,7 +12,7 @@ export default class DECasualTimeParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
-        const targetDate = dayjs(context.refDate);
+        const targetDate = dayjs(context.reference.instant);
         const timeKeywordPattern = match[2].toLowerCase();
         const component = context.createParsingComponents();
         implySimilarTime(component, targetDate);

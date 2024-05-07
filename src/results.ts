@@ -8,7 +8,7 @@ dayjs.extend(quarterOfYear);
 
 export class ReferenceWithTimezone {
     readonly instant: Date;
-    readonly timezoneOffset?: number | null;
+    readonly timezone?: string;
 
     constructor(input?: ParsingReference | Date) {
         input = input ?? new Date();
@@ -16,7 +16,7 @@ export class ReferenceWithTimezone {
             this.instant = input;
         } else {
             this.instant = input.instant ?? new Date();
-            this.timezoneOffset = toTimezoneOffset(input.timezone, this.instant);
+            this.timezone = input.ianaTimezone;
         }
     }
 
@@ -25,24 +25,7 @@ export class ReferenceWithTimezone {
      * The output's instant is NOT the reference's instant when the reference's and system's timezone are different.
      */
     getDateWithAdjustedTimezone() {
-        return new Date(this.instant.getTime() + this.getSystemTimezoneAdjustmentMinute(this.instant) * 60000);
-    }
-
-    /**
-     * Returns the number minutes difference between the JS date's timezone and the reference timezone.
-     * @param date
-     * @param overrideTimezoneOffset
-     */
-    getSystemTimezoneAdjustmentMinute(date?: Date, overrideTimezoneOffset?: number): number {
-        if (!date || date.getTime() < 0) {
-            // Javascript date timezone calculation got effect when the time epoch < 0
-            // e.g. new Date('Tue Feb 02 1300 00:00:00 GMT+0900 (JST)') => Tue Feb 02 1300 00:18:59 GMT+0918 (JST)
-            date = new Date();
-        }
-
-        const currentTimezoneOffset = -date.getTimezoneOffset();
-        const targetTimezoneOffset = overrideTimezoneOffset ?? this.timezoneOffset ?? currentTimezoneOffset;
-        return currentTimezoneOffset - targetTimezoneOffset;
+        return dayjs.tz(this.instant, dayjs.tz.guess()).toDate();
     }
 }
 
@@ -62,7 +45,7 @@ export class ParsingComponents implements ParsedComponents {
             }
         }
 
-        const refDayJs = dayjs(reference.instant);
+        const refDayJs = dayjs.tz(reference.instant, reference.timezone);
         this.imply("day", refDayJs.date());
         this.imply("month", refDayJs.month() + 1);
         this.imply("year", refDayJs.year());
@@ -144,13 +127,13 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     isValidDate(): boolean {
-        const date = this.dateWithoutTimezoneAdjustment();
+        const date = this.dayjs();
 
-        if (date.getFullYear() !== this.get("year")) return false;
-        if (date.getMonth() !== this.get("month") - 1) return false;
-        if (date.getDate() !== this.get("day")) return false;
-        if (this.get("hour") != null && date.getHours() != this.get("hour")) return false;
-        if (this.get("minute") != null && date.getMinutes() != this.get("minute")) return false;
+        if (date.year() !== this.get("year")) return false;
+        if (date.month() !== this.get("month") - 1) return false;
+        if (date.date() !== this.get("day")) return false;
+        if (this.get("hour") != null && date.hour() != this.get("hour")) return false;
+        if (this.get("minute") != null && date.minute() != this.get("minute")) return false;
 
         return true;
     }
@@ -164,13 +147,19 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     dayjs() {
-        return dayjs(this.date());
+        return dayjs([
+            this.get("year"),
+            this.get("month") - 1,
+            this.get("day"),
+            this.get("hour"),
+            this.get("minute"),
+            this.get("second"),
+            this.get("millisecond"),
+        ]).tz(this.reference.timezone, true);
     }
 
     date(): Date {
-        const date = this.dateWithoutTimezoneAdjustment();
-        const timezoneAdjustment = this.reference.getSystemTimezoneAdjustmentMinute(date, this.get("timezoneOffset"));
-        return new Date(date.getTime() + timezoneAdjustment * 60000);
+        return this.dayjs().toDate();
     }
 
     addTag(tag: string): ParsingComponents {
@@ -189,21 +178,6 @@ export class ParsingComponents implements ParsedComponents {
         return new Set(this._tags);
     }
 
-    private dateWithoutTimezoneAdjustment() {
-        const date = new Date(
-            this.get("year"),
-            this.get("month") - 1,
-            this.get("day"),
-            this.get("hour"),
-            this.get("minute"),
-            this.get("second"),
-            this.get("millisecond")
-        );
-
-        date.setFullYear(this.get("year"));
-        return date;
-    }
-
     static createRelativeFromReference(
         reference: ReferenceWithTimezone,
         fragments: { [c in QUnitType]?: number }
@@ -217,12 +191,12 @@ export class ParsingComponents implements ParsedComponents {
         if (fragments["hour"] || fragments["minute"] || fragments["second"]) {
             assignSimilarTime(components, date);
             assignSimilarDate(components, date);
-            if (reference.timezoneOffset !== null) {
+            if (reference.timezone !== null) {
                 components.assign("timezoneOffset", -reference.instant.getTimezoneOffset());
             }
         } else {
             implySimilarTime(components, date);
-            if (reference.timezoneOffset !== null) {
+            if (reference.timezone !== null) {
                 components.imply("timezoneOffset", -reference.instant.getTimezoneOffset());
             }
 
