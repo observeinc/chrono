@@ -13,7 +13,7 @@ export default class NLCasualTimeParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        const targetDate = dayjs(context.reference.instant);
+        const targetDate = dayjs.tz(context.reference.instant, context.reference.timezone);
         const component = context.createParsingComponents();
 
         if (match[DAY_GROUP] === "deze") {

@@ -36,7 +36,7 @@ export default class JPCasualDateParser implements Parser {
     extract(context: ParsingContext, match: RegExpMatchArray) {
         const text = normalizeTextToKanji(match[0]);
 
-        const date = dayjs(context.reference.instant);
+        const date = dayjs.tz(context.reference.instant, context.reference.timezone);
         const components = context.createParsingComponents();
 
         switch (text) {

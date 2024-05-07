@@ -22,7 +22,7 @@ export default class DECasualDateParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
-        let targetDate = dayjs(context.reference.instant);
+        let targetDate = dayjs.tz(context.reference.instant, context.reference.timezone);
         const dateKeyword = (match[DATE_GROUP] || "").toLowerCase();
         const timeKeyword = (match[TIME_GROUP] || "").toLowerCase();
 

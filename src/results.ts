@@ -147,7 +147,7 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     dayjs() {
-        return dayjs([
+        const naiveDayJs = dayjs([
             this.get("year"),
             this.get("month") - 1,
             this.get("day"),
@@ -155,7 +155,13 @@ export class ParsingComponents implements ParsedComponents {
             this.get("minute"),
             this.get("second"),
             this.get("millisecond"),
-        ]).tz(this.reference.timezone, true);
+        ]);
+
+        if (this.isCertain("timezoneOffset")) {
+            return naiveDayJs.utcOffset(this.get("timezoneOffset"), true);
+        }
+
+        return naiveDayJs.tz(this.reference.timezone, true);
     }
 
     date(): Date {
@@ -182,7 +188,7 @@ export class ParsingComponents implements ParsedComponents {
         reference: ReferenceWithTimezone,
         fragments: { [c in QUnitType]?: number }
     ): ParsingComponents {
-        let date = dayjs(reference.instant);
+        let date = dayjs.tz(reference.instant, reference.timezone);
         for (const key in fragments) {
             date = date.add(fragments[key as QUnitType], key as QUnitType);
         }

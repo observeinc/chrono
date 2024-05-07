@@ -10,7 +10,7 @@ export default class RUCasualTimeParser extends AbstractParserWithLeftRightBound
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        let targetDate = dayjs(context.reference.instant);
+        let targetDate = dayjs.tz(context.reference.instant, context.reference.timezone);
         const lowerText = match[0].toLowerCase();
         const component = context.createParsingComponents();
 

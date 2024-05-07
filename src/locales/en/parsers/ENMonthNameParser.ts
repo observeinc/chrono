@@ -54,7 +54,7 @@ export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChe
             const year = parseYear(match[YEAR_GROUP]);
             result.start.assign("year", year);
         } else {
-            const year = findYearClosestToRef(context.reference.instant, 1, month);
+            const year = findYearClosestToRef(context.reference, 1, month);
             result.start.imply("year", year);
         }
 

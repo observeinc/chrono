@@ -16,7 +16,7 @@ export default class ForwardDateRefiner implements Refiner {
         }
 
         results.forEach(function (result) {
-            let refMoment = dayjs(context.reference.instant);
+            let refMoment = dayjs.tz(context.reference.instant, context.reference.timezone);
 
             if (result.start.isOnlyTime() && refMoment.isAfter(result.start.dayjs())) {
                 refMoment = refMoment.add(1, "day");
