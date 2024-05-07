@@ -1,10 +1,8 @@
 import { Component, ParsedComponents, ParsedResult, ParsingReference } from "./types";
 
-import quarterOfYear from "dayjs/plugin/quarterOfYear";
-import dayjs, { QUnitType } from "dayjs";
+import { DateTime, DateTimeUnit } from "luxon";
 import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "./utils/dayjs";
 import { toTimezoneOffset } from "./timezone";
-dayjs.extend(quarterOfYear);
 
 export class ReferenceWithTimezone {
     readonly instant: Date;
@@ -25,7 +23,7 @@ export class ReferenceWithTimezone {
      * The output's instant is NOT the reference's instant when the reference's and system's timezone are different.
      */
     getDateWithAdjustedTimezone() {
-        return dayjs.tz(this.instant, dayjs.tz.guess()).toDate();
+        return DateTime.fromJSDate(this.instant).toJSDate();
     }
 }
 
@@ -45,10 +43,10 @@ export class ParsingComponents implements ParsedComponents {
             }
         }
 
-        const refDayJs = dayjs.tz(reference.instant, reference.timezone);
-        this.imply("day", refDayJs.date());
-        this.imply("month", refDayJs.month() + 1);
-        this.imply("year", refDayJs.year());
+        const refDayJs = DateTime.fromJSDate(reference.instant, { zone: reference.timezone });
+        this.imply("day", refDayJs.day);
+        this.imply("month", refDayJs.month);
+        this.imply("year", refDayJs.year);
         this.imply("hour", 12);
         this.imply("minute", 0);
         this.imply("second", 0);
@@ -127,13 +125,13 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     isValidDate(): boolean {
-        const date = this.dayjs();
+        const date = this.luxon();
 
-        if (date.year() !== this.get("year")) return false;
-        if (date.month() !== this.get("month") - 1) return false;
-        if (date.date() !== this.get("day")) return false;
-        if (this.get("hour") != null && date.hour() != this.get("hour")) return false;
-        if (this.get("minute") != null && date.minute() != this.get("minute")) return false;
+        if (date.year !== this.get("year")) return false;
+        if (date.month !== this.get("month")) return false;
+        if (date.day !== this.get("day")) return false;
+        if (this.get("hour") != null && date.hour != this.get("hour")) return false;
+        if (this.get("minute") != null && date.minute != this.get("minute")) return false;
 
         return true;
     }
@@ -146,26 +144,26 @@ export class ParsingComponents implements ParsedComponents {
             reference: ${JSON.stringify(this.reference)}]`;
     }
 
-    dayjs() {
-        const naiveDayJs = dayjs([
+    luxon() {
+        const naiveDayJs = DateTime.local(
             this.get("year"),
-            this.get("month") - 1,
+            this.get("month"),
             this.get("day"),
             this.get("hour"),
             this.get("minute"),
             this.get("second"),
-            this.get("millisecond"),
-        ]);
+            this.get("millisecond")
+        );
 
         if (this.isCertain("timezoneOffset")) {
-            return naiveDayJs.utcOffset(this.get("timezoneOffset"), true);
+            return naiveDayJs.setZone(`UTC${this.get("timezoneOffset") / 60}`, { keepLocalTime: true });
         }
 
-        return naiveDayJs.tz(this.reference.timezone, true);
+        return naiveDayJs.setZone(this.reference.timezone, { keepLocalTime: true });
     }
 
     date(): Date {
-        return this.dayjs().toDate();
+        return this.luxon().toJSDate();
     }
 
     addTag(tag: string): ParsingComponents {
@@ -186,45 +184,39 @@ export class ParsingComponents implements ParsedComponents {
 
     static createRelativeFromReference(
         reference: ReferenceWithTimezone,
-        fragments: { [c in QUnitType]?: number }
+        fragments: { [c in DateTimeUnit]?: number }
     ): ParsingComponents {
-        let date = dayjs.tz(reference.instant, reference.timezone);
+        let date = DateTime.fromJSDate(reference.instant, { zone: reference.timezone });
         for (const key in fragments) {
-            date = date.add(fragments[key as QUnitType], key as QUnitType);
+            date = date.plus({ [key]: fragments[key as DateTimeUnit] });
         }
 
         const components = new ParsingComponents(reference);
         if (fragments["hour"] || fragments["minute"] || fragments["second"]) {
             assignSimilarTime(components, date);
             assignSimilarDate(components, date);
-            if (reference.timezone !== null) {
-                components.assign("timezoneOffset", -reference.instant.getTimezoneOffset());
-            }
         } else {
             implySimilarTime(components, date);
-            if (reference.timezone !== null) {
-                components.imply("timezoneOffset", -reference.instant.getTimezoneOffset());
-            }
 
             if (fragments["d"]) {
-                components.assign("day", date.date());
-                components.assign("month", date.month() + 1);
-                components.assign("year", date.year());
+                components.assign("day", date.day);
+                components.assign("month", date.month);
+                components.assign("year", date.year);
             } else {
                 if (fragments["week"]) {
-                    components.imply("weekday", date.day());
+                    components.imply("weekday", date.weekday - 1);
                 }
 
-                components.imply("day", date.date());
+                components.imply("day", date.day);
                 if (fragments["month"]) {
-                    components.assign("month", date.month() + 1);
-                    components.assign("year", date.year());
+                    components.assign("month", date.month);
+                    components.assign("year", date.year);
                 } else {
-                    components.imply("month", date.month() + 1);
+                    components.imply("month", date.month);
                     if (fragments["year"]) {
-                        components.assign("year", date.year());
+                        components.assign("year", date.year);
                     } else {
-                        components.imply("year", date.year());
+                        components.imply("year", date.year);
                     }
                 }
             }

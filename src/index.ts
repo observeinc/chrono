@@ -6,19 +6,6 @@ import { Component, ParsedComponents, ParsedResult, ParsingOption, ParsingRefere
 export { en, Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
 export { Component, ParsedComponents, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
-// Export all locales
-import * as de from "./locales/de";
-import * as fr from "./locales/fr";
-import * as ja from "./locales/ja";
-import * as pt from "./locales/pt";
-import * as nl from "./locales/nl";
-import * as zh from "./locales/zh";
-import * as ru from "./locales/ru";
-import * as es from "./locales/es";
-import * as uk from "./locales/uk";
-
-export { de, fr, ja, pt, nl, zh, ru, es, uk };
-
 /**
  * A shortcut for {@link en | chrono.en.strict}
  */

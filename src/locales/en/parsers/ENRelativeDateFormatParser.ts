@@ -1,7 +1,7 @@
 import { TIME_UNIT_DICTIONARY } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
-import dayjs from "../../../utils/dayjs_global";
+import { DateTime } from "luxon";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { matchAnyPattern } from "../../../utils/pattern";
 
@@ -36,32 +36,32 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
         }
 
         const components = context.createParsingComponents();
-        let date = dayjs.tz(context.reference.instant, context.reference.timezone);
+        let date = DateTime.fromJSDate(context.reference.instant, { zone: context.reference.timezone });
 
         // This week
         if (unitWord.match(/week/i)) {
-            date = date.add(-date.get("d"), "d");
-            components.imply("day", date.date());
-            components.imply("month", date.month() + 1);
-            components.imply("year", date.year());
+            date = date.plus({ day: -(date.weekday - 1) });
+            components.imply("day", date.day);
+            components.imply("month", date.month);
+            components.imply("year", date.year);
         }
 
         // This month
         else if (unitWord.match(/month/i)) {
-            date = date.add(-date.date() + 1, "d");
-            components.imply("day", date.date());
-            components.assign("year", date.year());
-            components.assign("month", date.month() + 1);
+            date = date.plus({ day: -date.day + 1 });
+            components.imply("day", date.day);
+            components.assign("year", date.year);
+            components.assign("month", date.month);
         }
 
         // This year
         else if (unitWord.match(/year/i)) {
-            date = date.add(-date.date() + 1, "d");
-            date = date.add(-date.month(), "month");
+            date = date.plus({ day: -date.day + 1 });
+            date = date.plus({ month: -date.month });
 
-            components.imply("day", date.date());
-            components.imply("month", date.month() + 1);
-            components.assign("year", date.year());
+            components.imply("day", date.day);
+            components.imply("month", date.month);
+            components.assign("year", date.year);
         }
 
         return components;
