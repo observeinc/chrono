@@ -31,7 +31,7 @@ export default class ZHHansRelationWeekdayParser extends AbstractParserWithWordB
             modifier = "this";
         }
 
-        let startMoment = dayjs(context.refDate);
+        let startMoment = dayjs(context.reference.instant);
         let startMomentFixed = false;
         const refOffset = startMoment.day();
 

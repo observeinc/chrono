@@ -10,7 +10,7 @@ export default class ESCasualTimeParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        const targetDate = dayjs(context.refDate);
+        const targetDate = dayjs(context.reference.instant);
         const component = context.createParsingComponents();
         switch (match[1].toLowerCase()) {
             case "tarde":

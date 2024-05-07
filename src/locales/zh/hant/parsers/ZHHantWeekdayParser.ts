@@ -18,7 +18,7 @@ export default class ZHHantWeekdayParser extends AbstractParserWithWordBoundaryC
         const offset = WEEKDAY_OFFSET[dayOfWeek];
         if (offset === undefined) return null;
 
-        let startMoment = dayjs(context.refDate);
+        let startMoment = dayjs(context.reference.instant);
         const startMomentFixed = false;
         const refOffset = startMoment.day();
 

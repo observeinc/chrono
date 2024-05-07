@@ -74,7 +74,7 @@ export default class ZHHansTimeExpressionParser extends AbstractParserWithWordBo
             return null;
         }
 
-        const refMoment = dayjs(context.refDate);
+        const refMoment = dayjs(context.reference.instant);
         const result = context.createParsingResult(match.index, match[0]);
         let startMoment = refMoment.clone();
 
