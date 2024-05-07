@@ -1,6 +1,6 @@
 import { Component, ParsedComponents, ParsedResult, ParsingReference } from "./types";
 
-import { DateTime, DateTimeUnit } from "luxon";
+import { DateTime, DateTimeUnit, FixedOffsetZone } from "luxon";
 import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "./utils/dayjs";
 import { toTimezoneOffset } from "./timezone";
 
@@ -156,7 +156,7 @@ export class ParsingComponents implements ParsedComponents {
         );
 
         if (this.isCertain("timezoneOffset")) {
-            return naiveDayJs.setZone(`UTC${this.get("timezoneOffset") / 60}`, { keepLocalTime: true });
+            return naiveDayJs.setZone(FixedOffsetZone.instance(this.get("timezoneOffset")), { keepLocalTime: true });
         }
 
         return naiveDayJs.setZone(this.reference.timezone, { keepLocalTime: true });
