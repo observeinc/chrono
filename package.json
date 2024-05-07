@@ -1,10 +1,10 @@
 {
-  "name": "chrono-node",
+  "name": "@wengjames/chrono-node",
   "description": "A natural language date parser in Javascript",
-  "homepage": "http://github.com/wanasit/chrono",
+  "homepage": "http://github.com/wengj9/chrono",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wanasit/chrono.git"
+    "url": "https://github.com/wengj9/chrono.git"
   },
   "prettier": {
     "quoteProps": "preserve"
