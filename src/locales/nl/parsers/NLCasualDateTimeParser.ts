@@ -36,7 +36,7 @@ export default class NLCasualDateTimeParser extends AbstractParserWithWordBounda
         const dateText = match[DATE_GROUP].toLowerCase();
         const timeText = match[TIME_OF_DAY_GROUP].toLowerCase();
         const component = context.createParsingComponents();
-        const targetDate = dayjs(context.reference.instant);
+        const targetDate = dayjs.tz(context.reference.instant, context.reference.timezone);
 
         switch (dateText) {
             case "gisteren":

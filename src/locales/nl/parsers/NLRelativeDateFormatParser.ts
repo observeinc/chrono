@@ -37,7 +37,7 @@ export default class NLRelativeDateFormatParser extends AbstractParserWithWordBo
         }
 
         const components = context.createParsingComponents();
-        let date = dayjs(context.reference.instant);
+        let date = dayjs.tz(context.reference.instant, context.reference.timezone);
 
         // This week
         if (unitWord.match(/week/i)) {

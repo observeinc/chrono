@@ -14,9 +14,6 @@ export function now(reference: ReferenceWithTimezone): ParsingComponents {
     const component = new ParsingComponents(reference, {});
     assignSimilarDate(component, targetDate);
     assignSimilarTime(component, targetDate);
-    if (reference.timezone !== null) {
-        component.assign("timezoneOffset", targetDate.utcOffset());
-    }
     component.addTag("casualReference/now");
     return component;
 }
@@ -87,7 +84,7 @@ export function evening(reference: ReferenceWithTimezone, implyHour = 20): Parsi
 }
 
 export function yesterdayEvening(reference: ReferenceWithTimezone, implyHour = 20): ParsingComponents {
-    let targetDate = dayjs(reference.instant, reference.timezone);
+    let targetDate = dayjs.tz(reference.instant, reference.timezone);
     const component = new ParsingComponents(reference, {});
     targetDate = targetDate.add(-1, "day");
     assignSimilarDate(component, targetDate);
@@ -100,7 +97,7 @@ export function yesterdayEvening(reference: ReferenceWithTimezone, implyHour = 2
 
 export function midnight(reference: ReferenceWithTimezone): ParsingComponents {
     const component = new ParsingComponents(reference, {});
-    const targetDate = dayjs(reference.instant, reference.timezone);
+    const targetDate = dayjs.tz(reference.instant, reference.timezone);
     if (targetDate.hour() > 2) {
         // Unless it's very early morning (0~2AM), we assume the midnight is the coming midnight.
         // Thus, increasing the day by 1.

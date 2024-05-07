@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { ReferenceWithTimezone } from "../results";
 
 /**
  * Find the most likely year, from a raw number. For example:
@@ -18,9 +19,9 @@ export function findMostLikelyADYear(yearNumber: number): number {
     return yearNumber;
 }
 
-export function findYearClosestToRef(refDate: Date, day: number, month: number): number {
+export function findYearClosestToRef(reference: ReferenceWithTimezone, day: number, month: number): number {
     //Find the most appropriated year
-    const refMoment = dayjs(refDate);
+    const refMoment = dayjs.tz(reference.instant, reference.timezone);
     let dateMoment = refMoment;
     dateMoment = dateMoment.month(month - 1);
     dateMoment = dateMoment.date(day);

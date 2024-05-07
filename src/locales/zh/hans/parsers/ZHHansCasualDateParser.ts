@@ -27,7 +27,7 @@ export default class ZHHansCasualDateParser extends AbstractParserWithWordBounda
         const index = match.index;
         const result = context.createParsingResult(index, match[0]);
 
-        const refMoment = dayjs(context.reference.instant);
+        const refMoment = dayjs.tz(context.reference.instant, context.reference.timezone);
         let startMoment = refMoment;
 
         if (match[NOW_GROUP]) {

@@ -44,7 +44,7 @@ export default class ESMonthNameLittleEndianParser extends AbstractParserWithWor
             const yearNumber = parseYear(match[YEAR_GROUP]);
             result.start.assign("year", yearNumber);
         } else {
-            const year = findYearClosestToRef(context.reference.instant, day, month);
+            const year = findYearClosestToRef(context.reference, day, month);
             result.start.imply("year", year);
         }
 

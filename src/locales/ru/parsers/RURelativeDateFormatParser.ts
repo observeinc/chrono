@@ -34,7 +34,7 @@ export default class RURelativeDateFormatParser extends AbstractParserWithLeftRi
         }
 
         const components = context.createParsingComponents();
-        let date = dayjs(context.reference.instant);
+        let date = dayjs.tz(context.reference.instant, context.reference.timezone);
 
         // This week
         if (timeunit.match(/week/i)) {
