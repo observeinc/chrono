@@ -1,7 +1,7 @@
 import { ParsingContext } from "../../../chrono";
 import { Meridiem } from "../../../types";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import dayjs from "dayjs";
+import dayjs from "../../../utils/dayjs_global";
 import { assignTheNextDay } from "../../../utils/dayjs";
 
 const DAY_GROUP = 1;

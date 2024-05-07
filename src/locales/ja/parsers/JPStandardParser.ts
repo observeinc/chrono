@@ -2,7 +2,7 @@ import { Parser, ParsingContext } from "../../../chrono";
 import { toHankaku } from "../constants";
 import { findYearClosestToRef } from "../../../calculation/years";
 
-import dayjs from "dayjs";
+import dayjs from "../../../utils/dayjs_global";
 
 const PATTERN =
     /(?:(?:([同今本])|((昭和|平成|令和)?([0-9０-９]{1,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;

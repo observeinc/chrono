@@ -1,5 +1,5 @@
 import { Parser, ParsingContext } from "../../../chrono";
-import dayjs from "dayjs";
+import dayjs from "../../../utils/dayjs_global";
 import { Meridiem } from "../../../types";
 import * as references from "../../../common/casualReferences";
 

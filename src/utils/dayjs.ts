@@ -1,13 +1,5 @@
 import { ParsingComponents } from "../results";
-
-import dayjs from "dayjs";
-import "dayjs/plugin/utc";
-import "dayjs/plugin/timezone";
-import "dayjs/plugin/arraySupport";
-dayjs.extend(require("dayjs/plugin/utc"));
-dayjs.extend(require("dayjs/plugin/timezone"));
-dayjs.extend(require("dayjs/plugin/arraySupport"));
-
+import dayjs from "./dayjs_global";
 import { Meridiem } from "../types";
 
 export function assignTheNextDay(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {

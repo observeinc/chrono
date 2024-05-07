@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from "./utils/dayjs_global";
 import { TimezoneAbbrMap, Weekday, Month } from "./types";
 
 export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
