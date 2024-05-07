@@ -1,7 +1,7 @@
 import { TIME_UNIT_DICTIONARY } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
-import dayjs from "dayjs";
+import dayjs from "../../../utils/dayjs_global";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { matchAnyPattern } from "../../../utils/pattern";
 

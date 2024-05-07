@@ -1,7 +1,7 @@
 import { ParsingContext } from "../../../chrono";
 import * as references from "../../../common/casualReferences";
 import { assignSimilarDate } from "../../../utils/dayjs";
-import dayjs from "dayjs";
+import dayjs from "../../../utils/dayjs_global";
 import { AbstractParserWithLeftRightBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
 
 export default class RUCasualTimeParser extends AbstractParserWithLeftRightBoundaryChecking {

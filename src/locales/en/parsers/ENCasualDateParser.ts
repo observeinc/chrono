@@ -1,6 +1,6 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import dayjs from "dayjs";
+import dayjs from "../../../utils/dayjs_global";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { assignSimilarDate } from "../../../utils/dayjs";
 import * as references from "../../../common/casualReferences";

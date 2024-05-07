@@ -1,5 +1,5 @@
 import { ParsingComponents, ReferenceWithTimezone } from "../results";
-import dayjs from "dayjs";
+import dayjs from "../utils/dayjs_global";
 import {
     assignSimilarDate,
     assignSimilarTime,

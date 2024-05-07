@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from "../../../../utils/dayjs_global";
 import { ParsingContext } from "../../../../chrono";
 import { AbstractParserWithWordBoundaryChecking } from "../../../../common/parsers/AbstractParserWithWordBoundary";
 import { NUMBER, zhStringToNumber } from "../constants";
