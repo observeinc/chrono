@@ -71,7 +71,6 @@
     "add-package.json:nix": "echo '{\"type\":\"commonjs\",\"sideEffects\":false}' > dist/cjs/package.json && echo '{\"type\":\"module\",\"sideEffects\":false}' > dist/esm/package.json",
     "add-package.json:windows": "echo {\"type\":\"commonjs\",\"sideEffects\":false} > dist/cjs/package.json && echo {\"type\":\"module\",\"sideEffects\":false} > dist/esm/package.json",
     "benchmark": "npm run build && node ./benchmark/benchmark.js",
-    "post-install": "tsc --outDir ./build",
     "document": "typedoc",
     "prepare": "npm run build",
     "eslint": "eslint src test",
