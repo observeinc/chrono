@@ -1,6 +1,6 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import dayjs from "../../../utils/dayjs_global";
+import { DateTime } from "luxon";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { assignSimilarDate } from "../../../utils/dayjs";
 import * as references from "../../../common/casualReferences";
@@ -13,7 +13,7 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
-        let targetDate = dayjs.tz(context.reference.instant, context.reference.timezone);
+        let targetDate = DateTime.fromJSDate(context.reference.instant, { zone: context.reference.timezone });
         const lowerText = match[0].toLowerCase();
         let component = context.createParsingComponents();
 
@@ -42,8 +42,8 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
 
             default:
                 if (lowerText.match(/last\s*night/)) {
-                    if (targetDate.hour() > 6) {
-                        targetDate = targetDate.add(-1, "day");
+                    if (targetDate.hour > 6) {
+                        targetDate = targetDate.plus({ day: -1 });
                     }
 
                     assignSimilarDate(component, targetDate);

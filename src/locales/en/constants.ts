@@ -1,4 +1,4 @@
-import { OpUnitType, QUnitType } from "dayjs";
+import { DateTimeUnit } from "luxon";
 import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
 import { TimeUnits } from "../../utils/timeunits";
@@ -134,15 +134,15 @@ export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
     "thirty-first": 31,
 };
 
-export const TIME_UNIT_DICTIONARY_NO_ABBR: { [word: string]: OpUnitType | QUnitType } = {
+export const TIME_UNIT_DICTIONARY_NO_ABBR: { [word: string]: DateTimeUnit } = {
     second: "second",
     seconds: "second",
     minute: "minute",
     minutes: "minute",
     hour: "hour",
     hours: "hour",
-    day: "d",
-    days: "d",
+    day: "day",
+    days: "day",
     week: "week",
     weeks: "week",
     month: "month",
@@ -153,7 +153,7 @@ export const TIME_UNIT_DICTIONARY_NO_ABBR: { [word: string]: OpUnitType | QUnitT
     years: "year",
 };
 
-export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = {
+export const TIME_UNIT_DICTIONARY: { [word: string]: DateTimeUnit } = {
     s: "second",
     sec: "second",
     second: "second",
@@ -168,10 +168,10 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
     hrs: "hour",
     hour: "hour",
     hours: "hour",
-    d: "d",
-    day: "d",
-    days: "d",
-    w: "w",
+    d: "day",
+    day: "day",
+    days: "day",
+    w: "week",
     week: "week",
     weeks: "week",
     mo: "month",

@@ -1,4 +1,4 @@
-import dayjs from "../utils/dayjs_global";
+import { DateTime } from "luxon";
 import { ReferenceWithTimezone } from "../results";
 
 /**
@@ -21,19 +21,19 @@ export function findMostLikelyADYear(yearNumber: number): number {
 
 export function findYearClosestToRef(reference: ReferenceWithTimezone, day: number, month: number): number {
     //Find the most appropriated year
-    const refMoment = dayjs.tz(reference.instant, reference.timezone);
+    const refMoment = DateTime.fromJSDate(reference.instant, { zone: reference.timezone });
     let dateMoment = refMoment;
-    dateMoment = dateMoment.month(month - 1);
-    dateMoment = dateMoment.date(day);
-    dateMoment = dateMoment.year(refMoment.year());
+    dateMoment = dateMoment.set({ month: month });
+    dateMoment = dateMoment.set({ day: day });
+    dateMoment = dateMoment.set({ year: refMoment.year });
 
-    const nextYear = dateMoment.add(1, "y");
-    const lastYear = dateMoment.add(-1, "y");
-    if (Math.abs(nextYear.diff(refMoment)) < Math.abs(dateMoment.diff(refMoment))) {
+    const nextYear = dateMoment.plus({ year: 1 });
+    const lastYear = dateMoment.plus({ year: -1 });
+    if (Math.abs(nextYear.diff(refMoment).milliseconds) < Math.abs(dateMoment.diff(refMoment).milliseconds)) {
         dateMoment = nextYear;
-    } else if (Math.abs(lastYear.diff(refMoment)) < Math.abs(dateMoment.diff(refMoment))) {
+    } else if (Math.abs(lastYear.diff(refMoment).milliseconds) < Math.abs(dateMoment.diff(refMoment).milliseconds)) {
         dateMoment = lastYear;
     }
 
-    return dateMoment.year();
+    return dateMoment.year;
 }

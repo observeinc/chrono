@@ -43,6 +43,7 @@
   "types": "dist/esm/index.d.ts",
   "devDependencies": {
     "@types/jest": "^26.0.4",
+    "@types/luxon": "^3.4.2",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
     "benny": "^3.6.15",
@@ -55,8 +56,7 @@
     "run-script-os": "^1.1.6",
     "ts-jest": "^26.1.1",
     "tsc-esm-fix": "^2.12.4",
-    "typedoc": "^0.20.36",
-    "typescript": "~4.2.4"
+    "typescript": "^4.9.5"
   },
   "husky": {
     "hooks": {
@@ -80,9 +80,6 @@
     "watch": "jest --watch",
     "test": "jest --coverage",
     "test:silent": "jest --silent"
-  },
-  "dependencies": {
-    "dayjs": "^1.10.0"
   },
   "eslintConfig": {
     "env": {
@@ -121,5 +118,8 @@
       ],
       "prefer-const": "warn"
     }
+  },
+  "dependencies": {
+    "luxon": "^3.4.4"
   }
 }
