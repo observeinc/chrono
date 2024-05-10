@@ -1,24 +1,27 @@
 import { Chrono, Parser, Refiner } from "./chrono";
 import * as en from "./locales/en";
 import {
-    ParsingComponents,
-    ParsingResult,
-    ReferenceWithTimezone,
+  ParsingComponents,
+  ParsingResult,
+  ReferenceWithTimezone,
 } from "./results";
 import {
-    Component,
-    Meridiem,
-    ParsedComponents,
-    ParsedResult,
-    ParsingOption,
-    ParsingReference,
-    Weekday,
+  Component,
+  Meridiem,
+  ParsedComponents,
+  ParsedResult,
+  ParsingOption,
+  ParsingReference,
+  Weekday,
 } from "./types";
 
 export {
-    Chrono, Component, Meridiem, ParsedComponents,
-    ParsedResult, Parser, ParsingComponents, ParsingOption,
-    ParsingReference, ParsingResult, ReferenceWithTimezone, Refiner, Weekday, en
+  Chrono, Meridiem, ParsingComponents, ParsingResult, ReferenceWithTimezone, Weekday, en
+};
+export type {
+  Component, ParsedComponents,
+  ParsedResult, Parser, ParsingOption,
+  ParsingReference, Refiner
 };
 
 /**

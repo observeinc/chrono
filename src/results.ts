@@ -2,7 +2,6 @@ import { Component, ParsedComponents, ParsedResult, ParsingReference } from "./t
 
 import { DateTime, DateTimeUnit, FixedOffsetZone } from "luxon";
 import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "./utils/dayjs";
-import { toTimezoneOffset } from "./timezone";
 
 export class ReferenceWithTimezone {
     readonly instant: Date;
@@ -198,7 +197,7 @@ export class ParsingComponents implements ParsedComponents {
         } else {
             implySimilarTime(components, date);
 
-            if (fragments["d"]) {
+            if (fragments["day"]) {
                 components.assign("day", date.day);
                 components.assign("month", date.month);
                 components.assign("year", date.year);
