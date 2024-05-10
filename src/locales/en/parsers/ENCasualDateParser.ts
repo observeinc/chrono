@@ -1,14 +1,14 @@
-import { ParsingContext } from "../../../chrono";
-import { ParsingComponents, ParsingResult } from "../../../results";
 import { DateTime } from "luxon";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { assignSimilarDate } from "../../../utils/dayjs";
+import { ParsingContext } from "../../../chrono";
 import * as references from "../../../common/casualReferences";
+import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
+import { ParsingComponents, ParsingResult } from "../../../results";
+import { assignSimilarDate } from "../../../utils/dayjs";
 
 const PATTERN = /(now|today|tonight|tomorrow|tmr|tmrw|yesterday|last\s*night)(?=\W|$)/i;
 
 export default class ENCasualDateParser extends AbstractParserWithWordBoundaryChecking {
-    innerPattern(context: ParsingContext): RegExp {
+    innerPattern(_: ParsingContext): RegExp {
         return PATTERN;
     }
 

@@ -1,9 +1,10 @@
-import { TIME_UNIT_DICTIONARY } from "../constants";
-import { ParsingContext } from "../../../chrono";
-import { ParsingComponents } from "../../../results";
 import { DateTime } from "luxon";
+import { ParsingContext } from "../../../chrono";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
+import { ParsingComponents } from "../../../results";
 import { matchAnyPattern } from "../../../utils/pattern";
+import { TimeUnits } from "../../../utils/timeunits";
+import { TIME_UNIT_DICTIONARY } from "../constants";
 
 const PATTERN = new RegExp(
     `(this|last|past|next|after\\s*this)\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\s*)` + "(?=\\W|$)",
@@ -24,13 +25,13 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
         const timeunit = TIME_UNIT_DICTIONARY[unitWord];
 
         if (modifier == "next" || modifier.startsWith("after")) {
-            const timeUnits = {};
+            const timeUnits: TimeUnits = {};
             timeUnits[timeunit] = 1;
             return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
         }
 
         if (modifier == "last" || modifier == "past") {
-            const timeUnits = {};
+            const timeUnits: TimeUnits = {};
             timeUnits[timeunit] = -1;
             return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
         }

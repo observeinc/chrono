@@ -1,7 +1,7 @@
 import { ParsingContext } from "../../../chrono";
-import { MONTH_DICTIONARY } from "../constants";
-import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
+import { matchAnyPattern } from "../../../utils/pattern";
+import { MONTH_DICTIONARY } from "../constants";
 
 /*
     Date format with slash "/" between numbers like ENSlashDateFormatParser,
@@ -28,7 +28,7 @@ export default class ENCasualYearMonthDayParser extends AbstractParserWithWordBo
         return PATTERN;
     }
 
-    innerExtract(context: ParsingContext, match: RegExpMatchArray) {
+    innerExtract(_: ParsingContext, match: RegExpMatchArray) {
         const month = match[MONTH_NUMBER_GROUP]
             ? parseInt(match[MONTH_NUMBER_GROUP])
             : MONTH_DICTIONARY[match[MONTH_NAME_GROUP].toLowerCase()];

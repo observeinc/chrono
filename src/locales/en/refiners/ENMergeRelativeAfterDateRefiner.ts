@@ -1,7 +1,8 @@
+import { ParsingContext } from "../../../chrono";
 import { MergingRefiner } from "../../../common/abstractRefiners";
 import { ParsingComponents, ParsingResult, ReferenceWithTimezone } from "../../../results";
-import { parseTimeUnits } from "../constants";
 import { reverseTimeUnits } from "../../../utils/timeunits";
+import { parseTimeUnits } from "../constants";
 
 function IsPositiveFollowingReference(result: ParsingResult): boolean {
     return result.text.match(/^[+-]/i) != null;
@@ -17,7 +18,7 @@ function IsNegativeFollowingReference(result: ParsingResult): boolean {
  * - [next tuesday] [+10 days]
  */
 export default class ENMergeRelativeAfterDateRefiner extends MergingRefiner {
-    shouldMergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult): boolean {
+    shouldMergeResults(textBetween: string, _: ParsingResult, nextResult: ParsingResult): boolean {
         if (!textBetween.match(/^\s*$/i)) {
             return false;
         }
@@ -25,7 +26,7 @@ export default class ENMergeRelativeAfterDateRefiner extends MergingRefiner {
         return IsPositiveFollowingReference(nextResult) || IsNegativeFollowingReference(nextResult);
     }
 
-    mergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult, context): ParsingResult {
+    mergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult, _: ParsingContext): ParsingResult {
         let timeUnits = parseTimeUnits(nextResult.text);
         if (IsNegativeFollowingReference(nextResult)) {
             timeUnits = reverseTimeUnits(timeUnits);

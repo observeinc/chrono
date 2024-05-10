@@ -4,10 +4,9 @@ import { ParsingComponents } from "../results";
 export type TimeUnits = { [c in DateTimeUnit]?: number };
 
 export function reverseTimeUnits(timeUnits: TimeUnits): TimeUnits {
-    const reversed = {};
+    const reversed: TimeUnits = {};
     for (const key in timeUnits) {
-        // noinspection JSUnfilteredForInLoop
-        reversed[key] = -timeUnits[key];
+        reversed[key as DateTimeUnit] = -timeUnits[key as DateTimeUnit];
     }
 
     return reversed as TimeUnits;
@@ -18,8 +17,7 @@ export function addImpliedTimeUnits(components: ParsingComponents, timeUnits: Ti
 
     let date = components.luxon();
     for (const key in timeUnits) {
-        // noinspection JSUnfilteredForInLoop,TypeScriptValidateTypes
-        date = date.plus({ [key]: timeUnits[key] });
+        date = date.plus({ [key]: timeUnits[key as DateTimeUnit] });
     }
 
     if ("day" in timeUnits || "d" in timeUnits || "week" in timeUnits || "month" in timeUnits || "year" in timeUnits) {

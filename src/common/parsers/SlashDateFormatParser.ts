@@ -1,6 +1,6 @@
+import { findMostLikelyADYear, findYearClosestToRef } from "../../calculation/years";
 import { Parser, ParsingContext } from "../../chrono";
 import { ParsingResult } from "../../results";
-import { findMostLikelyADYear, findYearClosestToRef } from "../../calculation/years";
 
 /**
  * Date format with slash "/" (or dot ".") between numbers.
@@ -44,7 +44,7 @@ export default class SlashDateFormatParser implements Parser {
         if (match[OPENING_GROUP].length == 0 && match.index > 0 && match.index < context.text.length) {
             const previousChar = context.text[match.index - 1];
             if (previousChar >= "0" && previousChar <= "9") {
-                return;
+                return undefined;
             }
         }
 
@@ -56,13 +56,13 @@ export default class SlashDateFormatParser implements Parser {
 
         // '1.12', '1.12.12' is more like a version numbers
         if (text.match(/^\d\.\d$/) || text.match(/^\d\.\d{1,2}\.\d{1,2}\s*$/)) {
-            return;
+            return undefined;
         }
 
         // MM/dd -> OK
         // MM.dd -> NG
         if (!match[YEAR_GROUP] && match[0].indexOf("/") < 0) {
-            return;
+            return undefined;
         }
 
         const result = context.createParsingResult(index, text);

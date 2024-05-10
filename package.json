@@ -6,6 +6,7 @@
     "type": "git",
     "url": "https://github.com/wengj9/chrono.git"
   },
+  "type": "module",
   "license": "MIT",
   "version": "0.0.7",
   "engines": {
@@ -23,5 +24,9 @@
   },
   "dependencies": {
     "luxon": "^3.4.4"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json && tsup",
+    "typecheck": "tsc"
   }
 }
