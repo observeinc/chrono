@@ -1,10 +1,25 @@
-import * as en from "./locales/en";
 import { Chrono, Parser, Refiner } from "./chrono";
-import { ParsingResult, ParsingComponents, ReferenceWithTimezone } from "./results";
-import { Component, ParsedComponents, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "./types";
+import * as en from "./locales/en";
+import {
+    ParsingComponents,
+    ParsingResult,
+    ReferenceWithTimezone,
+} from "./results";
+import {
+    Component,
+    Meridiem,
+    ParsedComponents,
+    ParsedResult,
+    ParsingOption,
+    ParsingReference,
+    Weekday,
+} from "./types";
 
-export { en, Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
-export { Component, ParsedComponents, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
+export {
+    Chrono, Component, Meridiem, ParsedComponents,
+    ParsedResult, Parser, ParsingComponents, ParsingOption,
+    ParsingReference, ParsingResult, ReferenceWithTimezone, Refiner, Weekday, en
+};
 
 /**
  * A shortcut for {@link en | chrono.en.strict}
@@ -19,13 +34,21 @@ export const casual = en.casual;
 /**
  * A shortcut for {@link en | chrono.en.casual.parse()}
  */
-export function parse(text: string, ref?: ParsingReference | Date, option?: ParsingOption): ParsedResult[] {
-    return casual.parse(text, ref, option);
+export function parse(
+  text: string,
+  ref?: ParsingReference | Date,
+  option?: ParsingOption
+): ParsedResult[] {
+  return casual.parse(text, ref, option);
 }
 
 /**
  * A shortcut for {@link en | chrono.en.casual.parseDate()}
  */
-export function parseDate(text: string, ref?: ParsingReference | Date, option?: ParsingOption): Date | null {
-    return casual.parseDate(text, ref, option);
+export function parseDate(
+  text: string,
+  ref?: ParsingReference | Date,
+  option?: ParsingOption
+): Date | null {
+  return casual.parseDate(text, ref, option);
 }
