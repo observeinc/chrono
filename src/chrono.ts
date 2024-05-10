@@ -1,7 +1,7 @@
-import { ReferenceWithTimezone, ParsingComponents, ParsingResult } from "./results";
-import { Component, ParsedResult, ParsingOption, ParsingReference } from "./types";
 import { AsyncDebugBlock, DebugHandler } from "./debugging";
 import ENDefaultConfiguration from "./locales/en/configuration";
+import { ParsingComponents, ParsingResult, ReferenceWithTimezone } from "./results";
+import { Component, ParsedResult, ParsingOption, ParsingReference } from "./types";
 
 /**
  * Chrono configuration.
@@ -72,27 +72,24 @@ export class Chrono {
      */
     parseDate(text: string, referenceDate?: ParsingReference | Date, option?: ParsingOption): Date | null {
         const results = this.parse(text, referenceDate, option);
-        return results.length > 0 ? results[0].start.date() : null;
+
+        return results[0]?.start.date() ?? null;
     }
 
     parse(text: string, referenceDate?: ParsingReference | Date, option?: ParsingOption): ParsedResult[] {
         const context = new ParsingContext(text, referenceDate, option);
 
-        let results = [];
-        this.parsers.forEach((parser) => {
-            const parsedResults = Chrono.executeParser(context, parser);
-            results = results.concat(parsedResults);
+        const results = this.parsers.flatMap((parser) => {
+            return Chrono.executeParser(context, parser);
         });
 
         results.sort((a, b) => {
             return a.index - b.index;
         });
 
-        this.refiners.forEach(function (refiner) {
-            results = refiner.refine(context, results);
-        });
-
-        return results;
+        return this.refiners.reduce((results, refiner) => {
+            return refiner.refine(context, results);
+        }, results);
     }
 
     private static executeParser(context: ParsingContext, parser: Parser) {

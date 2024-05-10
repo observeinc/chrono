@@ -1,29 +1,26 @@
 {
   "compilerOptions": {
-    "sourceMap": true,
-    "inlineSources": false,
-    "inlineSourceMap": false,
-    "noEmit": false,
-    "declaration": true,
-    "stripInternal": true,
-    "downlevelIteration": true,
-    "esModuleInterop": true,
-    "importHelpers": false,
-    "moduleResolution": "node",
+    "target": "ES2021",
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM"],
+
+    /* Bundler mode */
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "removeComments": true,
-    "target": "es6"
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "useDefineForClassFields": true,
   },
-  "include": [
-    "src",
-    "test"
-  ],
-  "typedocOptions": {
-    "entryPoints": ["src/index.ts"],
-    "out": "docs",
-    "name": "Chrono",
-    "readme": "none",
-    "includeVersion": true,
-    "theme": "default"
-  }
+  "include": ["src", "test"],
 }

@@ -8,11 +8,11 @@ import { MergingRefiner } from "../abstractRefiners";
 export default abstract class AbstractMergeDateRangeRefiner extends MergingRefiner {
     abstract patternBetween(): RegExp;
 
-    shouldMergeResults(textBetween, currentResult, nextResult): boolean {
+    shouldMergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult): boolean {
         return !currentResult.end && !nextResult.end && textBetween.match(this.patternBetween()) != null;
     }
 
-    mergeResults(textBetween, fromResult: ParsingResult, toResult: ParsingResult): ParsingResult {
+    mergeResults(textBetween: string, fromResult: ParsingResult, toResult: ParsingResult): ParsingResult {
         if (!fromResult.start.isOnlyWeekdayComponent() && !toResult.start.isOnlyWeekdayComponent()) {
             toResult.start.getCertainComponents().forEach((key) => {
                 if (!fromResult.start.isCertain(key)) {

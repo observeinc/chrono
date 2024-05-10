@@ -1,10 +1,10 @@
 import { ParsingContext } from "../../../chrono";
+import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTimeExpressionParser";
 import { ParsingComponents } from "../../../results";
 import { Meridiem } from "../../../types";
-import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTimeExpressionParser";
 
 export default class ENTimeExpressionParser extends AbstractTimeExpressionParser {
-    constructor(strictMode) {
+    constructor(strictMode: boolean) {
         super(strictMode);
     }
 
@@ -16,11 +16,11 @@ export default class ENTimeExpressionParser extends AbstractTimeExpressionParser
         return "(?:(?:at|from)\\s*)??";
     }
 
-    primarySuffix(): string {
+    override primarySuffix(): string {
         return "(?:\\s*(?:o\\W*clock|at\\s*night|in\\s*the\\s*(?:morning|afternoon)))?(?!/)(?=\\W|$)";
     }
 
-    extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): null | ParsingComponents {
+    override extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): null | ParsingComponents {
         const components = super.extractPrimaryTimeComponents(context, match);
         if (!components) {
             return components;

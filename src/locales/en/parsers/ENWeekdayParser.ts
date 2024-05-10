@@ -1,9 +1,9 @@
 import { ParsingContext } from "../../../chrono";
-import { ParsingComponents } from "../../../results";
-import { WEEKDAY_DICTIONARY } from "../constants";
-import { matchAnyPattern } from "../../../utils/pattern";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { createParsingComponentsAtWeekday } from "../../../common/calculation/weekdays";
+import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
+import { ParsingComponents } from "../../../results";
+import { matchAnyPattern } from "../../../utils/pattern";
+import { WEEKDAY_DICTIONARY } from "../constants";
 
 const PATTERN = new RegExp(
     "(?:(?:\\,|\\(|\\（)\\s*)?" +
@@ -34,7 +34,7 @@ export default class ENWeekdayParser extends AbstractParserWithWordBoundaryCheck
         modifierWord = modifierWord || "";
         modifierWord = modifierWord.toLowerCase();
 
-        let modifier = null;
+        let modifier: "last" | "next" | "this" | undefined;
         if (modifierWord == "last" || modifierWord == "past") {
             modifier = "last";
         } else if (modifierWord == "next") {

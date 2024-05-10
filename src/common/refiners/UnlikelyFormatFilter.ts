@@ -1,12 +1,13 @@
-import { Filter } from "../abstractRefiners";
+import { ParsingContext } from "../../chrono";
 import { ParsingResult } from "../../results";
+import { Filter } from "../abstractRefiners";
 
 export default class UnlikelyFormatFilter extends Filter {
     constructor(private strictMode: boolean) {
         super();
     }
 
-    isValid(context, result: ParsingResult): boolean {
+    isValid(context: ParsingContext, result: ParsingResult): boolean {
         if (result.text.replace(" ", "").match(/^\d*(\.\d*)?$/)) {
             context.debug(() => {
                 console.log(`Removing unlikely result '${result.text}'`);
@@ -38,7 +39,7 @@ export default class UnlikelyFormatFilter extends Filter {
         return true;
     }
 
-    private isStrictModeValid(context, result: ParsingResult) {
+    private isStrictModeValid(context: ParsingContext, result: ParsingResult) {
         if (result.start.isOnlyWeekdayComponent()) {
             context.debug(() => {
                 console.log(`(Strict) Removing weekday only component: ${result} (${result.end})`);

@@ -41,7 +41,7 @@ export default class ISOFormatParser extends AbstractParserWithWordBoundaryCheck
         return PATTERN;
     }
 
-    innerExtract(context: ParsingContext, match: RegExpMatchArray) {
+    innerExtract(_: ParsingContext, match: RegExpMatchArray) {
         const components: { [component in Component]?: number } = {};
         components["year"] = parseInt(match[YEAR_NUMBER_GROUP]);
         components["month"] = parseInt(match[MONTH_NUMBER_GROUP]);

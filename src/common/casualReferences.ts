@@ -1,13 +1,12 @@
-import { ParsingComponents, ReferenceWithTimezone } from "../results";
 import { DateTime } from "luxon";
+import { ParsingComponents, ReferenceWithTimezone } from "../results";
+import { Meridiem } from "../types";
 import {
     assignSimilarDate,
     assignSimilarTime,
-    implySimilarDate,
     implySimilarTime,
-    implyTheNextDay,
+    implyTheNextDay
 } from "../utils/dayjs";
-import { Meridiem } from "../types";
 
 export function now(reference: ReferenceWithTimezone): ParsingComponents {
     const targetDate = DateTime.fromJSDate(reference.instant, { zone: reference.timezone });

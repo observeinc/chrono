@@ -1,8 +1,8 @@
 import { DateTimeUnit } from "luxon";
-import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
-import { TimeUnits } from "../../utils/timeunits";
 import { Weekday } from "../../types";
+import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
+import { TimeUnits } from "../../utils/timeunits";
 
 export const WEEKDAY_DICTIONARY: { [word: string]: Weekday } = {
     sunday: 0,
@@ -277,7 +277,7 @@ export const TIME_UNITS_NO_ABBR_PATTERN = repeatedTimeunitPattern(
     TIME_UNIT_CONNECTOR_PATTERN
 );
 
-export function parseTimeUnits(timeunitText): TimeUnits {
+export function parseTimeUnits(timeunitText: string): TimeUnits {
     const fragments = {};
     let remainingText = timeunitText;
     let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
@@ -289,7 +289,7 @@ export function parseTimeUnits(timeunitText): TimeUnits {
     return fragments;
 }
 
-function collectDateTimeFragment(fragments, match) {
+function collectDateTimeFragment(fragments: TimeUnits, match: RegExpExecArray) {
     const num = parseNumberPattern(match[1]);
     const unit = TIME_UNIT_DICTIONARY[match[2].toLowerCase()];
     fragments[unit] = num;

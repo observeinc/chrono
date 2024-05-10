@@ -73,7 +73,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         return `(?!/)(?=\\W|$)`;
     }
 
-    pattern(context: ParsingContext): RegExp {
+    pattern(_context: ParsingContext): RegExp {
         return this.getPrimaryTimePatternThroughCache();
     }
 
@@ -131,7 +131,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     extractPrimaryTimeComponents(
         context: ParsingContext,
         match: RegExpMatchArray,
-        strict = false
+        _strict = false
     ): null | ParsingComponents {
         const components = context.createParsingComponents();
         let minute = 0;
@@ -332,7 +332,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         return components;
     }
 
-    private checkAndReturnWithoutFollowingPattern(result) {
+    private checkAndReturnWithoutFollowingPattern(result: ParsingResult) {
         // Single digit (e.g "1") should not be counted as time expression (without proper context)
         if (result.text.match(/^\d$/)) {
             return null;
@@ -373,7 +373,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         return result;
     }
 
-    private checkAndReturnWithFollowingPattern(result) {
+    private checkAndReturnWithFollowingPattern(result: ParsingResult) {
         if (result.text.match(/^\d+-\d+$/)) {
             return null;
         }
@@ -404,9 +404,9 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         return result;
     }
 
-    private cachedPrimaryPrefix = null;
-    private cachedPrimarySuffix = null;
-    private cachedPrimaryTimePattern = null;
+    private cachedPrimaryPrefix: string;
+    private cachedPrimarySuffix: string;
+    private cachedPrimaryTimePattern: RegExp;
 
     getPrimaryTimePatternThroughCache() {
         const primaryPrefix = this.primaryPrefix();
@@ -427,9 +427,9 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         return this.cachedPrimaryTimePattern;
     }
 
-    private cachedFollowingPhase = null;
-    private cachedFollowingSuffix = null;
-    private cachedFollowingTimePatten = null;
+    private cachedFollowingPhase: string;
+    private cachedFollowingSuffix: string;
+    private cachedFollowingTimePatten: RegExp;
 
     getFollowingTimePatternThroughCache() {
         const followingPhase = this.followingPhase();

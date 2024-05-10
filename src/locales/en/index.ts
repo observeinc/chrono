@@ -5,13 +5,13 @@
  */
 
 import { Chrono, Parser, Refiner } from "../../chrono";
-import { ParsingResult, ParsingComponents, ReferenceWithTimezone } from "../../results";
-import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../types";
+import { ParsingComponents, ParsingResult, ReferenceWithTimezone } from "../../results";
+import { Component, Meridiem, ParsedResult, ParsingOption, ParsingReference, Weekday } from "../../types";
 
 import ENDefaultConfiguration from "./configuration";
 
-export { Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
-export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
+export { Chrono, Meridiem, ParsingComponents, ParsingResult, ReferenceWithTimezone, Weekday };
+export type { Component, ParsedResult, Parser, ParsingOption, ParsingReference, Refiner };
 
 export const configuration = new ENDefaultConfiguration();
 
