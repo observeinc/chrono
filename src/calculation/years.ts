@@ -8,32 +8,40 @@ import { ReferenceWithTimezone } from "../results";
  * 12 => 2012
  */
 export function findMostLikelyADYear(yearNumber: number): number {
-    if (yearNumber < 100) {
-        if (yearNumber > 50) {
-            yearNumber = yearNumber + 1900;
-        } else {
-            yearNumber = yearNumber + 2000;
-        }
-    }
+  if (yearNumber < 100) {
+    yearNumber = yearNumber > 50 ? yearNumber + 1900 : yearNumber + 2000;
+  }
 
-    return yearNumber;
+  return yearNumber;
 }
 
-export function findYearClosestToRef(reference: ReferenceWithTimezone, day: number, month: number): number {
-    //Find the most appropriated year
-    const refMoment = DateTime.fromJSDate(reference.instant, { zone: reference.timezone });
-    let dateMoment = refMoment;
-    dateMoment = dateMoment.set({ month: month });
-    dateMoment = dateMoment.set({ day: day });
-    dateMoment = dateMoment.set({ year: refMoment.year });
+export function findYearClosestToReference(
+  reference: ReferenceWithTimezone,
+  day: number,
+  month: number
+): number {
+  //Find the most appropriated year
+  const referenceMoment = DateTime.fromJSDate(reference.instant, {
+    zone: reference.timezone,
+  });
+  let dateMoment = referenceMoment;
+  dateMoment = dateMoment.set({ month: month });
+  dateMoment = dateMoment.set({ day: day });
+  dateMoment = dateMoment.set({ year: referenceMoment.year });
 
-    const nextYear = dateMoment.plus({ year: 1 });
-    const lastYear = dateMoment.plus({ year: -1 });
-    if (Math.abs(nextYear.diff(refMoment).milliseconds) < Math.abs(dateMoment.diff(refMoment).milliseconds)) {
-        dateMoment = nextYear;
-    } else if (Math.abs(lastYear.diff(refMoment).milliseconds) < Math.abs(dateMoment.diff(refMoment).milliseconds)) {
-        dateMoment = lastYear;
-    }
+  const nextYear = dateMoment.plus({ year: 1 });
+  const lastYear = dateMoment.plus({ year: -1 });
+  if (
+    Math.abs(nextYear.diff(referenceMoment).milliseconds) <
+    Math.abs(dateMoment.diff(referenceMoment).milliseconds)
+  ) {
+    dateMoment = nextYear;
+  } else if (
+    Math.abs(lastYear.diff(referenceMoment).milliseconds) <
+    Math.abs(dateMoment.diff(referenceMoment).milliseconds)
+  ) {
+    dateMoment = lastYear;
+  }
 
-    return dateMoment.year;
+  return dateMoment.year;
 }
