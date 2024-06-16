@@ -2,11 +2,13 @@
 
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 
-export default tseslint.config(
+export default [...tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
+  // @ts-ignore
   {
     languageOptions: {
       parserOptions: {
@@ -35,4 +37,4 @@ export default tseslint.config(
       "@typescript-eslint/restrict-template-expressions": ["off"],
     }
   }
-);
+), eslintPluginUnicorn.configs['flat/recommended'],];
