@@ -31,13 +31,17 @@ export default abstract class AbstractMergeDateRangeRefiner extends MergingRefin
     ) {
       for (const key of toResult.start.getCertainComponents()) {
         if (!fromResult.start.isCertain(key)) {
-          fromResult.start.imply(key, toResult.start.get(key));
+          if (key !== "timezoneOffset") {
+            fromResult.start.imply(key, toResult.start.get(key));
+          }
         }
       }
 
       for (const key of fromResult.start.getCertainComponents()) {
         if (!toResult.start.isCertain(key)) {
-          toResult.start.imply(key, fromResult.start.get(key));
+          if (key !== "timezoneOffset") {
+            toResult.start.imply(key, fromResult.start.get(key));
+          }
         }
       }
     }

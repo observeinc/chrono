@@ -445,7 +445,7 @@ test("Test - Strict mode", function () {
     chrono.strict,
     "5 minutes ago",
     new Date(2012, 7, 10, 12, 14),
-    (result, text) => {
+    (result, _) => {
       expect(result.start.get("hour")).toBe(12);
       expect(result.start.get("minute")).toBe(9);
       expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 9));

@@ -41,10 +41,10 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
         );
       });
 
-      const currentTimezoneOffset = result.start.get("timezoneOffset");
+      const currentTimezoneOffset = result.start.getTimezoneOffset();
       if (
-        currentTimezoneOffset !== null &&
-        extractedTimezoneOffset != currentTimezoneOffset
+        currentTimezoneOffset !== undefined &&
+        extractedTimezoneOffset !== currentTimezoneOffset
       ) {
         // We may already have extracted the timezone offset e.g. "11 am GMT+0900 (JST)"
         // - if they are equal, we also want to take the abbreviation text into result

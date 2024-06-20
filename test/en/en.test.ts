@@ -230,7 +230,7 @@ test("Test - Customize by removing time extraction", () => {
     custom,
     "Thursday 9AM",
     new Date(2020, 11 - 1, 29),
-    (result, text) => {
+    (result, _) => {
       expect(result.text).toBe("Thursday");
       expect(result.start.get("year")).toBe(2020);
       expect(result.start.get("month")).toBe(11);

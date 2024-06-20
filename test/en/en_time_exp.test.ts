@@ -7,7 +7,7 @@ test("Test - Parsing text offset", function () {
     chrono,
     "  11 AM ",
     new Date(2016, 10 - 1, 1, 8),
-    (result, text) => {
+    (result, _) => {
       expect(result.index).toBe(2);
       expect(result.text).toBe("11 AM");
     }
@@ -17,7 +17,7 @@ test("Test - Parsing text offset", function () {
     chrono,
     "2020 at  11 AM ",
     new Date(2016, 10 - 1, 1, 8),
-    (result, text) => {
+    (result, _) => {
       expect(result.index).toBe(5);
       expect(result.text).toBe("at  11 AM");
     }
@@ -172,7 +172,7 @@ test("Test - Time non-range expression", function () {
     chrono,
     "10:00:00 - 15/15",
     new Date(2016, 10 - 1, 1, 8),
-    (result, text) => {
+    (result, _) => {
       expect(result.text).toBe("10:00:00");
 
       expect(result.start.get("hour")).toBe(10);

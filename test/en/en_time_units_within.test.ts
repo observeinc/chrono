@@ -262,7 +262,7 @@ test("Test - The normal within expression", () => {
     chrono,
     "In about ~5 hours",
     new Date(2016, 10 - 1, 1, 13),
-    (result, text) => {
+    (result, _) => {
       expect(result.start.get("year")).toBe(2016);
       expect(result.start.get("month")).toBe(10);
       expect(result.start.get("day")).toBe(1);
@@ -274,7 +274,7 @@ test("Test - The normal within expression", () => {
     chrono,
     "in 1 month",
     new Date(2016, 10 - 1, 1, 14, 52),
-    (result, text) => {
+    (result, _) => {
       expect(result.text).toBe("in 1 month");
       expect(result.start.get("year")).toBe(2016);
       expect(result.start.get("month")).toBe(11);
@@ -578,7 +578,7 @@ test("Test - Strict mode", () => {
     chrono,
     "in 2hour",
     new Date(2016, 10 - 1, 1, 14, 52),
-    (result, text) => {
+    (result, _) => {
       expect(result.start.get("hour")).toBe(16);
       expect(result.start.get("minute")).toBe(52);
     }
@@ -605,7 +605,7 @@ test("Test - Forward date option", () => {
     "1 month",
     new Date(2016, 10 - 1, 1, 14, 52),
     { forwardDate: true },
-    (result, text) => {
+    (result, _) => {
       expect(result.text).toBe("1 month");
       expect(result.start.get("year")).toBe(2016);
       expect(result.start.get("month")).toBe(11);
@@ -618,7 +618,7 @@ test("Test - Forward date option", () => {
     "in 1 month",
     new Date(2016, 10 - 1, 1, 14, 52),
     { forwardDate: true },
-    (result, text) => {
+    (result, _) => {
       expect(result.text).toBe("in 1 month");
       expect(result.start.get("year")).toBe(2016);
       expect(result.start.get("month")).toBe(11);

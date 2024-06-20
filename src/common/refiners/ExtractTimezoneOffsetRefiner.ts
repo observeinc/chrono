@@ -29,7 +29,7 @@ export default class ExtractTimezoneOffsetRefiner implements Refiner {
       });
 
       const hourOffset = Number.parseInt(
-        match[TIMEZONE_OFFSET_HOUR_OFFSET_GROUP]
+        match[TIMEZONE_OFFSET_HOUR_OFFSET_GROUP]!
       );
       const minuteOffset = Number.parseInt(
         match[TIMEZONE_OFFSET_MINUTE_OFFSET_GROUP] || "0"

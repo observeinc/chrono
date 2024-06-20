@@ -289,7 +289,7 @@ test("Test - Future relative expressions", () => {
     chrono,
     "Connect back after this year",
     new Date(2022, 4 - 1, 16, 12),
-    (result, text) => {
+    (result, _) => {
       expect(result.start.get("year")).toBe(2023);
       expect(result.start.get("month")).toBe(4);
       expect(result.start.get("day")).toBe(16);
