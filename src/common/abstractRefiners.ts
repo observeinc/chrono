@@ -36,12 +36,8 @@ export abstract class MergingRefiner implements Refiner {
     }
 
     const mergedResults: ParsingResult[] = [];
-    let currentResult = results[0];
-    let nextResult = undefined;
 
-    for (let index = 1; index < results.length; index++) {
-      nextResult = results[index];
-
+    const currentResult = results.reduce((currentResult, nextResult) => {
       const textBetween = context.text.slice(
         currentResult.index + currentResult.text.length,
         nextResult.index
@@ -63,14 +59,14 @@ export abstract class MergingRefiner implements Refiner {
           );
         });
 
-        currentResult = mergedResult;
+        return mergedResult;
       } else {
         mergedResults.push(currentResult);
-        currentResult = nextResult;
+        return nextResult;
       }
-    }
+    });
 
-    if (currentResult != undefined) {
+    if (currentResult !== undefined) {
       mergedResults.push(currentResult);
     }
 

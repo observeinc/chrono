@@ -1,8 +1,8 @@
 // @ts-check
 
 import eslint from "@eslint/js";
-import tseslint from "typescript-eslint";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
+import tseslint from "typescript-eslint";
 
 export default [
   ...tseslint.config(
@@ -42,12 +42,9 @@ export default [
   eslintPluginUnicorn.configs["flat/recommended"],
   {
     rules: {
-      "unicorn/filename-case": [
-        "error",
-        {
-          case: "pascalCase",
-        },
-      ],
+      "unicorn/filename-case": ["off"],
+      "unicorn/no-array-reduce": ["off"],
+      "unicorn/prevent-abbreviations": ["warning"],
     },
   },
 ];

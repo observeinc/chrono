@@ -1,8 +1,8 @@
 // Map ABBR -> Offset in minute
 import { ParsingContext, Refiner } from "../../chrono";
-import { TimezoneAbbrMap } from "../../types";
 import { ParsingResult } from "../../results";
 import { toTimezoneOffset } from "../../timezone";
+import { TimezoneAbbrMap } from "../../types";
 
 const TIMEZONE_NAME_PATTERN = new RegExp(
   String.raw`^\s*,?\s*\(?([A-Z]{2,4})\)?(?=\W|$)`,
@@ -24,7 +24,7 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
         continue;
       }
 
-      const timezoneAbbr = match[1].toUpperCase();
+      const timezoneAbbr = match[1]!.toUpperCase();
       const referenceDate = result.start.date() ?? result.refDate ?? new Date();
       const tzOverrides = { ...this.timezoneOverrides, ...timezoneOverrides };
       const extractedTimezoneOffset = toTimezoneOffset(

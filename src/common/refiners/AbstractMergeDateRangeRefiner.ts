@@ -16,7 +16,7 @@ export default abstract class AbstractMergeDateRangeRefiner extends MergingRefin
     return (
       !currentResult.end &&
       !nextResult.end &&
-      textBetween.match(this.patternBetween()) != undefined
+      textBetween.match(this.patternBetween()) !== null
     );
   }
 

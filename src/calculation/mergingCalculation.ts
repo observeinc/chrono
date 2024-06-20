@@ -74,7 +74,7 @@ export function mergeDateTimeComponent(
   if (timeComponent.isCertain("timezoneOffset")) {
     dateTimeComponent.assign(
       "timezoneOffset",
-      timeComponent.get("timezoneOffset")
+      timeComponent.getTimezoneOffset()!
     );
   }
 
@@ -88,7 +88,7 @@ export function mergeDateTimeComponent(
   }
 
   if (
-    dateTimeComponent.get("meridiem") == Meridiem.PM &&
+    dateTimeComponent.get("meridiem") == Meridiem.PM.valueOf() &&
     dateTimeComponent.get("hour") < 12
   ) {
     if (timeComponent.isCertain("hour")) {

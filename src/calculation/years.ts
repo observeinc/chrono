@@ -22,7 +22,7 @@ export function findYearClosestToReference(
 ): number {
   //Find the most appropriated year
   const referenceMoment = DateTime.fromJSDate(reference.instant, {
-    zone: reference.timezone,
+    zone: reference.zone,
   });
   let dateMoment = referenceMoment;
   dateMoment = dateMoment.set({ month: month });

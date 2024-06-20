@@ -18,7 +18,7 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
     match: RegExpMatchArray
   ): ParsingComponents | ParsingResult {
     let targetDate = DateTime.fromJSDate(context.reference.instant, {
-      zone: context.reference.timezone,
+      zone: context.reference.zone,
     });
     const lowerText = match[0].toLowerCase();
     let component = context.createParsingComponents();

@@ -5,7 +5,15 @@ import {
   ParsingReference,
 } from "./types";
 
-import { DateTime, DateTimeUnit, FixedOffsetZone } from "luxon";
+import {
+  DateTime,
+  DateTimeUnit,
+  FixedOffsetZone,
+  IANAZone,
+  SystemZone,
+  Zone,
+} from "luxon";
+import { toTimezoneOffset } from "./timezone";
 import {
   assignSimilarDate,
   assignSimilarTime,
@@ -14,15 +22,21 @@ import {
 
 export class ReferenceWithTimezone {
   readonly instant: Date;
-  readonly timezone?: string;
+  private readonly timezone?: string;
+  private readonly timezoneOffset?: number | undefined;
 
   constructor(input?: ParsingReference | Date) {
     input = input ?? new Date();
     if (input instanceof Date) {
       this.instant = input;
-    } else {
+    } else if ("ianaTimezone" in input) {
       this.instant = input.instant ?? new Date();
       this.timezone = input.ianaTimezone;
+    } else if ("timezone" in input) {
+      this.instant = input.instant ?? new Date();
+      this.timezoneOffset = toTimezoneOffset(input.timezone, this.instant);
+    } else {
+      this.instant = input.instant ?? new Date();
     }
   }
 
@@ -32,6 +46,17 @@ export class ReferenceWithTimezone {
    */
   getDateWithAdjustedTimezone() {
     return DateTime.fromJSDate(this.instant).toJSDate();
+  }
+
+  // Creates a given zone based on the input
+  get zone(): Zone {
+    if (this.timezone !== undefined) {
+      return IANAZone.create(this.timezone);
+    } else if (this.timezoneOffset !== undefined) {
+      return FixedOffsetZone.instance(this.timezoneOffset);
+    } else {
+      return SystemZone.instance;
+    }
   }
 }
 
@@ -55,7 +80,7 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     const referenceDayJs = DateTime.fromJSDate(reference.instant, {
-      zone: reference.timezone,
+      zone: reference.zone,
     });
     this.imply("day", referenceDayJs.day);
     this.imply("month", referenceDayJs.month);
@@ -66,16 +91,12 @@ export class ParsingComponents implements ParsedComponents {
     this.imply("millisecond", 0);
   }
 
-  get(component: Component): number | null {
-    if (component in this.knownValues) {
-      return this.knownValues[component];
-    }
+  get(component: Exclude<Component, "timezoneOffset">): number {
+    return this.knownValues[component] ?? this.impliedValues[component]!;
+  }
 
-    if (component in this.impliedValues) {
-      return this.impliedValues[component];
-    }
-
-    return null;
+  getTimezoneOffset(): number | undefined {
+    return this.knownValues.timezoneOffset ?? this.impliedValues.timezoneOffset;
   }
 
   isCertain(component: Component): boolean {
@@ -186,12 +207,12 @@ export class ParsingComponents implements ParsedComponents {
 
     if (this.isCertain("timezoneOffset")) {
       return naiveDayJs.setZone(
-        FixedOffsetZone.instance(this.get("timezoneOffset")),
+        FixedOffsetZone.instance(this.getTimezoneOffset()!),
         { keepLocalTime: true }
       );
     }
 
-    return naiveDayJs.setZone(this.reference.timezone, { keepLocalTime: true });
+    return naiveDayJs.setZone(this.reference.zone, { keepLocalTime: true });
   }
 
   date(): Date {
@@ -219,7 +240,7 @@ export class ParsingComponents implements ParsedComponents {
     fragments: { [c in DateTimeUnit]?: number }
   ): ParsingComponents {
     let date = DateTime.fromJSDate(reference.instant, {
-      zone: reference.timezone,
+      zone: reference.zone,
     });
     for (const key in fragments) {
       date = date.plus({ [key]: fragments[key as DateTimeUnit] });
@@ -281,14 +302,14 @@ export class ParsingResult implements ParsedResult {
     this.refDate = reference.instant;
     this.index = index;
     this.text = text;
-    this.start = start || new ParsingComponents(reference);
+    this.start = start ?? new ParsingComponents(reference);
     this.end = end;
   }
 
   clone() {
     const result = new ParsingResult(this.reference, this.index, this.text);
-    result.start = this.start ? this.start.clone() : null;
-    result.end = this.end ? this.end.clone() : null;
+    result.start = this.start.clone();
+    result.end = this.end?.clone();
     return result;
   }
 

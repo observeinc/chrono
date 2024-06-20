@@ -2,8 +2,8 @@
   
 */
 
-import { MergingRefiner } from "../abstractRefiners";
 import { ParsingResult } from "../../results";
+import { MergingRefiner } from "../abstractRefiners";
 
 /**
  * Merge weekday component into more completed data

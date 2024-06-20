@@ -10,7 +10,7 @@ import {
 
 export function now(reference: ReferenceWithTimezone): ParsingComponents {
   const targetDate = DateTime.fromJSDate(reference.instant, {
-    zone: reference.timezone,
+    zone: reference.zone,
   });
   const component = new ParsingComponents(reference, {});
   assignSimilarDate(component, targetDate);
@@ -21,7 +21,7 @@ export function now(reference: ReferenceWithTimezone): ParsingComponents {
 
 export function today(reference: ReferenceWithTimezone): ParsingComponents {
   const targetDate = DateTime.fromJSDate(reference.instant, {
-    zone: reference.timezone,
+    zone: reference.zone,
   });
   const component = new ParsingComponents(reference, {});
   assignSimilarDate(component, targetDate);
@@ -56,7 +56,7 @@ export function theDayAfter(
   nDays: number
 ): ParsingComponents {
   let targetDate = DateTime.fromJSDate(reference.instant, {
-    zone: reference.timezone,
+    zone: reference.zone,
   });
   const component = new ParsingComponents(reference, {});
   targetDate = targetDate.plus({ day: nDays });
@@ -70,7 +70,7 @@ export function tonight(
   implyHour = 22
 ): ParsingComponents {
   const targetDate = DateTime.fromJSDate(reference.instant, {
-    zone: reference.timezone,
+    zone: reference.zone,
   });
   const component = new ParsingComponents(reference, {});
   assignSimilarDate(component, targetDate);
@@ -85,7 +85,7 @@ export function lastNight(
   implyHour = 0
 ): ParsingComponents {
   let targetDate = DateTime.fromJSDate(reference.instant, {
-    zone: reference.timezone,
+    zone: reference.zone,
   });
   const component = new ParsingComponents(reference, {});
   if (targetDate.hour < 6) {
@@ -112,7 +112,7 @@ export function yesterdayEvening(
   implyHour = 20
 ): ParsingComponents {
   let targetDate = DateTime.fromJSDate(reference.instant, {
-    zone: reference.timezone,
+    zone: reference.zone,
   });
   const component = new ParsingComponents(reference, {});
   targetDate = targetDate.plus({ day: -1 });
@@ -127,7 +127,7 @@ export function yesterdayEvening(
 export function midnight(reference: ReferenceWithTimezone): ParsingComponents {
   const component = new ParsingComponents(reference, {});
   const targetDate = DateTime.fromJSDate(reference.instant, {
-    zone: reference.timezone,
+    zone: reference.zone,
   });
   if (targetDate.hour > 2) {
     // Unless it's very early morning (0~2AM), we assume the midnight is the coming midnight.

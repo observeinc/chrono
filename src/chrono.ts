@@ -112,7 +112,6 @@ export class Chrono {
       return a.index - b.index;
     });
 
-    // eslint-disable-next-line unicorn/no-array-reduce
     return this.refiners.reduce(
       (results, refiner) => refiner.refine(context, results),
       results

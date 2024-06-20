@@ -41,13 +41,13 @@ export {
   ReferenceWithTimezone,
 } from "./results";
 export {
-  type Component,
   Meridiem,
-  type ParsedComponents,
   Weekday,
+  type Component,
+  type ParsedComponents,
   type ParsedResult,
   type ParsingOption,
-  type ParsingReference,
+  type ParsingReference as ParsingReference,
 } from "./types";
 
 export * as en from "./locales/en";

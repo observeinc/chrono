@@ -48,7 +48,7 @@ export interface AmbiguousTimezoneMap {
  */
 export type TimezoneAbbrMap = Record<string, number | AmbiguousTimezoneMap>;
 
-export interface ParsingReference {
+interface IanaParsingReference {
   /**
    * Reference date. The instant (JavaScript Date object) when the input is written or mention.
    * This effect date/time implication (e.g. weekday or time mentioning).
@@ -63,6 +63,22 @@ export interface ParsingReference {
    */
   ianaTimezone?: string;
 }
+interface OldParsingReference {
+  /**
+   * Reference date. The instant (JavaScript Date object) when the input is written or mention.
+   * This effect date/time implication (e.g. weekday or time mentioning).
+   * (default = now)
+   */
+  instant?: Date;
+
+  /**
+   * Reference timezone. The timezone where the input is written or mention.
+   * Date/time implication will account the difference between input timezone and the current system timezone.
+   * (default = current timezone)
+   */
+  timezone?: string | number;
+}
+export type ParsingReference = IanaParsingReference | OldParsingReference;
 
 /**
  * Parsed result or final output.

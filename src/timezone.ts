@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { TimezoneAbbrMap, Weekday, Month } from "./types";
+import { Month, TimezoneAbbrMap, Weekday } from "./types";
 
 export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
   ACDT: 630,

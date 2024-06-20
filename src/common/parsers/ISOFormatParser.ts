@@ -43,13 +43,13 @@ export default class ISOFormatParser extends AbstractParserWithWordBoundaryCheck
 
   innerExtract(_: ParsingContext, match: RegExpMatchArray) {
     const components: { [component in Component]?: number } = {};
-    components.year = Number.parseInt(match[YEAR_NUMBER_GROUP]);
-    components.month = Number.parseInt(match[MONTH_NUMBER_GROUP]);
-    components.day = Number.parseInt(match[DATE_NUMBER_GROUP]);
+    components.year = Number.parseInt(match[YEAR_NUMBER_GROUP]!);
+    components.month = Number.parseInt(match[MONTH_NUMBER_GROUP]!);
+    components.day = Number.parseInt(match[DATE_NUMBER_GROUP]!);
 
     if (match[HOUR_NUMBER_GROUP] != undefined) {
       components.hour = Number.parseInt(match[HOUR_NUMBER_GROUP]);
-      components.minute = Number.parseInt(match[MINUTE_NUMBER_GROUP]);
+      components.minute = Number.parseInt(match[MINUTE_NUMBER_GROUP]!);
 
       if (match[SECOND_NUMBER_GROUP] != undefined) {
         components.second = Number.parseInt(match[SECOND_NUMBER_GROUP]);
