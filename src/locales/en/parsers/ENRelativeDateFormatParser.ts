@@ -24,9 +24,9 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
     context: ParsingContext,
     match: RegExpMatchArray
   ): ParsingComponents {
-    const modifier = match[MODIFIER_WORD_GROUP].toLowerCase();
-    const unitWord = match[RELATIVE_WORD_GROUP].toLowerCase();
-    const timeunit = TIME_UNIT_DICTIONARY[unitWord];
+    const modifier = match[MODIFIER_WORD_GROUP]!.toLowerCase();
+    const unitWord = match[RELATIVE_WORD_GROUP]!.toLowerCase();
+    const timeunit = TIME_UNIT_DICTIONARY[unitWord]!;
 
     if (modifier == "next" || modifier.startsWith("after")) {
       const timeUnits: TimeUnits = {};

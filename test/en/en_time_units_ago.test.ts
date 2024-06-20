@@ -8,7 +8,7 @@ test("Test - Single Expression", function () {
     "5 days ago, we did something",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(5);
@@ -25,7 +25,7 @@ test("Test - Single Expression", function () {
     "10 days ago, we did something",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(7);
       expect(result.start.get("day")).toBe(31);
@@ -180,7 +180,7 @@ test("Test - Single Expression", function () {
     "5 Days ago, we did something",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(5);
@@ -212,7 +212,7 @@ test("Test - Single Expression", function () {
     "A days ago, we did something",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(9);
@@ -261,7 +261,7 @@ test("Test - Single Expression (Casual)", function () {
     "5 months ago, we did something",
     new Date(2012, 10 - 1, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(5);
       expect(result.start.get("day")).toBe(10);
@@ -278,7 +278,7 @@ test("Test - Single Expression (Casual)", function () {
     "5 years ago, we did something",
     new Date(2012, 8 - 1, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2007);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
@@ -295,7 +295,7 @@ test("Test - Single Expression (Casual)", function () {
     "a week ago, we did something",
     new Date(2012, 8 - 1, 3),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(7);
       expect(result.start.get("day")).toBe(27);
@@ -312,7 +312,7 @@ test("Test - Single Expression (Casual)", function () {
     "a few days ago, we did something",
     new Date(2012, 8 - 1, 3),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(7);
       expect(result.start.get("day")).toBe(31);

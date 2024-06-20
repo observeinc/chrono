@@ -8,7 +8,7 @@ test("Test - Later Expression", function () {
     "2 days later",
     new Date(2012, 7, 10, 12),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(12);
@@ -28,7 +28,7 @@ test("Test - Later Expression", function () {
     "5 minutes later",
     new Date(2012, 7, 10, 10, 0),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
@@ -50,7 +50,7 @@ test("Test - Later Expression", function () {
     "3 week later",
     new Date(2012, 7 - 1, 10, 10, 0),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(7);
       expect(result.start.get("day")).toBe(31);
@@ -67,7 +67,7 @@ test("Test - Later Expression", function () {
     "3w later",
     new Date(2012, 7 - 1, 10, 10, 0),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(7);
       expect(result.start.get("day")).toBe(31);
@@ -82,7 +82,7 @@ test("Test - Later Expression", function () {
     "3mo later",
     new Date(2012, 7 - 1, 10, 10, 0),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(10);
       expect(result.start.get("day")).toBe(10);
@@ -99,7 +99,7 @@ test("Test - From now Expression", () => {
     "5 days from now, we did something",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(15);
@@ -116,7 +116,7 @@ test("Test - From now Expression", () => {
     "10 days from now, we did something",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(20);
@@ -267,7 +267,7 @@ test("Test - From now Expression", () => {
     "5 Days from now, we did something",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(15);
@@ -298,7 +298,7 @@ test("Test - From now Expression", () => {
     "A days from now, we did something",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(11);

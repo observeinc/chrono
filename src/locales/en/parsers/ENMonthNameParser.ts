@@ -1,9 +1,13 @@
-import { FULL_MONTH_NAME_DICTIONARY, MONTH_DICTIONARY } from "../constants";
-import { ParsingContext } from "../../../chrono";
 import { findYearClosestToReference } from "../../../calculation/years";
-import { matchAnyPattern } from "../../../utils/pattern";
-import { YEAR_PATTERN, parseYear } from "../constants";
+import { ParsingContext } from "../../../chrono";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
+import { matchAnyPattern } from "../../../utils/pattern";
+import {
+  FULL_MONTH_NAME_DICTIONARY,
+  MONTH_DICTIONARY,
+  YEAR_PATTERN,
+  parseYear,
+} from "../constants";
 
 const PATTERN = new RegExp(
   `((?:in)\\s*)?` +
@@ -33,21 +37,21 @@ export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChe
   }
 
   innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-    const monthName = match[MONTH_NAME_GROUP].toLowerCase();
+    const monthName = match[MONTH_NAME_GROUP]!.toLowerCase();
 
     // skip some unlikely words "jan", "mar", ..
     if (match[0].length <= 3 && !FULL_MONTH_NAME_DICTIONARY[monthName]) {
-      return null;
+      return undefined;
     }
 
     const result = context.createParsingResult(
-      match.index + (match[PREFIX_GROUP] || "").length,
-      match.index + match[0].length
+      match.index! + (match[PREFIX_GROUP] || "").length,
+      match.index! + match[0].length
     );
     result.start.imply("day", 1);
     result.start.addTag("parser/ENMonthNameParser");
 
-    const month = MONTH_DICTIONARY[monthName];
+    const month = MONTH_DICTIONARY[monthName]!;
     result.start.assign("month", month);
 
     if (match[YEAR_GROUP]) {

@@ -18,7 +18,7 @@ test("Test - Single Expression", function () {
     "The event is going ahead (04/2016)",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2016);
       expect(result.start.get("month")).toBe(4);
       expect(result.start.get("day")).toBe(1);
@@ -35,7 +35,7 @@ test("Test - Single Expression", function () {
     "Published: 06/2004",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2004);
       expect(result.start.get("month")).toBe(6);
       expect(result.start.get("day")).toBe(1);
@@ -48,7 +48,7 @@ test("Test - Single Expression", function () {
   );
 
   testSingleCase(chrono, "8/10/2012", new Date(2012, 7, 10), (result) => {
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2012);
     expect(result.start.get("month")).toBe(8);
     expect(result.start.get("day")).toBe(10);
@@ -64,7 +64,7 @@ test("Test - Single Expression", function () {
   });
 
   testSingleCase(chrono, ": 8/1/2012", new Date(2012, 7, 10), (result) => {
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2012);
     expect(result.start.get("month")).toBe(8);
     expect(result.start.get("day")).toBe(1);
@@ -76,7 +76,7 @@ test("Test - Single Expression", function () {
   });
 
   testSingleCase(chrono, "8/10", new Date(2012, 7, 10), (result) => {
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2012);
     expect(result.start.get("month")).toBe(8);
     expect(result.start.get("day")).toBe(10);
@@ -133,7 +133,7 @@ test("Test - Single Expression", function () {
 
 test("Test - Single Expression Little-Endian", function () {
   testSingleCase(chrono.en.GB, "8/10/2012", new Date(2012, 7, 10), (result) => {
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2012);
     expect(result.start.get("month")).toBe(10);
     expect(result.start.get("day")).toBe(8);
@@ -162,7 +162,7 @@ test("Test - Single Expression Little-Endian with Month name", function () {
     "8/Oct/2012",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(10);
       expect(result.start.get("day")).toBe(8);
@@ -199,7 +199,7 @@ test("Test - Range Expression", function () {
       expect(result.index).toBe(0);
       expect(result.text).toBe("8/10/2012 - 8/15/2012");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
@@ -222,14 +222,14 @@ test("Test - Range Expressions with Time", function () {
     "from 01/21/2021 10:00 to 01/01/2023 07:00",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2021);
       expect(result.start.get("month")).toBe(1);
       expect(result.start.get("day")).toBe(21);
       expect(result.start.get("hour")).toBe(10);
       expect(result.start.get("minute")).toBe(0);
 
-      expect(result.end).not.toBeNull();
+      expect(result.end).not.toBeUndefined();
       expect(result.end?.get("year")).toBe(2023);
       expect(result.end?.get("month")).toBe(1);
       expect(result.end?.get("day")).toBe(1);
@@ -243,14 +243,14 @@ test("Test - Range Expressions with Time", function () {
     "08/08/2023, 09:15 AM to 08/29/2023, 09:15 AM",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2023);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(8);
       expect(result.start.get("hour")).toBe(9);
       expect(result.start.get("minute")).toBe(15);
 
-      expect(result.end).not.toBeNull();
+      expect(result.end).not.toBeUndefined();
       expect(result.end?.get("year")).toBe(2023);
       expect(result.end?.get("month")).toBe(8);
       expect(result.end?.get("day")).toBe(29);
@@ -296,7 +296,7 @@ test("Test - forward dates only option", function () {
     new Date(1999, 6 - 1, 1),
     { forwardDate: true },
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2000);
       expect(result.start.get("month")).toBe(5);
       expect(result.start.get("day")).toBe(31);
@@ -320,7 +320,7 @@ test("Test - forward dates only option", function () {
     (result) => {
       expect(result.text).toBe("1/8 at 12pm");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2022);
       expect(result.start.get("month")).toBe(1);
       expect(result.start.get("day")).toBe(8);

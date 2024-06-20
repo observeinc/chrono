@@ -6,7 +6,7 @@ test("Test - Single Expression", function () {
     expect(result.index).toBe(0);
     expect(result.text).toBe("Monday");
 
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2012);
     expect(result.start.get("month")).toBe(8);
     expect(result.start.get("day")).toBe(6);
@@ -24,7 +24,7 @@ test("Test - Single Expression", function () {
     expect(result.index).toBe(0);
     expect(result.text).toBe("Thursday");
 
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2012);
     expect(result.start.get("month")).toBe(8);
     expect(result.start.get("day")).toBe(9);
@@ -37,7 +37,7 @@ test("Test - Single Expression", function () {
     expect(result.index).toBe(0);
     expect(result.text).toBe("Sunday");
 
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2012);
     expect(result.start.get("month")).toBe(8);
     expect(result.start.get("day")).toBe(12);
@@ -54,7 +54,7 @@ test("Test - Single Expression", function () {
       expect(result.index).toBe(16);
       expect(result.text).toBe("last Friday");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(3);
@@ -72,7 +72,7 @@ test("Test - Single Expression", function () {
       expect(result.index).toBe(16);
       expect(result.text).toBe("past Friday");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(3);
@@ -90,7 +90,7 @@ test("Test - Single Expression", function () {
       expect(result.index).toBe(21);
       expect(result.text).toBe("on Friday next week");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2015);
       expect(result.start.get("month")).toBe(4);
       expect(result.start.get("day")).toBe(24);
@@ -108,7 +108,7 @@ test("Test - Single Expression", function () {
       expect(result.index).toBe(29);
       expect(result.text).toBe("on Tuesday, next week");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2015);
       expect(result.start.get("month")).toBe(4);
       expect(result.start.get("day")).toBe(21);
@@ -288,7 +288,7 @@ test("Test - Weekday With Casual Time", function () {
       expect(result.index).toBe(10);
       expect(result.text).toBe("on Tuesday morning");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2015);
       expect(result.start.get("month")).toBe(4);
       expect(result.start.get("day")).toBe(21);
@@ -309,7 +309,7 @@ test("Test - Weekday Overlap", function () {
       expect(result.index).toBe(0);
       expect(result.text).toBe("Sunday, December 7, 2014");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2014);
       expect(result.start.get("month")).toBe(12);
       expect(result.start.get("day")).toBe(7);
@@ -332,7 +332,7 @@ test("Test - Weekday Overlap", function () {
       expect(result.index).toBe(0);
       expect(result.text).toBe("Sunday 12/7/2014");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2014);
       expect(result.start.get("month")).toBe(12);
       expect(result.start.get("day")).toBe(7);
@@ -394,7 +394,7 @@ test("Test - forward dates only option", () => {
       expect(result.index).toBe(0);
       expect(result.text).toBe("Monday");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(13);
@@ -418,7 +418,7 @@ test("Test - forward dates only option", () => {
       expect(result.index).toBe(0);
       expect(result.text).toBe("this Friday to this Monday");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2016);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(5);
@@ -431,7 +431,7 @@ test("Test - forward dates only option", () => {
 
       expect(result.start).toBeDate(new Date(2016, 8 - 1, 5, 12));
 
-      expect(result.end).not.toBeNull();
+      expect(result.end).not.toBeUndefined();
       expect(result.end?.get("year")).toBe(2016);
       expect(result.end?.get("month")).toBe(8);
       expect(result.end?.get("day")).toBe(8);
@@ -455,7 +455,7 @@ test("Test - forward dates only option", () => {
       expect(result.index).toBe(0);
       expect(result.text).toBe("sunday morning");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2021);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(22);
@@ -478,12 +478,12 @@ test("Test - forward dates only option", () => {
     (result) => {
       expect(result.text).toBe("monday - friday");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2019);
       expect(result.start.get("month")).toBe(6);
       expect(result.start.get("day")).toBe(17);
 
-      expect(result.end).not.toBeNull();
+      expect(result.end).not.toBeUndefined();
       expect(result.end?.get("year")).toBe(2019);
       expect(result.end?.get("month")).toBe(6);
       expect(result.end?.get("day")).toBe(21);

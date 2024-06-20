@@ -4,7 +4,7 @@
     into the future instead of the past.
 */
 
-import { DateTime } from "luxon";
+import { DateTime, WeekdayNumbers } from "luxon";
 import { ParsingContext, Refiner } from "../../chrono";
 import { ParsingResult } from "../../results";
 import { implySimilarDate } from "../../utils/luxon";
@@ -35,13 +35,16 @@ export default class ForwardDateRefiner implements Refiner {
         referenceMoment > result.start.luxon()
       ) {
         referenceMoment =
-          referenceMoment.day() >= result.start.get("weekday")
-            ? referenceMoment.day(result.start.get("weekday") + 7)
-            : referenceMoment.day(result.start.get("weekday")!);
+          isoWeekdayToWeekday(referenceMoment.weekday) >=
+          result.start.get("weekday")
+            ? referenceMoment.plus({ week: 1 })
+            : referenceMoment.set({
+                weekday: weekdayToIsoWeekday(result.start.get("weekday")),
+              });
 
-        result.start.imply("day", referenceMoment.date());
-        result.start.imply("month", referenceMoment.month() + 1);
-        result.start.imply("year", referenceMoment.year());
+        result.start.imply("day", referenceMoment.day);
+        result.start.imply("month", referenceMoment.month);
+        result.start.imply("year", referenceMoment.year);
         context.debug(() => {
           console.log(
             `Forward weekly adjusted for ${result} (${result.start})`
@@ -51,13 +54,16 @@ export default class ForwardDateRefiner implements Refiner {
         if (result.end?.isOnlyWeekdayComponent()) {
           // Adjust date to the coming week
           referenceMoment =
-            referenceMoment.day() > result.end.get("weekday")
-              ? referenceMoment.day(result.end.get("weekday") + 7)
-              : referenceMoment.day(result.end.get("weekday")!);
+            isoWeekdayToWeekday(referenceMoment.weekday) >
+            result.end.get("weekday")
+              ? referenceMoment.plus({ week: 1 })
+              : referenceMoment.set({
+                  weekday: weekdayToIsoWeekday(result.end.get("weekday")),
+                });
 
-          result.end.imply("day", referenceMoment.date());
-          result.end.imply("month", referenceMoment.month() + 1);
-          result.end.imply("year", referenceMoment.year());
+          result.end.imply("day", referenceMoment.day);
+          result.end.imply("month", referenceMoment.month);
+          result.end.imply("year", referenceMoment.year);
           context.debug(() => {
             console.log(
               `Forward weekly adjusted for ${result} (${result.end})`
@@ -99,3 +105,7 @@ export default class ForwardDateRefiner implements Refiner {
     return results;
   }
 }
+
+const isoWeekdayToWeekday = (isoWeekday: number) => isoWeekday % 7;
+const weekdayToIsoWeekday = (weekday: number): WeekdayNumbers =>
+  weekday === 0 ? 7 : (weekday as WeekdayNumbers);

@@ -3,6 +3,7 @@ import { Configuration } from "./chrono";
 import ISOFormatParser from "./common/parsers/ISOFormatParser";
 import ExtractTimezoneAbbrRefiner from "./common/refiners/ExtractTimezoneAbbrRefiner";
 import ExtractTimezoneOffsetRefiner from "./common/refiners/ExtractTimezoneOffsetRefiner";
+import ForwardDateRefiner from "./common/refiners/ForwardDateRefiner";
 import MergeWeekdayComponentRefiner from "./common/refiners/MergeWeekdayComponentRefiner";
 import OverlapRemovalRefiner from "./common/refiners/OverlapRemovalRefiner";
 import UnlikelyFormatFilter from "./common/refiners/UnlikelyFormatFilter";
@@ -22,6 +23,7 @@ export function includeCommonConfiguration(
   configuration.refiners.push(
     new ExtractTimezoneAbbrRefiner(),
     new OverlapRemovalRefiner(),
+    new ForwardDateRefiner(),
     new UnlikelyFormatFilter(strictMode)
   );
   return configuration;

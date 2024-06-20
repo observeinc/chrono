@@ -19,7 +19,7 @@ test("Test - Create & manipulate parsing components", () => {
   expect(components.tags().size).toBe(0);
 
   // null
-  expect(components.get("weekday")).toBeNull();
+  expect(components.get("weekday")).toBeUndefined();
   expect(components.isCertain("weekday")).toBe(false);
 
   // "imply"

@@ -9,7 +9,7 @@ test("Test - Single Expression", function () {
     (result) => {
       expect(result.text).toBe("2 months before 02/02");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2021);
       expect(result.start.get("month")).toBe(12);
       expect(result.start.get("day")).toBe(2);

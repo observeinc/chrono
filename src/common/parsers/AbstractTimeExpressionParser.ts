@@ -77,38 +77,41 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     return this.getPrimaryTimePatternThroughCache();
   }
 
-  extract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
+  extract(
+    context: ParsingContext,
+    match: RegExpMatchArray
+  ): ParsingResult | undefined {
     const startComponents = this.extractPrimaryTimeComponents(context, match);
     if (!startComponents) {
       // If the match seem like a year e.g. "2013.12:...",
       // then skips the year part and try matching again.
       if (/^\d{4}/.test(match[0])) {
-        match.index += 4; // Skip over potential overlapping pattern
-        return null;
+        match.index! += 4; // Skip over potential overlapping pattern
+        return undefined;
       }
 
-      match.index += match[0].length; // Skip over potential overlapping pattern
-      return null;
+      match.index! += match[0].length; // Skip over potential overlapping pattern
+      return undefined;
     }
 
-    const index = match.index + match[1].length;
-    const text = match[0].slice(match[1].length);
+    const index = match.index! + match[1]!.length;
+    const text = match[0].slice(match[1]!.length);
     const result = context.createParsingResult(index, text, startComponents);
-    match.index += match[0].length; // Skip over potential overlapping pattern
+    match.index! += match[0].length; // Skip over potential overlapping pattern
 
-    const remainingText = context.text.slice(Math.max(0, match.index));
+    const remainingText = context.text.slice(Math.max(0, match.index!));
     const followingPattern = this.getFollowingTimePatternThroughCache();
-    const followingMatch = followingPattern.exec(remainingText);
+    const followingMatch = followingPattern!.exec(remainingText);
 
     // Pattern "456-12", "2022-12" should not be time without proper context
     if (/^\d{3,4}/.test(text) && followingMatch) {
       // e.g. "2022-12"
       if (/^\s*([+-])\s*\d{2,4}$/.test(followingMatch[0])) {
-        return null;
+        return undefined;
       }
       // e.g. "2022-12:01..."
       if (/^\s*([+-])\s*\d{2}\W\d{2}/.test(followingMatch[0])) {
-        return null;
+        return undefined;
       }
     }
 
@@ -142,7 +145,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     let meridiem = null;
 
     // ----- Hours
-    let hour = Number.parseInt(match[HOUR_GROUP]);
+    let hour = Number.parseInt(match[HOUR_GROUP]!);
     if (hour > 100) {
       if (this.strictMode || match[MINUTE_GROUP] != undefined) {
         return null;
@@ -177,7 +180,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     // ----- AM & PM
     if (match[AM_PM_HOUR_GROUP] != undefined) {
       if (hour > 12) return null;
-      const ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
+      const ampm = match[AM_PM_HOUR_GROUP][0]?.toLowerCase();
       if (ampm == "a") {
         meridiem = Meridiem.AM;
         if (hour == 12) {
@@ -231,7 +234,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     context: ParsingContext,
     match: RegExpMatchArray,
     result: ParsingResult
-  ): null | ParsingComponents {
+  ): undefined | ParsingComponents {
     const components = context.createParsingComponents();
 
     // ----- Millisecond
@@ -239,7 +242,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
       const millisecond = Number.parseInt(
         match[MILLI_SECOND_GROUP].slice(0, 3)
       );
-      if (millisecond >= 1000) return null;
+      if (millisecond >= 1000) return undefined;
 
       components.assign("millisecond", millisecond);
     }
@@ -247,12 +250,12 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     // ----- Second
     if (match[SECOND_GROUP] != undefined) {
       const second = Number.parseInt(match[SECOND_GROUP]);
-      if (second >= 60) return null;
+      if (second >= 60) return undefined;
 
       components.assign("second", second);
     }
 
-    let hour = Number.parseInt(match[HOUR_GROUP]);
+    let hour = Number.parseInt(match[HOUR_GROUP]!);
     let minute = 0;
     let meridiem = -1;
 
@@ -265,7 +268,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     }
 
     if (minute >= 60 || hour > 24) {
-      return null;
+      return undefined;
     }
 
     if (hour >= 12) {
@@ -275,10 +278,10 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     // ----- AM & PM
     if (match[AM_PM_HOUR_GROUP] != undefined) {
       if (hour > 12) {
-        return null;
+        return undefined;
       }
 
-      const ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
+      const ampm = match[AM_PM_HOUR_GROUP]![0]?.toLowerCase();
       if (ampm == "a") {
         meridiem = Meridiem.AM;
         if (hour == 12) {
@@ -344,38 +347,38 @@ export abstract class AbstractTimeExpressionParser implements Parser {
   private checkAndReturnWithoutFollowingPattern(result: ParsingResult) {
     // Single digit (e.g "1") should not be counted as time expression (without proper context)
     if (/^\d$/.test(result.text)) {
-      return null;
+      return undefined;
     }
 
     // Three or more digit (e.g. "203", "2014") should not be counted as time expression (without proper context)
     if (/^\d\d\d+$/.test(result.text)) {
-      return null;
+      return undefined;
     }
 
     // Instead of "am/pm", it ends with "a" or "p" (e.g "1a", "123p"), this seems unlikely
     if (/\d[APap]$/.test(result.text)) {
-      return null;
+      return undefined;
     }
 
     // If it ends only with numbers or dots
     const endingWithNumbers = result.text.match(/[^\d.:](\d[\d.]+)$/);
     if (endingWithNumbers) {
-      const endingNumbers: string = endingWithNumbers[1];
+      const endingNumbers: string = endingWithNumbers[1]!;
 
       // In strict mode (e.g. "at 1" or "at 1.2"), this should not be accepted
       if (this.strictMode) {
-        return null;
+        return undefined;
       }
 
       // If it ends only with dot single digit, e.g. "at 1.2"
       if (endingNumbers.includes(".") && !/\d(\.\d{2})+$/.test(endingNumbers)) {
-        return null;
+        return undefined;
       }
 
       // If it ends only with numbers above 24, e.g. "at 25"
       const endingNumberValue = Number.parseInt(endingNumbers);
       if (endingNumberValue > 24) {
-        return null;
+        return undefined;
       }
     }
 
@@ -384,7 +387,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
 
   private checkAndReturnWithFollowingPattern(result: ParsingResult) {
     if (/^\d+-\d+$/.test(result.text)) {
-      return null;
+      return undefined;
     }
 
     // If it ends only with numbers or dots
@@ -394,38 +397,39 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     if (endingWithNumbers) {
       // In strict mode (e.g. "at 1-3" or "at 1.2 - 2.3"), this should not be accepted
       if (this.strictMode) {
-        return null;
+        return undefined;
       }
 
-      const startingNumbers: string = endingWithNumbers[1];
-      const endingNumbers: string = endingWithNumbers[2];
+      const startingNumbers: string = endingWithNumbers[1]!;
+      const endingNumbers: string = endingWithNumbers[2]!;
       // If it ends only with dot single digit, e.g. "at 1.2"
       if (endingNumbers.includes(".") && !/\d(\.\d{2})+$/.test(endingNumbers)) {
-        return null;
+        return undefined;
       }
 
       // If it ends only with numbers above 24, e.g. "at 25"
       const endingNumberValue = Number.parseInt(endingNumbers);
       const startingNumberValue = Number.parseInt(startingNumbers);
       if (endingNumberValue > 24 || startingNumberValue > 24) {
-        return null;
+        return undefined;
       }
     }
 
     return result;
   }
 
-  private cachedPrimaryPrefix: string;
-  private cachedPrimarySuffix: string;
-  private cachedPrimaryTimePattern: RegExp;
+  private cachedPrimaryPrefix: string | undefined;
+  private cachedPrimarySuffix: string | undefined;
+  private cachedPrimaryTimePattern: RegExp | undefined;
 
-  getPrimaryTimePatternThroughCache() {
+  getPrimaryTimePatternThroughCache(): RegExp {
     const primaryPrefix = this.primaryPrefix();
     const primarySuffix = this.primarySuffix();
 
     if (
       this.cachedPrimaryPrefix === primaryPrefix &&
-      this.cachedPrimarySuffix === primarySuffix
+      this.cachedPrimarySuffix === primarySuffix &&
+      this.cachedPrimaryTimePattern !== undefined
     ) {
       return this.cachedPrimaryTimePattern;
     }
@@ -441,17 +445,18 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     return this.cachedPrimaryTimePattern;
   }
 
-  private cachedFollowingPhase: string;
-  private cachedFollowingSuffix: string;
-  private cachedFollowingTimePatten: RegExp;
+  private cachedFollowingPhase: string | undefined;
+  private cachedFollowingSuffix: string | undefined;
+  private cachedFollowingTimePatten: RegExp | undefined;
 
-  getFollowingTimePatternThroughCache() {
+  getFollowingTimePatternThroughCache(): RegExp {
     const followingPhase = this.followingPhase();
     const followingSuffix = this.followingSuffix();
 
     if (
       this.cachedFollowingPhase === followingPhase &&
-      this.cachedFollowingSuffix === followingSuffix
+      this.cachedFollowingSuffix === followingSuffix &&
+      this.cachedFollowingTimePatten !== undefined
     ) {
       return this.cachedFollowingTimePatten;
     }

@@ -7,7 +7,7 @@ test("Test - Single Expression", function () {
     "Let's finish this before this 2013-2-7.",
     new Date(2012, 7, 8),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2013);
       expect(result.start.get("month")).toBe(2);
       expect(result.start.get("day")).toBe(7);
@@ -23,7 +23,7 @@ test("Test - Single Expression", function () {
     "1994-11-05T08:15:30-05:30",
     new Date(2012, 7, 8),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(1994);
       expect(result.start.get("month")).toBe(11);
       expect(result.start.get("day")).toBe(5);
@@ -42,7 +42,7 @@ test("Test - Single Expression", function () {
     "1994-11-05T13:15:30",
     new Date(2012, 7, 8),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(1994);
       expect(result.start.get("month")).toBe(11);
       expect(result.start.get("day")).toBe(5);
@@ -61,7 +61,7 @@ test("Test - Single Expression", function () {
     "2015-07-31T12:00:00",
     new Date(2012, 7, 8),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2015);
       expect(result.start.get("month")).toBe(7);
       expect(result.start.get("day")).toBe(31);
@@ -80,7 +80,7 @@ test("Test - Single Expression", function () {
     "1994-11-05T13:15:30Z",
     new Date(2012, 7, 8),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(1994);
       expect(result.start.get("month")).toBe(11);
       expect(result.start.get("day")).toBe(5);
@@ -99,7 +99,7 @@ test("Test - Single Expression", function () {
     "1994-11-05T13:15:30Z",
     new Date(2012, 7, 8),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(1994);
       expect(result.start.get("month")).toBe(11);
       expect(result.start.get("day")).toBe(5);
@@ -118,7 +118,7 @@ test("Test - Single Expression", function () {
     "- 1994-11-05T13:15:30Z",
     new Date(2012, 7, 8),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(1994);
       expect(result.start.get("month")).toBe(11);
       expect(result.start.get("day")).toBe(5);
@@ -139,7 +139,7 @@ test("Test - Single Expression", function () {
     "2016-05-07T23:45:00.487+01:00",
     new Date(2012, 7, 8),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2016);
       expect(result.start.get("month")).toBe(5);
       expect(result.start.get("day")).toBe(7);

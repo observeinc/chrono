@@ -1,13 +1,14 @@
-import { ParsingContext } from "../../../chrono";
 import { findYearClosestToReference } from "../../../calculation/years";
-import { MONTH_DICTIONARY } from "../constants";
-import {
-  ORDINAL_NUMBER_PATTERN,
-  parseOrdinalNumberPattern,
-} from "../constants";
-import { YEAR_PATTERN, parseYear } from "../constants";
-import { matchAnyPattern } from "../../../utils/pattern";
+import { ParsingContext } from "../../../chrono";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
+import { matchAnyPattern } from "../../../utils/pattern";
+import {
+  MONTH_DICTIONARY,
+  ORDINAL_NUMBER_PATTERN,
+  YEAR_PATTERN,
+  parseOrdinalNumberPattern,
+  parseYear,
+} from "../constants";
 
 // prettier-ignore
 const PATTERN = new RegExp(
@@ -55,10 +56,10 @@ export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWor
   }
 
   innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-    const month = MONTH_DICTIONARY[match[MONTH_NAME_GROUP].toLowerCase()];
-    const day = parseOrdinalNumberPattern(match[DATE_GROUP]);
+    const month = MONTH_DICTIONARY[match[MONTH_NAME_GROUP]!.toLowerCase()]!;
+    const day = parseOrdinalNumberPattern(match[DATE_GROUP]!);
     if (day > 31) {
-      return null;
+      return undefined;
     }
 
     // Skip the case where the day looks like a year (ex: January 21)
@@ -66,9 +67,9 @@ export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWor
       if (
         !match[DATE_TO_GROUP] &&
         !match[YEAR_GROUP] &&
-        match[DATE_GROUP].match(/^2[0-5]$/)
+        match[DATE_GROUP]!.match(/^2[0-5]$/)
       ) {
-        return null;
+        return undefined;
       }
     }
     const components = context
@@ -91,7 +92,7 @@ export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWor
 
     // Text can be 'range' value. Such as 'January 12 - 13, 2012'
     const endDate = parseOrdinalNumberPattern(match[DATE_TO_GROUP]);
-    const result = context.createParsingResult(match.index, match[0]);
+    const result = context.createParsingResult(match.index!, match[0]);
     result.start = components;
     result.end = components.clone();
     result.end.assign("day", endDate);

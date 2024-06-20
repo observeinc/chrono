@@ -123,7 +123,7 @@ test("Test - Parsing date/time with timezone abbreviation", function () {
       expect(result.start.get("day")).toBe(16);
       expect(result.start.get("hour")).toBe(11);
       expect(result.start.get("minute")).toBe(0);
-      expect(result.start.get("timezoneOffset")).toBe(null);
+      expect(result.start.get("timezoneOffset")).toBeUndefined();
     }
   );
 

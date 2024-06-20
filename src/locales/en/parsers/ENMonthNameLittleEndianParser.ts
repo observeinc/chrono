@@ -1,14 +1,14 @@
-import { ParsingContext } from "../../../chrono";
-import { ParsingResult } from "../../../results";
 import { findYearClosestToReference } from "../../../calculation/years";
-import { MONTH_DICTIONARY } from "../constants";
-import { YEAR_PATTERN, parseYear } from "../constants";
-import {
-  ORDINAL_NUMBER_PATTERN,
-  parseOrdinalNumberPattern,
-} from "../constants";
-import { matchAnyPattern } from "../../../utils/pattern";
+import { ParsingContext } from "../../../chrono";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
+import { matchAnyPattern } from "../../../utils/pattern";
+import {
+  MONTH_DICTIONARY,
+  ORDINAL_NUMBER_PATTERN,
+  YEAR_PATTERN,
+  parseOrdinalNumberPattern,
+  parseYear,
+} from "../constants";
 
 // prettier-ignore
 const PATTERN = new RegExp(
@@ -38,18 +38,15 @@ export default class ENMonthNameLittleEndianParser extends AbstractParserWithWor
     return PATTERN;
   }
 
-  innerExtract(
-    context: ParsingContext,
-    match: RegExpMatchArray
-  ): ParsingResult {
-    const result = context.createParsingResult(match.index, match[0]);
+  innerExtract(context: ParsingContext, match: RegExpMatchArray) {
+    const result = context.createParsingResult(match.index!, match[0]);
 
-    const month = MONTH_DICTIONARY[match[MONTH_NAME_GROUP].toLowerCase()];
-    const day = parseOrdinalNumberPattern(match[DATE_GROUP]);
+    const month = MONTH_DICTIONARY[match[MONTH_NAME_GROUP]!.toLowerCase()]!;
+    const day = parseOrdinalNumberPattern(match[DATE_GROUP]!);
     if (day > 31) {
       // e.g. "[96 Aug]" => "9[6 Aug]", we need to shift away from the next number
-      match.index = match.index + match[DATE_GROUP].length;
-      return null;
+      match.index = match.index! + match[DATE_GROUP]!.length;
+      return undefined;
     }
 
     result.start.assign("month", month);

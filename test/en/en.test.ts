@@ -203,7 +203,7 @@ test("Test - Parse multiple date results", function () {
     expect(result?.start.get("day")).toBe(6);
     expect(result?.start.get("hour")).toBe(2);
 
-    expect(result?.end).toBeNull();
+    expect(result?.end).toBeUndefined();
   }
 
   {

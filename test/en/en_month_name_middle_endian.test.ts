@@ -10,7 +10,7 @@ test("Test - Single Expression", () => {
     chrono,
     "She is getting married soon (July 2017).",
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2017);
       expect(result.start.get("month")).toBe(7);
       expect(result.start.get("day")).toBe(1);
@@ -27,7 +27,7 @@ test("Test - Single Expression", () => {
     "She is leaving in August.",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(1);
@@ -44,7 +44,7 @@ test("Test - Single Expression", () => {
     "I am arriving sometime in August, 2012, probably.",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(1);
@@ -57,7 +57,7 @@ test("Test - Single Expression", () => {
   );
 
   testSingleCase(chrono, "August 10, 2012", new Date(2012, 7, 10), (result) => {
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2012);
     expect(result.start.get("month")).toBe(8);
     expect(result.start.get("day")).toBe(10);
@@ -69,7 +69,7 @@ test("Test - Single Expression", () => {
   });
 
   testSingleCase(chrono, "Nov 12, 2011", new Date(2012, 7, 10), (result) => {
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2011);
     expect(result.start.get("month")).toBe(11);
     expect(result.start.get("day")).toBe(12);
@@ -85,7 +85,7 @@ test("Test - Single Expression", () => {
     "The Deadline is August 10",
     new Date(2012, 7, 10),
     (result) => {
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
@@ -275,14 +275,14 @@ test("Test - Range expression", () => {
       expect(result.index).toBe(0);
       expect(result.text).toBe("August 10 - 22, 2012");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
 
       expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
 
-      expect(result.end).not.toBeNull();
+      expect(result.end).not.toBeUndefined();
       expect(result.end?.get("year")).toBe(2012);
       expect(result.end?.get("month")).toBe(8);
       expect(result.end?.get("day")).toBe(22);
@@ -299,14 +299,14 @@ test("Test - Range expression", () => {
       expect(result.index).toBe(0);
       expect(result.text).toBe("August 10 to 22, 2012");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
 
       expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
 
-      expect(result.end).not.toBeNull();
+      expect(result.end).not.toBeUndefined();
       expect(result.end?.get("year")).toBe(2012);
       expect(result.end?.get("month")).toBe(8);
       expect(result.end?.get("day")).toBe(22);
@@ -323,14 +323,14 @@ test("Test - Range expression", () => {
       expect(result.index).toBe(0);
       expect(result.text).toBe("August 10 - November 12");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
 
       expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
 
-      expect(result.end).not.toBeNull();
+      expect(result.end).not.toBeUndefined();
       expect(result.end?.get("year")).toBe(2012);
       expect(result.end?.get("month")).toBe(11);
       expect(result.end?.get("day")).toBe(12);
@@ -347,14 +347,14 @@ test("Test - Range expression", () => {
       expect(result.index).toBe(0);
       expect(result.text).toBe("Aug 10 to Nov 12");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
 
       expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
 
-      expect(result.end).not.toBeNull();
+      expect(result.end).not.toBeUndefined();
       expect(result.end?.get("year")).toBe(2012);
       expect(result.end?.get("month")).toBe(11);
       expect(result.end?.get("day")).toBe(12);
@@ -371,14 +371,14 @@ test("Test - Range expression", () => {
       expect(result.index).toBe(0);
       expect(result.text).toBe("Aug 10 - Nov 12, 2013");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2013);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
 
       expect(result.start).toBeDate(new Date(2013, 8 - 1, 10, 12));
 
-      expect(result.end).not.toBeNull();
+      expect(result.end).not.toBeUndefined();
       expect(result.end?.get("year")).toBe(2013);
       expect(result.end?.get("month")).toBe(11);
       expect(result.end?.get("day")).toBe(12);
@@ -395,14 +395,14 @@ test("Test - Range expression", () => {
       expect(result.index).toBe(0);
       expect(result.text).toBe("Aug 10 - Nov 12, 2011");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2011);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
 
       expect(result.start).toBeDate(new Date(2011, 8 - 1, 10, 12));
 
-      expect(result.end).not.toBeNull();
+      expect(result.end).not.toBeUndefined();
       expect(result.end?.get("year")).toBe(2011);
       expect(result.end?.get("month")).toBe(11);
       expect(result.end?.get("day")).toBe(12);
@@ -421,7 +421,7 @@ test("Test - Ordinal Words", () => {
       expect(result.index).toBe(0);
       expect(result.text).toBe("May eighth, 2010");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2010);
       expect(result.start.get("month")).toBe(5);
       expect(result.start.get("day")).toBe(8);
@@ -436,7 +436,7 @@ test("Test - Ordinal Words", () => {
       expect(result.index).toBe(0);
       expect(result.text).toBe("May twenty-fourth");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(5);
       expect(result.start.get("day")).toBe(24);
@@ -451,12 +451,12 @@ test("Test - Ordinal Words", () => {
       expect(result.index).toBe(0);
       expect(result.text).toBe("May eighth - tenth, 2010");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2010);
       expect(result.start.get("month")).toBe(5);
       expect(result.start.get("day")).toBe(8);
 
-      expect(result.end).not.toBeNull();
+      expect(result.end).not.toBeUndefined();
       expect(result.end?.get("year")).toBe(2010);
       expect(result.end?.get("month")).toBe(5);
       expect(result.end?.get("day")).toBe(10);

@@ -59,7 +59,7 @@ test("Test - Month-Year expression", function () {
   });
 
   testSingleCase(chrono, "Sep-2012", (result) => {
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2012);
     expect(result.start.get("month")).toBe(9);
 
@@ -89,7 +89,7 @@ test("Test - Month-Only expression", function () {
   testSingleCase(chrono, "In January", new Date(2020, 11 - 1, 22), (result) => {
     expect(result.text).toContain("January");
 
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2021);
     expect(result.start.get("month")).toBe(1);
     expect(result.start.get("day")).toBe(1);
@@ -104,7 +104,7 @@ test("Test - Month-Only expression", function () {
   testSingleCase(chrono, "in Jan", new Date(2020, 11 - 1, 22), (result) => {
     expect(result.text).toContain("Jan");
 
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2021);
     expect(result.start.get("month")).toBe(1);
     expect(result.start.get("day")).toBe(1);
@@ -119,7 +119,7 @@ test("Test - Month-Only expression", function () {
   testSingleCase(chrono, "May", new Date(2020, 11 - 1, 22), (result) => {
     expect(result.text).toContain("May");
 
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2021);
     expect(result.start.get("month")).toBe(5);
     expect(result.start.get("day")).toBe(1);
@@ -261,7 +261,7 @@ test("Test - Month expression in context", function () {
     expect(result.index).toBe(12);
     expect(result.text).toBe("Sep 2012");
 
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2012);
     expect(result.start.get("month")).toBe(9);
 
@@ -271,7 +271,7 @@ test("Test - Month expression in context", function () {
   testSingleCase(chrono, "By Angie Mar November 2019", (result) => {
     expect(result.text).toBe("November 2019");
 
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2019);
     expect(result.start.get("month")).toBe(11);
 
@@ -281,7 +281,7 @@ test("Test - Month expression in context", function () {
 
 test("Test - Month slash expression", function () {
   testSingleCase(chrono, "9/2012", new Date(2012, 7, 10), (result) => {
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2012);
     expect(result.start.get("month")).toBe(9);
 

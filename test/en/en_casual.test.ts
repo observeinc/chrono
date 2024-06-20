@@ -11,7 +11,7 @@ test("Test - Single Expression", () => {
       expect(result.index).toBe(16);
       expect(result.text).toBe("now");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
@@ -47,7 +47,7 @@ test("Test - Single Expression", () => {
       expect(result.index).toBe(16);
       expect(result.text).toBe("today");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
@@ -64,7 +64,7 @@ test("Test - Single Expression", () => {
       expect(result.index).toBe(16);
       expect(result.text).toBe("Tomorrow");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(11);
@@ -90,7 +90,7 @@ test("Test - Single Expression", () => {
       expect(result.index).toBe(17);
       expect(result.text).toBe("yesterday");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(9);
@@ -107,7 +107,7 @@ test("Test - Single Expression", () => {
       expect(result.index).toBe(17);
       expect(result.text).toBe("last night");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(9);
@@ -125,7 +125,7 @@ test("Test - Single Expression", () => {
       expect(result.index).toBe(17);
       expect(result.text).toBe("this morning");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
@@ -143,7 +143,7 @@ test("Test - Single Expression", () => {
       expect(result.index).toBe(17);
       expect(result.text).toBe("this afternoon");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
@@ -161,7 +161,7 @@ test("Test - Single Expression", () => {
       expect(result.index).toBe(17);
       expect(result.text).toBe("this evening");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
@@ -262,7 +262,7 @@ test("Test - Casual date range", () => {
       expect(result.index).toBe(13);
       expect(result.text).toBe("today - next friday");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(4);
@@ -270,7 +270,7 @@ test("Test - Casual date range", () => {
 
       expect(result.start).toBeDate(new Date(2012, 7, 4, 12));
 
-      expect(result.end).not.toBeNull();
+      expect(result.end).not.toBeUndefined();
       expect(result.end?.get("year")).toBe(2012);
       expect(result.end?.get("month")).toBe(8);
       expect(result.end?.get("day")).toBe(10);
@@ -288,7 +288,7 @@ test("Test - Casual date range", () => {
       expect(result.index).toBe(13);
       expect(result.text).toBe("today - next friday");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(10);
@@ -296,7 +296,7 @@ test("Test - Casual date range", () => {
 
       expect(result.start).toBeDate(new Date(2012, 7, 10, 12));
 
-      expect(result.end).not.toBeNull();
+      expect(result.end).not.toBeUndefined();
       expect(result.end?.get("year")).toBe(2012);
       expect(result.end?.get("month")).toBe(8);
       expect(result.end?.get("day")).toBe(17);

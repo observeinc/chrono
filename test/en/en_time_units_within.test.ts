@@ -10,7 +10,7 @@ test("Test - The normal within expression", () => {
       expect(result.index).toBe(26);
       expect(result.text).toBe("in 5 days");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(15);
@@ -27,7 +27,7 @@ test("Test - The normal within expression", () => {
       expect(result.index).toBe(26);
       expect(result.text).toBe("in five days");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(15);
@@ -44,7 +44,7 @@ test("Test - The normal within expression", () => {
       expect(result.index).toBe(26);
       expect(result.text).toBe("within 10 day");
 
-      expect(result.start).not.toBeNull();
+      expect(result.start).not.toBeUndefined();
       expect(result.start.get("year")).toBe(2012);
       expect(result.start.get("month")).toBe(8);
       expect(result.start.get("day")).toBe(20);
@@ -413,12 +413,12 @@ test("Test - Single Expression (Implied)", () => {
     "within 30 days",
     new Date(2012, 7, 10, 12, 14),
     (result) => {
-      expect(!result.start.isCertain("year")).not.toBeNull();
-      expect(!result.start.isCertain("month")).not.toBeNull();
-      expect(!result.start.isCertain("day")).not.toBeNull();
-      expect(!result.start.isCertain("hour")).not.toBeNull();
-      expect(!result.start.isCertain("minute")).not.toBeNull();
-      expect(!result.start.isCertain("second")).not.toBeNull();
+      expect(!result.start.isCertain("year")).not.toBeUndefined();
+      expect(!result.start.isCertain("month")).not.toBeUndefined();
+      expect(!result.start.isCertain("day")).not.toBeUndefined();
+      expect(!result.start.isCertain("hour")).not.toBeUndefined();
+      expect(!result.start.isCertain("minute")).not.toBeUndefined();
+      expect(!result.start.isCertain("second")).not.toBeUndefined();
     }
   );
 });

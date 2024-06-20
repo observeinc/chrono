@@ -3,7 +3,7 @@ import { testSingleCase, testUnexpectedResult } from "../test_util";
 
 test("Test - Single Expression Start with Year", function () {
   testSingleCase(chrono, "2012/8/10", new Date(2012, 7, 10), (result) => {
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2012);
     expect(result.start.get("month")).toBe(8);
     expect(result.start.get("day")).toBe(10);
@@ -48,7 +48,7 @@ test("Test - Single Expression Start with Year", function () {
 
 test("Test - Single Expression Start with Year and Month Name", function () {
   testSingleCase(chrono, "2012/Aug/10", new Date(2012, 7, 10), (result) => {
-    expect(result.start).not.toBeNull();
+    expect(result.start).not.toBeUndefined();
     expect(result.start.get("year")).toBe(2012);
     expect(result.start.get("month")).toBe(8);
     expect(result.start.get("day")).toBe(10);

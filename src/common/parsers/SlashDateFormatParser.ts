@@ -52,23 +52,23 @@ export default class SlashDateFormatParser implements Parser {
     // Because of how pattern is executed on remaining text in `chrono.ts`, the character before the match could
     // still be a number (e.g. X[X/YY/ZZ] or XX[/YY/ZZ] or [XX/YY/]ZZ). We want to check and skip them.
     if (
-      match[OPENING_GROUP].length === 0 &&
-      match.index > 0 &&
-      match.index < context.text.length
+      match[OPENING_GROUP]!.length === 0 &&
+      match.index! > 0 &&
+      match.index! < context.text.length
     ) {
-      const previousChar = context.text[match.index - 1];
+      const previousChar = context.text[match.index! - 1]!;
       if (previousChar >= "0" && previousChar <= "9") {
         return undefined;
       }
     }
 
-    const index = match.index + match[OPENING_GROUP].length;
+    const index = match.index! + match[OPENING_GROUP]!.length;
     const text = match[0].slice(
-      match[OPENING_GROUP].length,
-      match[OPENING_GROUP].length +
+      match[OPENING_GROUP]!.length,
+      match[OPENING_GROUP]!.length +
         match[0].length -
-        match[OPENING_GROUP].length -
-        match[ENDING_GROUP].length
+        match[OPENING_GROUP]!.length -
+        match[ENDING_GROUP]!.length
     );
 
     // '1.12', '1.12.12' is more like a version numbers
@@ -83,19 +83,19 @@ export default class SlashDateFormatParser implements Parser {
     }
 
     const result = context.createParsingResult(index, text);
-    let month = Number.parseInt(match[this.groupNumberMonth]);
-    let day = Number.parseInt(match[this.groupNumberDay]);
+    let month = Number.parseInt(match[this.groupNumberMonth]!);
+    let day = Number.parseInt(match[this.groupNumberDay]!);
 
     if ((month < 1 || month > 12) && month > 12) {
       if (day >= 1 && day <= 12 && month <= 31) {
         [day, month] = [month, day];
       } else {
-        return null;
+        return undefined;
       }
     }
 
     if (day < 1 || day > 31) {
-      return null;
+      return undefined;
     }
 
     result.start.assign("day", day);
