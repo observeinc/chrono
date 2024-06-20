@@ -201,7 +201,7 @@ test("Test - Checking non-existing date during DST skip", () => {
   // Only CET (or CEST) timezones where the DST starts on "Sunday, March 27, 2022" at "02:00 (2 am) local time"
   const preDstDate = new Date(2022, 3 - 1, 27, 2);
   const postDstDate = new Date(2022, 3 - 1, 27, 3);
-  if (preDstDate.getTime() == postDstDate.getTime()) {
+  if (preDstDate.getTime() === postDstDate.getTime()) {
     const reference = new ReferenceWithTimezone(new Date());
 
     // On "Sunday, March 27, 2022" at "02:00 local time", the clock is moved forward to "03:00 local time".

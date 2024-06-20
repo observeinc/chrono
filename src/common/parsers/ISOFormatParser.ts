@@ -47,27 +47,27 @@ export default class ISOFormatParser extends AbstractParserWithWordBoundaryCheck
     components.month = Number.parseInt(match[MONTH_NUMBER_GROUP]!);
     components.day = Number.parseInt(match[DATE_NUMBER_GROUP]!);
 
-    if (match[HOUR_NUMBER_GROUP] != undefined) {
+    if (match[HOUR_NUMBER_GROUP] !== undefined) {
       components.hour = Number.parseInt(match[HOUR_NUMBER_GROUP]);
       components.minute = Number.parseInt(match[MINUTE_NUMBER_GROUP]!);
 
-      if (match[SECOND_NUMBER_GROUP] != undefined) {
+      if (match[SECOND_NUMBER_GROUP] !== undefined) {
         components.second = Number.parseInt(match[SECOND_NUMBER_GROUP]);
       }
 
-      if (match[MILLISECOND_NUMBER_GROUP] != undefined) {
+      if (match[MILLISECOND_NUMBER_GROUP] !== undefined) {
         components.millisecond = Number.parseInt(
           match[MILLISECOND_NUMBER_GROUP]
         );
       }
 
-      if (match[TZD_HOUR_OFFSET_GROUP] == undefined) {
+      if (match[TZD_HOUR_OFFSET_GROUP] === undefined) {
         components.timezoneOffset = 0;
       } else {
         const hourOffset = Number.parseInt(match[TZD_HOUR_OFFSET_GROUP]);
 
         let minuteOffset = 0;
-        if (match[TZD_MINUTE_OFFSET_GROUP] != undefined) {
+        if (match[TZD_MINUTE_OFFSET_GROUP] !== undefined) {
           minuteOffset = Number.parseInt(match[TZD_MINUTE_OFFSET_GROUP]);
         }
 

@@ -43,7 +43,7 @@ export default class ExtractTimezoneOffsetRefiner implements Refiner {
         timezoneOffset = -timezoneOffset;
       }
 
-      if (result.end != undefined) {
+      if (result.end !== undefined) {
         result.end.assign("timezoneOffset", timezoneOffset);
       }
 

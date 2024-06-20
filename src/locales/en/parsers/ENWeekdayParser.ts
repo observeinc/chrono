@@ -38,11 +38,11 @@ export default class ENWeekdayParser extends AbstractParserWithWordBoundaryCheck
     modifierWord = modifierWord.toLowerCase();
 
     let modifier: "last" | "next" | "this" | undefined;
-    if (modifierWord == "last" || modifierWord == "past") {
+    if (modifierWord === "last" || modifierWord === "past") {
       modifier = "last";
-    } else if (modifierWord == "next") {
+    } else if (modifierWord === "next") {
       modifier = "next";
-    } else if (modifierWord == "this") {
+    } else if (modifierWord === "this") {
       modifier = "this";
     }
 

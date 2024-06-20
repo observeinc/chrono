@@ -46,21 +46,21 @@ export function getDaysToWeekday(
     case "next": {
       // From Sunday, the next Sunday is 7 days later.
       // Otherwise, next Mon is 1 days later, next Tues is 2 days later, and so on..., (return enum value)
-      if (referenceWeekday == Weekday.SUNDAY) {
-        return weekday == Weekday.SUNDAY ? 7 : weekday;
+      if (referenceWeekday === Weekday.SUNDAY) {
+        return weekday === Weekday.SUNDAY ? 7 : weekday;
       }
       // From Saturday, the next Saturday is 7 days later, the next Sunday is 8-days later.
       // Otherwise, next Mon is (1 + 1) days later, next Tues is (1 + 2) days later, and so on...,
       // (return, 2 + [enum value] days)
-      if (referenceWeekday == Weekday.SATURDAY) {
-        if (weekday == Weekday.SATURDAY) return 7;
-        if (weekday == Weekday.SUNDAY) return 8;
+      if (referenceWeekday === Weekday.SATURDAY) {
+        if (weekday === Weekday.SATURDAY) return 7;
+        if (weekday === Weekday.SUNDAY) return 8;
         return 1 + weekday;
       }
       // From weekdays, next Mon is the following week's Mon, next Tues the following week's Tues, and so on...
       // If the week's weekday already passed (weekday < refWeekday), we simply count forward to next week
       // (similar to 'this'). Otherwise, count forward to this week, then add another 7 days.
-      return weekday < referenceWeekday && weekday != Weekday.SUNDAY
+      return weekday < referenceWeekday && weekday !== Weekday.SUNDAY
         ? getDaysForwardToWeekday(referenceDate, weekday)
         : getDaysForwardToWeekday(referenceDate, weekday) + 7;
     }

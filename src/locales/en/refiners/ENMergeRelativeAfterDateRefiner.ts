@@ -1,15 +1,19 @@
 import { ParsingContext } from "../../../chrono";
 import { MergingRefiner } from "../../../common/abstractRefiners";
-import { ParsingComponents, ParsingResult, ReferenceWithTimezone } from "../../../results";
+import {
+  ParsingComponents,
+  ParsingResult,
+  ReferenceWithTimezone,
+} from "../../../results";
 import { reverseTimeUnits } from "../../../utils/timeunits";
 import { parseTimeUnits } from "../constants";
 
 function IsPositiveFollowingReference(result: ParsingResult): boolean {
-    return result.text.match(/^[+-]/i) != null;
+  return result.text.match(/^[+-]/i) !== null;
 }
 
 function IsNegativeFollowingReference(result: ParsingResult): boolean {
-    return result.text.match(/^-/i) != null;
+  return result.text.match(/^-/i) !== null;
 }
 
 /**
@@ -18,30 +22,42 @@ function IsNegativeFollowingReference(result: ParsingResult): boolean {
  * - [next tuesday] [+10 days]
  */
 export default class ENMergeRelativeAfterDateRefiner extends MergingRefiner {
-    shouldMergeResults(textBetween: string, _: ParsingResult, nextResult: ParsingResult): boolean {
-        if (!textBetween.match(/^\s*$/i)) {
-            return false;
-        }
-
-        return IsPositiveFollowingReference(nextResult) || IsNegativeFollowingReference(nextResult);
+  shouldMergeResults(
+    textBetween: string,
+    _: ParsingResult,
+    nextResult: ParsingResult
+  ): boolean {
+    if (!textBetween.match(/^\s*$/i)) {
+      return false;
     }
 
-    mergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult, _: ParsingContext): ParsingResult {
-        let timeUnits = parseTimeUnits(nextResult.text);
-        if (IsNegativeFollowingReference(nextResult)) {
-            timeUnits = reverseTimeUnits(timeUnits);
-        }
+    return (
+      IsPositiveFollowingReference(nextResult) ||
+      IsNegativeFollowingReference(nextResult)
+    );
+  }
 
-        const components = ParsingComponents.createRelativeFromReference(
-            new ReferenceWithTimezone(currentResult.start.date()),
-            timeUnits
-        );
-
-        return new ParsingResult(
-            currentResult.reference,
-            currentResult.index,
-            `${currentResult.text}${textBetween}${nextResult.text}`,
-            components
-        );
+  mergeResults(
+    textBetween: string,
+    currentResult: ParsingResult,
+    nextResult: ParsingResult,
+    _: ParsingContext
+  ): ParsingResult {
+    let timeUnits = parseTimeUnits(nextResult.text);
+    if (IsNegativeFollowingReference(nextResult)) {
+      timeUnits = reverseTimeUnits(timeUnits);
     }
+
+    const components = ParsingComponents.createRelativeFromReference(
+      new ReferenceWithTimezone(currentResult.start.date()),
+      timeUnits
+    );
+
+    return new ParsingResult(
+      currentResult.reference,
+      currentResult.index,
+      `${currentResult.text}${textBetween}${nextResult.text}`,
+      components
+    );
+  }
 }

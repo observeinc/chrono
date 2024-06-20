@@ -11,13 +11,13 @@ export function mergeDateTimeResult(
   const beginTime = timeResult.start;
 
   result.start = mergeDateTimeComponent(beginDate, beginTime);
-  if (dateResult.end != undefined || timeResult.end != undefined) {
+  if (dateResult.end !== undefined || timeResult.end !== undefined) {
     const endDate = dateResult.end ?? dateResult.start;
     const endTime = timeResult.end ?? timeResult.start;
     const endDateTime = mergeDateTimeComponent(endDate, endTime);
 
     if (
-      dateResult.end == undefined &&
+      dateResult.end === undefined &&
       endDateTime.date().getTime() < result.start.date().getTime()
     ) {
       // For example,  "Tuesday 9pm - 1am" the ending should actually be 1am on the next day.
@@ -81,14 +81,14 @@ export function mergeDateTimeComponent(
   if (timeComponent.isCertain("meridiem")) {
     dateTimeComponent.assign("meridiem", timeComponent.get("meridiem"));
   } else if (
-    timeComponent.get("meridiem") != undefined &&
-    dateTimeComponent.get("meridiem") == undefined
+    timeComponent.get("meridiem") !== undefined &&
+    dateTimeComponent.get("meridiem") === undefined
   ) {
     dateTimeComponent.imply("meridiem", timeComponent.get("meridiem"));
   }
 
   if (
-    dateTimeComponent.get("meridiem") == Meridiem.PM.valueOf() &&
+    dateTimeComponent.get("meridiem") === Meridiem.PM.valueOf() &&
     dateTimeComponent.get("hour") < 12
   ) {
     if (timeComponent.isCertain("hour")) {

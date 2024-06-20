@@ -91,7 +91,15 @@ export class ParsingComponents implements ParsedComponents {
     this.imply("millisecond", 0);
   }
 
-  get(component: Exclude<Component, "timezoneOffset">): number {
+  get(component: Component): number {
+    if (component === "timezoneOffset") {
+      return (
+        this.knownValues[component] ??
+        this.impliedValues[component] ??
+        this.reference.zone.offset(this.reference.instant.valueOf())
+      );
+    }
+
     return this.knownValues[component] ?? this.impliedValues[component]!;
   }
 
@@ -178,9 +186,9 @@ export class ParsingComponents implements ParsedComponents {
     if (date.year !== this.get("year")) return false;
     if (date.month !== this.get("month")) return false;
     if (date.day !== this.get("day")) return false;
-    if (this.get("hour") != undefined && date.hour != this.get("hour"))
+    if (this.get("hour") !== undefined && date.hour !== this.get("hour"))
       return false;
-    if (this.get("minute") != undefined && date.minute != this.get("minute"))
+    if (this.get("minute") !== undefined && date.minute !== this.get("minute"))
       return false;
 
     return true;

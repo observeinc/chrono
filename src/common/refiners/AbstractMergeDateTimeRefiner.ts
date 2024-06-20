@@ -2,9 +2,9 @@
 
 */
 
-import { MergingRefiner } from "../abstractRefiners";
-import { ParsingResult } from "../../results";
 import { mergeDateTimeResult } from "../../calculation/mergingCalculation";
+import { ParsingResult } from "../../results";
+import { MergingRefiner } from "../abstractRefiners";
 
 export default abstract class AbstractMergeDateTimeRefiner extends MergingRefiner {
   abstract patternBetween(): RegExp;
@@ -17,7 +17,7 @@ export default abstract class AbstractMergeDateTimeRefiner extends MergingRefine
     return (
       ((currentResult.start.isOnlyDate() && nextResult.start.isOnlyTime()) ||
         (nextResult.start.isOnlyDate() && currentResult.start.isOnlyTime())) &&
-      textBetween.match(this.patternBetween()) != undefined
+      textBetween.match(this.patternBetween()) !== null
     );
   }
 

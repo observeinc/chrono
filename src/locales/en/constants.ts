@@ -201,7 +201,7 @@ export function parseNumberPattern(match: string): number {
   const num = match.toLowerCase();
   if (INTEGER_WORD_DICTIONARY[num] !== undefined) {
     return INTEGER_WORD_DICTIONARY[num]!;
-  } else if (num === "a" || num === "an" || num == "the") {
+  } else if (num === "a" || num === "an" || num === "the") {
     return 1;
   } else if (num.match(/few/)) {
     return 3;

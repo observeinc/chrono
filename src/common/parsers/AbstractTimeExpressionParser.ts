@@ -147,7 +147,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     // ----- Hours
     let hour = Number.parseInt(match[HOUR_GROUP]!);
     if (hour > 100) {
-      if (this.strictMode || match[MINUTE_GROUP] != undefined) {
+      if (this.strictMode || match[MINUTE_GROUP] !== undefined) {
         return null;
       }
 
@@ -160,8 +160,8 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     }
 
     // ----- Minutes
-    if (match[MINUTE_GROUP] != undefined) {
-      if (match[MINUTE_GROUP].length == 1 && !match[AM_PM_HOUR_GROUP]) {
+    if (match[MINUTE_GROUP] !== undefined) {
+      if (match[MINUTE_GROUP].length === 1 && !match[AM_PM_HOUR_GROUP]) {
         // Skip single digit minute e.g. "at 1.1 xx"
         return null;
       }
@@ -178,19 +178,19 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     }
 
     // ----- AM & PM
-    if (match[AM_PM_HOUR_GROUP] != undefined) {
+    if (match[AM_PM_HOUR_GROUP] !== undefined) {
       if (hour > 12) return null;
       const ampm = match[AM_PM_HOUR_GROUP][0]?.toLowerCase();
-      if (ampm == "a") {
+      if (ampm === "a") {
         meridiem = Meridiem.AM;
-        if (hour == 12) {
+        if (hour === 12) {
           hour = 0;
         }
       }
 
-      if (ampm == "p") {
+      if (ampm === "p") {
         meridiem = Meridiem.PM;
-        if (hour != 12) {
+        if (hour !== 12) {
           hour += 12;
         }
       }
@@ -210,7 +210,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     }
 
     // ----- Millisecond
-    if (match[MILLI_SECOND_GROUP] != undefined) {
+    if (match[MILLI_SECOND_GROUP] !== undefined) {
       const millisecond = Number.parseInt(
         match[MILLI_SECOND_GROUP].slice(0, 3)
       );
@@ -220,7 +220,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     }
 
     // ----- Second
-    if (match[SECOND_GROUP] != undefined) {
+    if (match[SECOND_GROUP] !== undefined) {
       const second = Number.parseInt(match[SECOND_GROUP]);
       if (second >= 60) return null;
 
@@ -238,7 +238,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     const components = context.createParsingComponents();
 
     // ----- Millisecond
-    if (match[MILLI_SECOND_GROUP] != undefined) {
+    if (match[MILLI_SECOND_GROUP] !== undefined) {
       const millisecond = Number.parseInt(
         match[MILLI_SECOND_GROUP].slice(0, 3)
       );
@@ -248,7 +248,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     }
 
     // ----- Second
-    if (match[SECOND_GROUP] != undefined) {
+    if (match[SECOND_GROUP] !== undefined) {
       const second = Number.parseInt(match[SECOND_GROUP]);
       if (second >= 60) return undefined;
 
@@ -260,7 +260,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     let meridiem = -1;
 
     // ----- Minute
-    if (match[MINUTE_GROUP] != undefined) {
+    if (match[MINUTE_GROUP] !== undefined) {
       minute = Number.parseInt(match[MINUTE_GROUP]);
     } else if (hour > 100) {
       minute = hour % 100;
@@ -276,15 +276,15 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     }
 
     // ----- AM & PM
-    if (match[AM_PM_HOUR_GROUP] != undefined) {
+    if (match[AM_PM_HOUR_GROUP] !== undefined) {
       if (hour > 12) {
         return undefined;
       }
 
       const ampm = match[AM_PM_HOUR_GROUP]![0]?.toLowerCase();
-      if (ampm == "a") {
+      if (ampm === "a") {
         meridiem = Meridiem.AM;
-        if (hour == 12) {
+        if (hour === 12) {
           hour = 0;
           if (!components.isCertain("day")) {
             components.imply("day", components.get("day") + 1);
@@ -292,22 +292,22 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         }
       }
 
-      if (ampm == "p") {
+      if (ampm === "p") {
         meridiem = Meridiem.PM;
-        if (hour != 12) hour += 12;
+        if (hour !== 12) hour += 12;
       }
 
       if (!result.start.isCertain("meridiem")) {
-        if (meridiem == Meridiem.AM) {
+        if (meridiem === Meridiem.AM) {
           result.start.imply("meridiem", Meridiem.AM);
 
-          if (result.start.get("hour") == 12) {
+          if (result.start.get("hour") === 12) {
             result.start.assign("hour", 0);
           }
         } else {
           result.start.imply("meridiem", Meridiem.PM);
 
-          if (result.start.get("hour") != 12) {
+          if (result.start.get("hour") !== 12) {
             result.start.assign("hour", result.start.get("hour") + 12);
           }
         }

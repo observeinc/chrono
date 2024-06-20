@@ -32,7 +32,7 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
         referenceDate,
         tzOverrides
       );
-      if (extractedTimezoneOffset == undefined) {
+      if (extractedTimezoneOffset === undefined) {
         continue;
       }
       context.debug(() => {
@@ -55,7 +55,7 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
 
         // This is often because it's relative time with inferred timezone (e.g. in 1 hour, tomorrow)
         // Then, we want to double-check the abbr case (e.g. "GET" not "get")
-        if (timezoneAbbr != match[1]) {
+        if (timezoneAbbr !== match[1]) {
           continue;
         }
       }
@@ -63,7 +63,7 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
       if (
         result.start.isOnlyDate() && // If the time is not explicitly mentioned,
         // Then, we also want to double-check the abbr case (e.g. "GET" not "get")
-        timezoneAbbr != match[1]
+        timezoneAbbr !== match[1]
       ) {
         continue;
       }
@@ -74,7 +74,7 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
         result.start.assign("timezoneOffset", extractedTimezoneOffset);
       }
 
-      if (result.end != undefined && !result.end.isCertain("timezoneOffset")) {
+      if (result.end !== undefined && !result.end.isCertain("timezoneOffset")) {
         result.end.assign("timezoneOffset", extractedTimezoneOffset);
       }
     }

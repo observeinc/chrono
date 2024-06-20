@@ -28,7 +28,7 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
     const unitWord = match[RELATIVE_WORD_GROUP]!.toLowerCase();
     const timeunit = TIME_UNIT_DICTIONARY[unitWord]!;
 
-    if (modifier == "next" || modifier.startsWith("after")) {
+    if (modifier === "next" || modifier.startsWith("after")) {
       const timeUnits: TimeUnits = {};
       timeUnits[timeunit] = 1;
       return ParsingComponents.createRelativeFromReference(
@@ -37,7 +37,7 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
       );
     }
 
-    if (modifier == "last" || modifier == "past") {
+    if (modifier === "last" || modifier === "past") {
       const timeUnits: TimeUnits = {};
       timeUnits[timeunit] = -1;
       return ParsingComponents.createRelativeFromReference(

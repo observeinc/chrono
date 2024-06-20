@@ -16,7 +16,9 @@ export default class ForwardDateRefiner implements Refiner {
     }
 
     for (const result of results) {
-      let referenceMoment = DateTime.fromJSDate(context.reference.instant);
+      let referenceMoment = DateTime.fromJSDate(context.reference.instant, {
+        zone: context.reference.zone,
+      });
 
       if (result.start.isOnlyTime() && referenceMoment > result.start.luxon()) {
         referenceMoment = referenceMoment.plus({ days: 1 });

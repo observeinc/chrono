@@ -306,7 +306,7 @@ export function toTimezoneOffset(
   date?: Date,
   timezoneOverrides: TimezoneAbbrMap = {}
 ): number | undefined {
-  if (timezoneInput == undefined) {
+  if (timezoneInput === undefined) {
     return undefined;
   }
 
@@ -316,11 +316,11 @@ export function toTimezoneOffset(
 
   const matchedTimezone =
     timezoneOverrides[timezoneInput] ?? TIMEZONE_ABBR_MAP[timezoneInput];
-  if (matchedTimezone == undefined) {
+  if (matchedTimezone === undefined) {
     return undefined;
   }
   // This means that we have matched an unambiguous timezone
-  if (typeof matchedTimezone == "number") {
+  if (typeof matchedTimezone === "number") {
     return matchedTimezone;
   }
 
@@ -328,7 +328,7 @@ export function toTimezoneOffset(
   // is during daylight savings or not.
 
   // Without refDate as context, there's no way to know if DST or non-DST offset should be used. Return null instead.
-  if (date == undefined) {
+  if (date === undefined) {
     return undefined;
   }
 
