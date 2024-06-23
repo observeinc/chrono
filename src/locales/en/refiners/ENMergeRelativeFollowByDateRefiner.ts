@@ -8,11 +8,11 @@ import { reverseTimeUnits } from "../../../utils/timeunits";
 import { parseTimeUnits } from "../constants";
 
 function hasImpliedEarlierReferenceDate(result: ParsingResult): boolean {
-  return result.text.match(/\s+(before|from)$/i) !== null;
+  return /\s+(before|from)$/i.test(result.text);
 }
 
 function hasImpliedLaterReferenceDate(result: ParsingResult): boolean {
-  return result.text.match(/\s+(after|since)$/i) !== null;
+  return /\s+(after|since)$/i.test(result.text);
 }
 
 /**
@@ -31,7 +31,7 @@ export default class ENMergeRelativeFollowByDateRefiner extends MergingRefiner {
     nextResult: ParsingResult
   ): boolean {
     // Dates need to be next to each other to get merged
-    if (!textBetween.match(this.patternBetween())) {
+    if (!this.patternBetween().test(textBetween)) {
       return false;
     }
 

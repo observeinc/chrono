@@ -4,7 +4,7 @@ import { Weekday } from "../../types";
 import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { TimeUnits } from "../../utils/timeunits";
 
-export const WEEKDAY_DICTIONARY: { [word: string]: Weekday } = {
+export const WEEKDAY_DICTIONARY: Record<string, Weekday> = {
   sunday: 0,
   sun: 0,
   "sun.": 0,
@@ -32,7 +32,7 @@ export const WEEKDAY_DICTIONARY: { [word: string]: Weekday } = {
   "sat.": 6,
 };
 
-export const FULL_MONTH_NAME_DICTIONARY: { [word: string]: number } = {
+export const FULL_MONTH_NAME_DICTIONARY: Record<string, number> = {
   january: 1,
   february: 2,
   march: 3,
@@ -47,7 +47,7 @@ export const FULL_MONTH_NAME_DICTIONARY: { [word: string]: number } = {
   december: 12,
 };
 
-export const MONTH_DICTIONARY: { [word: string]: number } = {
+export const MONTH_DICTIONARY: Record<string, number> = {
   ...FULL_MONTH_NAME_DICTIONARY,
   jan: 1,
   "jan.": 1,
@@ -75,7 +75,7 @@ export const MONTH_DICTIONARY: { [word: string]: number } = {
   "dec.": 12,
 };
 
-export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
+export const INTEGER_WORD_DICTIONARY: Record<string, number> = {
   one: 1,
   two: 2,
   three: 3,
@@ -90,7 +90,7 @@ export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
   twelve: 12,
 };
 
-export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
+export const ORDINAL_WORD_DICTIONARY: Record<string, number> = {
   first: 1,
   second: 2,
   third: 3,
@@ -134,7 +134,7 @@ export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
   "thirty-first": 31,
 };
 
-export const TIME_UNIT_DICTIONARY_NO_ABBR: { [word: string]: DateTimeUnit } = {
+export const TIME_UNIT_DICTIONARY_NO_ABBR: Record<string, DateTimeUnit> = {
   second: "second",
   seconds: "second",
   minute: "minute",
@@ -153,7 +153,7 @@ export const TIME_UNIT_DICTIONARY_NO_ABBR: { [word: string]: DateTimeUnit } = {
   years: "year",
 };
 
-export const TIME_UNIT_DICTIONARY: { [word: string]: DateTimeUnit } = {
+export const TIME_UNIT_DICTIONARY: Record<string, DateTimeUnit> = {
   s: "second",
   sec: "second",
   second: "second",
@@ -198,60 +198,60 @@ export const NUMBER_PATTERN = `(?:${matchAnyPattern(
 )}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s{0,2}an?)?|an?\\b(?:\\s{0,2}few)?|few|several|the|a?\\s{0,2}couple\\s{0,2}(?:of)?)`;
 
 export function parseNumberPattern(match: string): number {
-  const num = match.toLowerCase();
-  if (INTEGER_WORD_DICTIONARY[num] !== undefined) {
-    return INTEGER_WORD_DICTIONARY[num]!;
-  } else if (num === "a" || num === "an" || num === "the") {
+  const number_ = match.toLowerCase();
+  if (INTEGER_WORD_DICTIONARY[number_] !== undefined) {
+    return INTEGER_WORD_DICTIONARY[number_];
+  } else if (number_ === "a" || number_ === "an" || number_ === "the") {
     return 1;
-  } else if (num.match(/few/)) {
+  } else if (number_.includes('few')) {
     return 3;
-  } else if (num.match(/half/)) {
+  } else if (number_.includes('half')) {
     return 0.5;
-  } else if (num.match(/couple/)) {
+  } else if (number_.includes('couple')) {
     return 2;
-  } else if (num.match(/several/)) {
+  } else if (number_.includes('several')) {
     return 7;
   }
 
-  return parseFloat(num);
+  return Number.parseFloat(number_);
 }
 
 //-----------------------------
 
 export const ORDINAL_NUMBER_PATTERN = `(?:${matchAnyPattern(ORDINAL_WORD_DICTIONARY)}|[0-9]{1,2}(?:st|nd|rd|th)?)`;
 export function parseOrdinalNumberPattern(match: string): number {
-  let num = match.toLowerCase();
-  if (ORDINAL_WORD_DICTIONARY[num] !== undefined) {
-    return ORDINAL_WORD_DICTIONARY[num]!;
+  let number_ = match.toLowerCase();
+  if (ORDINAL_WORD_DICTIONARY[number_] !== undefined) {
+    return ORDINAL_WORD_DICTIONARY[number_]!;
   }
 
-  num = num.replace(/(?:st|nd|rd|th)$/i, "");
-  return parseInt(num);
+  number_ = number_.replace(/(?:st|nd|rd|th)$/i, "");
+  return Number.parseInt(number_);
 }
 
 //-----------------------------
 
 export const YEAR_PATTERN = `(?:[1-9][0-9]{0,3}\\s{0,2}(?:BE|AD|BC|BCE|CE)|[1-2][0-9]{3}|[5-9][0-9]|2[0-5])`;
 export function parseYear(match: string): number {
-  if (/BE/i.test(match)) {
+  if (/be/i.test(match)) {
     // Buddhist Era
-    match = match.replace(/BE/i, "");
-    return parseInt(match) - 543;
+    match = match.replace(/be/i, "");
+    return Number.parseInt(match) - 543;
   }
 
-  if (/BCE?/i.test(match)) {
+  if (/bce?/i.test(match)) {
     // Before Christ, Before Common Era
-    match = match.replace(/BCE?/i, "");
-    return -parseInt(match);
+    match = match.replace(/bce?/i, "");
+    return -Number.parseInt(match);
   }
 
-  if (/(AD|CE)/i.test(match)) {
+  if (/(ad|ce)/i.test(match)) {
     // Anno Domini, Common Era
-    match = match.replace(/(AD|CE)/i, "");
-    return parseInt(match);
+    match = match.replace(/(ad|ce)/i, "");
+    return Number.parseInt(match);
   }
 
-  const rawYearNumber = parseInt(match);
+  const rawYearNumber = Number.parseInt(match);
   return findMostLikelyADYear(rawYearNumber);
 }
 
@@ -283,14 +283,14 @@ export function parseTimeUnits(timeunitText: string): TimeUnits {
   let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
   while (match) {
     collectDateTimeFragment(fragments, match);
-    remainingText = remainingText.substring(match[0].length).trim();
+    remainingText = remainingText.slice(match[0].length).trim();
     match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
   }
   return fragments;
 }
 
 function collectDateTimeFragment(fragments: TimeUnits, match: RegExpExecArray) {
-  const num = parseNumberPattern(match[1]!);
+  const number_ = parseNumberPattern(match[1]!);
   const unit = TIME_UNIT_DICTIONARY[match[2]!.toLowerCase()]!;
-  fragments[unit] = num;
+  fragments[unit] = number_;
 }

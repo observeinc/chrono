@@ -6,13 +6,13 @@ import { matchAnyPattern } from "../../../utils/pattern";
 import { WEEKDAY_DICTIONARY } from "../constants";
 
 const PATTERN = new RegExp(
-  "(?:(?:\\,|\\(|\\（)\\s*)?" +
-    "(?:on\\s*?)?" +
-    "(?:(this|last|past|next)\\s*)?" +
+  String.raw`(?:(?:\,|\(|\（)\s*)?` +
+    String.raw`(?:on\s*?)?` +
+    String.raw`(?:(this|last|past|next)\s*)?` +
     `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
-    "(?:\\s*(?:\\,|\\)|\\）))?" +
-    "(?:\\s*(this|last|past|next)\\s*week)?" +
-    "(?=\\W|$)",
+    String.raw`(?:\s*(?:\,|\)|\）))?` +
+    String.raw`(?:\s*(this|last|past|next)\s*week)?` +
+    String.raw`(?=\W|$)`,
   "i"
 );
 
@@ -38,12 +38,24 @@ export default class ENWeekdayParser extends AbstractParserWithWordBoundaryCheck
     modifierWord = modifierWord.toLowerCase();
 
     let modifier: "last" | "next" | "this" | undefined;
-    if (modifierWord === "last" || modifierWord === "past") {
+    switch (modifierWord) {
+    case "last": 
+    case "past": {
       modifier = "last";
-    } else if (modifierWord === "next") {
+    
+    break;
+    }
+    case "next": {
       modifier = "next";
-    } else if (modifierWord === "this") {
+    
+    break;
+    }
+    case "this": {
       modifier = "this";
+    
+    break;
+    }
+    // No default
     }
 
     return createParsingComponentsAtWeekday(

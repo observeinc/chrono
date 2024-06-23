@@ -16,7 +16,7 @@ export default abstract class AbstractMergeDateRangeRefiner extends MergingRefin
     return (
       !currentResult.end &&
       !nextResult.end &&
-      textBetween.match(this.patternBetween()) !== null
+      this.patternBetween().test(textBetween)
     );
   }
 
@@ -30,18 +30,14 @@ export default abstract class AbstractMergeDateRangeRefiner extends MergingRefin
       !toResult.start.isOnlyWeekdayComponent()
     ) {
       for (const key of toResult.start.getCertainComponents()) {
-        if (!fromResult.start.isCertain(key)) {
-          if (key !== "timezoneOffset") {
-            fromResult.start.imply(key, toResult.start.get(key));
-          }
+        if (!fromResult.start.isCertain(key) && key !== "timezoneOffset") {
+          fromResult.start.imply(key, toResult.start.get(key));
         }
       }
 
       for (const key of fromResult.start.getCertainComponents()) {
-        if (!toResult.start.isCertain(key)) {
-          if (key !== "timezoneOffset") {
-            toResult.start.imply(key, fromResult.start.get(key));
-          }
+        if (!toResult.start.isCertain(key) && key !== "timezoneOffset") {
+          toResult.start.imply(key, fromResult.start.get(key));
         }
       }
     }

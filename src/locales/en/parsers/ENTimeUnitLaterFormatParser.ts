@@ -9,7 +9,7 @@ import {
 
 const PATTERN = new RegExp(
   `(${TIME_UNITS_PATTERN})\\s{0,5}(?:later|after|from now|henceforth|forward|out)` +
-    "(?=(?:\\W|$))",
+    String.raw`(?=(?:\W|$))`,
   "i"
 );
 

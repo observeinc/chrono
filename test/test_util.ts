@@ -1,10 +1,15 @@
-import { ParsedResult, ParsingOption, ParsingReference } from "../src";
+import {
+  ParsedComponents,
+  ParsedResult,
+  ParsingOption,
+  ParsingReference,
+} from "../src";
 import { BufferedDebugHandler } from "../src/debugging";
 
 interface ChronoLike {
   parse(
     text: string,
-    ref?: ParsingReference | Date,
+    reference?: ParsingReference | Date,
     option?: ParsingOption
   ): ParsedResult[];
 }
@@ -19,20 +24,20 @@ export function testSingleCase(
 export function testSingleCase(
   chrono: ChronoLike,
   text: string,
-  refDateOrCheckResult?: ParsingReference | Date | CheckResult,
+  referenceDateOrCheckResult?: ParsingReference | Date | CheckResult,
   checkResult?: CheckResult
 ): void;
 export function testSingleCase(
   chrono: ChronoLike,
   text: string,
-  refDateOrCheckResult?: ParsingReference | Date | CheckResult,
+  referenceDateOrCheckResult?: ParsingReference | Date | CheckResult,
   optionOrCheckResult?: ParsingOption | CheckResult,
   checkResult?: CheckResult
 ): void;
 export function testSingleCase(
   chrono: ChronoLike,
   text: string,
-  refDateOrCheckResult?: ParsingReference | Date | CheckResult,
+  referenceDateOrCheckResult?: ParsingReference | Date | CheckResult,
   optionOrCheckResult?: ParsingOption | CheckResult,
   checkResult?: CheckResult
 ): void {
@@ -43,31 +48,32 @@ export function testSingleCase(
 
   if (
     optionOrCheckResult === undefined &&
-    typeof refDateOrCheckResult === "function"
+    typeof referenceDateOrCheckResult === "function"
   ) {
-    checkResult = refDateOrCheckResult;
-    refDateOrCheckResult = undefined;
+    checkResult = referenceDateOrCheckResult;
+    referenceDateOrCheckResult = undefined;
   }
 
   const debugHandler = new BufferedDebugHandler();
-  optionOrCheckResult = (optionOrCheckResult as ParsingOption) || {};
+  optionOrCheckResult =
+    (optionOrCheckResult as ParsingOption | undefined) ?? {};
   optionOrCheckResult.debug = debugHandler;
 
   try {
     const results = chrono.parse(
       text,
-      refDateOrCheckResult as Date,
+      referenceDateOrCheckResult as Date,
       optionOrCheckResult
     );
     expect(results).toBeSingleOnText(text);
     if (checkResult) {
       checkResult(results[0]!, text);
     }
-  } catch (e) {
-    if (e instanceof Error) {
+  } catch (error) {
+    if (error instanceof Error) {
       debugHandler.executeBufferedBlocks();
-      e.stack = e.stack?.replace(/[^\n]*at .*test_util.*\n/g, "");
-      throw e;
+      error.stack = error.stack?.replace(/[^\n]*at .*test_util.*\n/g, "");
+      throw error;
     }
   }
 }
@@ -85,21 +91,21 @@ export function testWithExpectedDate(
 export function testUnexpectedResult(
   chrono: ChronoLike,
   text: string,
-  refDate?: Date,
+  referenceDate?: Date,
   options?: ParsingOption
 ) {
   const debugHandler = new BufferedDebugHandler();
-  options = options || {};
+  options = options ?? {};
   options.debug = debugHandler;
 
   try {
-    const results = chrono.parse(text, refDate, options);
+    const results = chrono.parse(text, referenceDate, options);
     expect(results).toHaveLength(0);
-  } catch (e) {
-    if (e instanceof Error) {
+  } catch (error) {
+    if (error instanceof Error) {
       debugHandler.executeBufferedBlocks();
-      e.stack = e.stack?.replace(/[^\n]*at .*test_util.*\n/g, "");
-      throw e;
+      error.stack = error.stack?.replace(/[^\n]*at .*test_util.*\n/g, "");
+      throw error;
     }
   }
 }
@@ -125,9 +131,8 @@ declare global {
   }
 }
 
-// noinspection JSUnusedGlobalSymbols
 expect.extend({
-  toBeDate(resultOrComponent, date) {
+  toBeDate(resultOrComponent: ParsedResult | ParsedComponents, date: Date) {
     if (typeof resultOrComponent.date !== "function") {
       return {
         message: () =>

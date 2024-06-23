@@ -9,11 +9,11 @@ import { reverseTimeUnits } from "../../../utils/timeunits";
 import { parseTimeUnits } from "../constants";
 
 function IsPositiveFollowingReference(result: ParsingResult): boolean {
-  return result.text.match(/^[+-]/i) !== null;
+  return /^[+-]/i.test(result.text);
 }
 
 function IsNegativeFollowingReference(result: ParsingResult): boolean {
-  return result.text.match(/^-/i) !== null;
+  return /^-/i.test(result.text);
 }
 
 /**
@@ -27,7 +27,7 @@ export default class ENMergeRelativeAfterDateRefiner extends MergingRefiner {
     _: ParsingResult,
     nextResult: ParsingResult
   ): boolean {
-    if (!textBetween.match(/^\s*$/i)) {
+    if (!/^\s*$/i.test(textBetween)) {
       return false;
     }
 

@@ -117,7 +117,7 @@ export class ParsingComponents implements ParsedComponents {
     return Object.keys(this.knownValues) as Component[];
   }
 
-  imply(component: Component, value: number): ParsingComponents {
+  imply(component: Component, value: number): this {
     if (component in this.knownValues) {
       return this;
     }
@@ -125,7 +125,7 @@ export class ParsingComponents implements ParsedComponents {
     return this;
   }
 
-  assign(component: Component, value: number): ParsingComponents {
+  assign(component: Component, value: number): this {
     this.knownValues[component] = value;
     delete this.impliedValues[component];
     return this;
@@ -229,12 +229,12 @@ export class ParsingComponents implements ParsedComponents {
     return this.luxon().toJSDate();
   }
 
-  addTag(tag: string): ParsingComponents {
+  addTag(tag: string): this {
     this._tags.add(tag);
     return this;
   }
 
-  addTags(tags: string[] | Set<string>): ParsingComponents {
+  addTags(tags: string[] | Set<string>): this {
     for (const tag of tags) {
       this._tags.add(tag);
     }

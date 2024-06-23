@@ -13,17 +13,17 @@ import {
 // prettier-ignore
 const PATTERN = new RegExp(
     `(${matchAnyPattern(MONTH_DICTIONARY)})` +
-        "(?:-|/|\\s*,?\\s*)" +
+        String.raw`(?:-|/|\s*,?\s*)` +
         `(${ORDINAL_NUMBER_PATTERN})(?!\\s*(?:am|pm))\\s*` +
         "(?:" +
-            "(?:to|\\-)\\s*" +
+            String.raw`(?:to|\-)\s*` +
             `(${ORDINAL_NUMBER_PATTERN})\\s*` +
         ")?" +
         "(?:" +
             `(?:-|/|\\s*,\\s*|\\s+)` +
             `(${YEAR_PATTERN})` +
         ")?" +
-        "(?=\\W|$)(?!\\:\\d)",
+        String.raw`(?=\W|$)(?!\:\d)`,
     "i"
 );
 
@@ -59,19 +59,17 @@ export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWor
     const month = MONTH_DICTIONARY[match[MONTH_NAME_GROUP]!.toLowerCase()]!;
     const day = parseOrdinalNumberPattern(match[DATE_GROUP]!);
     if (day > 31) {
-      return undefined;
+      return;
     }
 
     // Skip the case where the day looks like a year (ex: January 21)
-    if (this.shouldSkipYearLikeDate) {
-      if (
+    if (this.shouldSkipYearLikeDate && 
         !match[DATE_TO_GROUP] &&
         !match[YEAR_GROUP] &&
-        match[DATE_GROUP]!.match(/^2[0-5]$/)
+        /^2[0-5]$/.test(match[DATE_GROUP]!)
       ) {
-        return undefined;
+        return;
       }
-    }
     const components = context
       .createParsingComponents({
         day: day,

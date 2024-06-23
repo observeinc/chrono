@@ -8,7 +8,7 @@ import { TIME_UNIT_DICTIONARY } from "../constants";
 
 const PATTERN = new RegExp(
   `(this|last|past|next|after\\s*this)\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\s*)` +
-    "(?=\\W|$)",
+    String.raw`(?=\W|$)`,
   "i"
 );
 
@@ -52,7 +52,7 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
     });
 
     // This week
-    if (unitWord.match(/week/i)) {
+    if (/week/i.test(unitWord)) {
       date = date.startOf("week", { useLocaleWeeks: true });
       components.imply("day", date.day);
       components.imply("month", date.month);
@@ -60,7 +60,7 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
     }
 
     // This month
-    else if (unitWord.match(/month/i)) {
+    else if (/month/i.test(unitWord)) {
       date = date.startOf("month");
       components.imply("day", date.day);
       components.assign("year", date.year);
@@ -68,7 +68,7 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
     }
 
     // This year
-    else if (unitWord.match(/year/i)) {
+    else if (/year/i.test(unitWord)) {
       date = date.startOf("year");
 
       components.imply("day", date.day);

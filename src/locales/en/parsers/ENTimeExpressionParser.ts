@@ -9,15 +9,15 @@ export default class ENTimeExpressionParser extends AbstractTimeExpressionParser
     }
 
     followingPhase(): string {
-        return "\\s*(?:\\-|\\–|\\~|\\〜|to|until|through|till|\\?)\\s*";
+        return String.raw`\s*(?:\-|\–|\~|\〜|to|until|through|till|\?)\s*`;
     }
 
     primaryPrefix(): string {
-        return "(?:(?:at|from)\\s*)??";
+        return String.raw`(?:(?:at|from)\s*)??`;
     }
 
     override primarySuffix(): string {
-        return "(?:\\s*(?:o\\W*clock|at\\s*night|in\\s*the\\s*(?:morning|afternoon)))?(?!/)(?=\\W|$)";
+        return String.raw`(?:\s*(?:o\W*clock|at\s*night|in\s*the\s*(?:morning|afternoon)))?(?!/)(?=\W|$)`;
     }
 
     override extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): null | ParsingComponents {

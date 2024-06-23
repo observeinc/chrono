@@ -17,7 +17,7 @@ export default abstract class AbstractMergeDateTimeRefiner extends MergingRefine
     return (
       ((currentResult.start.isOnlyDate() && nextResult.start.isOnlyTime()) ||
         (nextResult.start.isOnlyDate() && currentResult.start.isOnlyTime())) &&
-      textBetween.match(this.patternBetween()) !== null
+      this.patternBetween().test(textBetween)
     );
   }
 

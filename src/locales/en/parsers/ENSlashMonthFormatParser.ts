@@ -21,8 +21,8 @@ export default class ENSlashMonthFormatParser extends AbstractParserWithWordBoun
     context: ParsingContext,
     match: RegExpMatchArray
   ): ParsingComponents {
-    const year = parseInt(match[YEAR_GROUP]!);
-    const month = parseInt(match[MONTH_GROUP]!);
+    const year = Number.parseInt(match[YEAR_GROUP]!);
+    const month = Number.parseInt(match[MONTH_GROUP]!);
 
     return context
       .createParsingComponents()

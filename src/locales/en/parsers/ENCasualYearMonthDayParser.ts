@@ -14,7 +14,7 @@ const PATTERN = new RegExp(
   `([0-9]{4})[\\.\\/\\s]` +
     `(?:(${matchAnyPattern(MONTH_DICTIONARY)})|([0-9]{1,2}))[\\.\\/\\s]` +
     `([0-9]{1,2})` +
-    "(?=\\W|$)",
+    String.raw`(?=\W|$)`,
   "i"
 );
 
@@ -30,15 +30,15 @@ export default class ENCasualYearMonthDayParser extends AbstractParserWithWordBo
 
   innerExtract(_: ParsingContext, match: RegExpMatchArray) {
     const month = match[MONTH_NUMBER_GROUP]
-      ? parseInt(match[MONTH_NUMBER_GROUP])
+      ? Number.parseInt(match[MONTH_NUMBER_GROUP])
       : MONTH_DICTIONARY[match[MONTH_NAME_GROUP]!.toLowerCase()]!;
 
     if (month < 1 || month > 12) {
-      return undefined;
+      return;
     }
 
-    const year = parseInt(match[YEAR_NUMBER_GROUP]!);
-    const day = parseInt(match[DATE_NUMBER_GROUP]!);
+    const year = Number.parseInt(match[YEAR_NUMBER_GROUP]!);
+    const day = Number.parseInt(match[DATE_NUMBER_GROUP]!);
 
     return {
       day: day,

@@ -156,9 +156,9 @@ export class Chrono {
       const parsedIndex = parsedResult.index;
       const parsedText = parsedResult.text;
       context.debug(() =>
-        console.log(
+        { console.log(
           `${parser.constructor.name} extracted (at index=${parsedIndex}) '${parsedText}'`
-        )
+        ); }
       );
 
       results.push(parsedResult);
