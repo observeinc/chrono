@@ -36,9 +36,7 @@ export default class OverlapRemovalRefiner implements Refiner {
     });
 
     // The last one
-    if (previousResult !== undefined) {
-      filteredResults.push(previousResult);
-    }
+    filteredResults.push(previousResult);
 
     return filteredResults;
   }

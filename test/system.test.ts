@@ -49,7 +49,7 @@ test("Test - Add custom parser", () => {
       expect(context.reference.instant).toBeTruthy();
 
       return {
-        day: parseInt(match[1]!),
+        day: Number.parseInt(match[1]!),
       };
     },
   };
@@ -72,7 +72,7 @@ test("Test - Add custom parser example", () => {
   const custom = chrono.casual.clone();
   custom.parsers.push({
     pattern: () => {
-      return /\bChristmas\b/i;
+      return /\bchristmas\b/i;
     },
     extract: () => {
       return {
@@ -109,7 +109,7 @@ test("Test - Add custom refiner example", () => {
     refine: (_, results) => {
       // If there is no AM/PM (meridiem) specified,
       //  let all time between 1:00 - 4:00 be PM (13.00 - 16.00)
-      results.forEach((result) => {
+      for (const result of results) {
         if (
           !result.start.isCertain("meridiem") &&
           result.start.get("hour") >= 1 &&
@@ -118,7 +118,7 @@ test("Test - Add custom refiner example", () => {
           result.start.assign("meridiem", Meridiem.PM);
           result.start.assign("hour", result.start.get("hour") + 12);
         }
-      });
+      }
       return results;
     },
   });
@@ -140,7 +140,7 @@ test("Test - Add custom parser with tags example", () => {
   const custom = chrono.casual.clone();
   custom.parsers.push({
     pattern: () => {
-      return /\bChristmas\b/i;
+      return /\bchristmas\b/i;
     },
     extract: (context) => {
       return context
@@ -237,15 +237,15 @@ test("Test - Replace a parser example", () => {
   );
 });
 
-test("Test - Compare with native js", () => {
-  const testByCompareWithNative = (text: string) => {
-    const expectedDate = new Date(text);
-    testSingleCase(chrono, text, (result) => {
-      expect(result.text).toBe(text);
-      expect(result).toBeDate(expectedDate);
-    });
-  };
+const testByCompareWithNative = (text: string) => {
+  const expectedDate = new Date(text);
+  testSingleCase(chrono, text, (result) => {
+    expect(result.text).toBe(text);
+    expect(result).toBeDate(expectedDate);
+  });
+};
 
+test("Test - Compare with native js", () => {
   testByCompareWithNative("1994-11-05T13:15:30Z");
 
   testByCompareWithNative("1994-02-28T08:15:30-05:30");

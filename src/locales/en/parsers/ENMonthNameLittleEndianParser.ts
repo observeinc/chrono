@@ -24,7 +24,7 @@ const PATTERN = new RegExp(
             `(?:-|/|,?\\s{0,3})` +
             `(${YEAR_PATTERN}(?!\\w))` +
         ")?" +
-        "(?=\\W|$)",
+        String.raw`(?=\W|$)`,
     "i"
 );
 
@@ -46,7 +46,7 @@ export default class ENMonthNameLittleEndianParser extends AbstractParserWithWor
     if (day > 31) {
       // e.g. "[96 Aug]" => "9[6 Aug]", we need to shift away from the next number
       match.index = match.index! + match[DATE_GROUP]!.length;
-      return undefined;
+      return;
     }
 
     result.start.assign("month", month);

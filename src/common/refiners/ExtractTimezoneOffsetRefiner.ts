@@ -32,7 +32,7 @@ export default class ExtractTimezoneOffsetRefiner implements Refiner {
         match[TIMEZONE_OFFSET_HOUR_OFFSET_GROUP]!
       );
       const minuteOffset = Number.parseInt(
-        match[TIMEZONE_OFFSET_MINUTE_OFFSET_GROUP] || "0"
+        match[TIMEZONE_OFFSET_MINUTE_OFFSET_GROUP] ?? "0"
       );
       let timezoneOffset = hourOffset * 60 + minuteOffset;
       // No timezones have offsets greater than 14 hours, so disregard this match

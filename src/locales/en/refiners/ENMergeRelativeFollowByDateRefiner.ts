@@ -31,7 +31,7 @@ export default class ENMergeRelativeFollowByDateRefiner extends MergingRefiner {
     nextResult: ParsingResult
   ): boolean {
     // Dates need to be next to each other to get merged
-    if (!textBetween.match(this.patternBetween())) {
+    if (!this.patternBetween().test(textBetween)) {
       return false;
     }
 

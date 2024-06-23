@@ -37,6 +37,6 @@ export default class MergeWeekdayComponentRefiner extends MergingRefiner {
       currentResult.start.isOnlyWeekdayComponent() &&
       !currentResult.start.isCertain("hour") &&
       nextResult.start.isCertain("day");
-    return weekdayThenNormalDate && textBetween.match(/^,?\s*$/) !== undefined;
+    return weekdayThenNormalDate && !/^,?\s*$/.test(textBetween);
   }
 }

@@ -24,8 +24,8 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
         continue;
       }
 
-      const timezoneAbbr = match[1]!.toUpperCase();
-      const referenceDate = result.start.date() ?? result.refDate ?? new Date();
+      const timezoneAbbr = match[1]?.toUpperCase();
+      const referenceDate = result.start.date();
       const tzOverrides = { ...this.timezoneOverrides, ...timezoneOverrides };
       const extractedTimezoneOffset = toTimezoneOffset(
         timezoneAbbr,

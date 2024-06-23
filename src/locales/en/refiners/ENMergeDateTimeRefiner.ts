@@ -7,7 +7,7 @@ import AbstractMergeDateTimeRefiner from "../../../common/refiners/AbstractMerge
  * - Tomorrow [after] 7am
  */
 export default class ENMergeDateTimeRefiner extends AbstractMergeDateTimeRefiner {
-    patternBetween(): RegExp {
-        return new RegExp("^\\s*(T|at|after|before|on|of|,|-|\\.|:)?\\s*$");
-    }
+  patternBetween(): RegExp {
+    return new RegExp(String.raw`^\s*(T|at|after|before|on|of|,|-|\.|:)?\s*$`);
+  }
 }
