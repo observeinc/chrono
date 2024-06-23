@@ -22,11 +22,11 @@ export function mergeDateTimeResult(
     ) {
       // For example,  "Tuesday 9pm - 1am" the ending should actually be 1am on the next day.
       // We need to add to ending by another day.
-      const nextDayJs = endDateTime.luxon().plus({ day: 1 });
+      const nextDateTime = endDateTime.luxon().plus({ day: 1 });
       if (endDateTime.isCertain("day")) {
-        assignSimilarDate(endDateTime, nextDayJs);
+        assignSimilarDate(endDateTime, nextDateTime);
       } else {
-        implySimilarDate(endDateTime, nextDayJs);
+        implySimilarDate(endDateTime, nextDateTime);
       }
     }
 

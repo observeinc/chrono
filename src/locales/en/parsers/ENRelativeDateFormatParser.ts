@@ -53,7 +53,7 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
 
     // This week
     if (unitWord.match(/week/i)) {
-      date = date.plus({ day: -(date.weekday - 1) });
+      date = date.startOf("week", { useLocaleWeeks: true });
       components.imply("day", date.day);
       components.imply("month", date.month);
       components.imply("year", date.year);
@@ -61,7 +61,7 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
 
     // This month
     else if (unitWord.match(/month/i)) {
-      date = date.plus({ day: -date.day + 1 });
+      date = date.startOf("month");
       components.imply("day", date.day);
       components.assign("year", date.year);
       components.assign("month", date.month);
@@ -69,8 +69,7 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
 
     // This year
     else if (unitWord.match(/year/i)) {
-      date = date.plus({ day: -date.day + 1 });
-      date = date.plus({ month: -date.month });
+      date = date.startOf("year");
 
       components.imply("day", date.day);
       components.imply("month", date.month);

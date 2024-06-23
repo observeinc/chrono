@@ -4,39 +4,39 @@ import { Meridiem } from "../types";
 
 export function assignTheNextDay(
   component: ParsingComponents,
-  targetDayJs: DateTime
+  targetDateTime: DateTime
 ) {
-  targetDayJs = targetDayJs.plus({ day: 1 });
-  assignSimilarDate(component, targetDayJs);
-  implySimilarTime(component, targetDayJs);
+  targetDateTime = targetDateTime.plus({ day: 1 });
+  assignSimilarDate(component, targetDateTime);
+  implySimilarTime(component, targetDateTime);
 }
 
 export function implyTheNextDay(
   component: ParsingComponents,
-  targetDayJs: DateTime
+  targetDateTime: DateTime
 ) {
-  targetDayJs = targetDayJs.plus({ day: 1 });
-  implySimilarDate(component, targetDayJs);
-  implySimilarTime(component, targetDayJs);
+  targetDateTime = targetDateTime.plus({ day: 1 });
+  implySimilarDate(component, targetDateTime);
+  implySimilarTime(component, targetDateTime);
 }
 
 export function assignSimilarDate(
   component: ParsingComponents,
-  targetDayJs: DateTime
+  targetDateTime: DateTime
 ) {
-  component.assign("day", targetDayJs.day);
-  component.assign("month", targetDayJs.month);
-  component.assign("year", targetDayJs.year);
+  component.assign("day", targetDateTime.day);
+  component.assign("month", targetDateTime.month);
+  component.assign("year", targetDateTime.year);
 }
 
 export function assignSimilarTime(
   component: ParsingComponents,
-  targetDayJs: DateTime
+  targetDateTime: DateTime
 ) {
-  component.assign("hour", targetDayJs.hour);
-  component.assign("minute", targetDayJs.minute);
-  component.assign("second", targetDayJs.second);
-  component.assign("millisecond", targetDayJs.millisecond);
+  component.assign("hour", targetDateTime.hour);
+  component.assign("minute", targetDateTime.minute);
+  component.assign("second", targetDateTime.second);
+  component.assign("millisecond", targetDateTime.millisecond);
   if (component.get("hour") < 12) {
     component.assign("meridiem", Meridiem.AM);
   } else {
@@ -46,19 +46,19 @@ export function assignSimilarTime(
 
 export function implySimilarDate(
   component: ParsingComponents,
-  targetDayJs: DateTime
+  targetDateTime: DateTime
 ) {
-  component.imply("day", targetDayJs.day);
-  component.imply("month", targetDayJs.month);
-  component.imply("year", targetDayJs.year);
+  component.imply("day", targetDateTime.day);
+  component.imply("month", targetDateTime.month);
+  component.imply("year", targetDateTime.year);
 }
 
 export function implySimilarTime(
   component: ParsingComponents,
-  targetDayJs: DateTime
+  targetDateTime: DateTime
 ) {
-  component.imply("hour", targetDayJs.hour);
-  component.imply("minute", targetDayJs.minute);
-  component.imply("second", targetDayJs.second);
-  component.imply("millisecond", targetDayJs.millisecond);
+  component.imply("hour", targetDateTime.hour);
+  component.imply("minute", targetDateTime.minute);
+  component.imply("second", targetDateTime.second);
+  component.imply("millisecond", targetDateTime.millisecond);
 }

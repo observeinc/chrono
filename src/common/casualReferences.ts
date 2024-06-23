@@ -51,7 +51,7 @@ export function theDayBefore(
 }
 
 /**
- * The following day with dayjs.assignTheNextDay()
+ * The following day with luxon.assignTheNextDay()
  */
 export function tomorrow(reference: ReferenceWithTimezone): ParsingComponents {
   return theDayAfter(reference, 1).addTag("casualReference/tomorrow");

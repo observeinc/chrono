@@ -81,12 +81,12 @@ export class ParsingComponents implements ParsedComponents {
       }
     }
 
-    const referenceDayJs = DateTime.fromJSDate(reference.instant, {
+    const referenceDateTime = DateTime.fromJSDate(reference.instant, {
       zone: reference.zone,
     });
-    this.imply("day", referenceDayJs.day);
-    this.imply("month", referenceDayJs.month);
-    this.imply("year", referenceDayJs.year);
+    this.imply("day", referenceDateTime.day);
+    this.imply("month", referenceDateTime.month);
+    this.imply("year", referenceDateTime.year);
     this.imply("hour", 12);
     this.imply("minute", 0);
     this.imply("second", 0);
@@ -205,7 +205,7 @@ export class ParsingComponents implements ParsedComponents {
   }
 
   luxon() {
-    const naiveDayJs = DateTime.local(
+    const naiveDateTime = DateTime.local(
       this.get("year"),
       this.get("month"),
       this.get("day"),
@@ -216,13 +216,13 @@ export class ParsingComponents implements ParsedComponents {
     );
 
     if (this.isCertain("timezoneOffset")) {
-      return naiveDayJs.setZone(
+      return naiveDateTime.setZone(
         FixedOffsetZone.instance(this.getTimezoneOffset()!),
         { keepLocalTime: true }
       );
     }
 
-    return naiveDayJs.setZone(this.reference.zone, { keepLocalTime: true });
+    return naiveDateTime.setZone(this.reference.zone, { keepLocalTime: true });
   }
 
   date(): Date {
