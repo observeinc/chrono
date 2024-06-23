@@ -15,6 +15,12 @@ export function now(reference: ReferenceWithTimezone): ParsingComponents {
   const component = new ParsingComponents(reference, {});
   assignSimilarDate(component, targetDate);
   assignSimilarTime(component, targetDate);
+  if (reference.zone !== undefined) {
+    component.assign(
+      "timezoneOffset",
+      reference.zone.offset(reference.instant.valueOf())
+    );
+  }
   component.addTag("casualReference/now");
   return component;
 }

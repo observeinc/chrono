@@ -39,7 +39,9 @@ export default class ForwardDateRefiner implements Refiner {
         referenceMoment =
           isoWeekdayToWeekday(referenceMoment.weekday) >=
           result.start.get("weekday")
-            ? referenceMoment.plus({ week: 1 })
+            ? referenceMoment.plus({ week: 1 }).set({
+                weekday: weekdayToIsoWeekday(result.start.get("weekday")),
+              })
             : referenceMoment.set({
                 weekday: weekdayToIsoWeekday(result.start.get("weekday")),
               });
@@ -58,7 +60,9 @@ export default class ForwardDateRefiner implements Refiner {
           referenceMoment =
             isoWeekdayToWeekday(referenceMoment.weekday) >
             result.end.get("weekday")
-              ? referenceMoment.plus({ week: 1 })
+              ? referenceMoment.plus({ week: 1 }).set({
+                  weekday: weekdayToIsoWeekday(result.start.get("weekday")),
+                })
               : referenceMoment.set({
                   weekday: weekdayToIsoWeekday(result.end.get("weekday")),
                 });

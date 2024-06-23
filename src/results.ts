@@ -29,6 +29,7 @@ export class ReferenceWithTimezone {
     input = input ?? new Date();
     if (input instanceof Date) {
       this.instant = input;
+      this.timezone = SystemZone.instance.name;
     } else if ("ianaTimezone" in input) {
       this.instant = input.instant ?? new Date();
       this.timezone = input.ianaTimezone;
@@ -48,15 +49,16 @@ export class ReferenceWithTimezone {
     return DateTime.fromJSDate(this.instant).toJSDate();
   }
 
-  // Creates a given zone based on the input
-  get zone(): Zone {
+  // Creates a given zone based on the input, returning the system zone by default
+  get zone(): Zone | undefined {
     if (this.timezone !== undefined) {
       return IANAZone.create(this.timezone);
-    } else if (this.timezoneOffset !== undefined) {
-      return FixedOffsetZone.instance(this.timezoneOffset);
-    } else {
-      return SystemZone.instance;
     }
+    if (this.timezoneOffset !== undefined) {
+      return FixedOffsetZone.instance(this.timezoneOffset);
+    }
+
+    return undefined;
   }
 }
 
@@ -96,7 +98,7 @@ export class ParsingComponents implements ParsedComponents {
       return (
         this.knownValues[component] ??
         this.impliedValues[component] ??
-        this.reference.zone.offset(this.reference.instant.valueOf())
+        this.reference.zone?.offset(this.reference.instant.valueOf())!
       );
     }
 
