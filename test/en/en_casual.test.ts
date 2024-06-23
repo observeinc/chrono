@@ -31,10 +31,10 @@ test("Test - Single Expression", () => {
   testSingleCase(
     chrono.casual,
     "The Deadline is now, without implicit local timezone",
-    { instant: new Date(1_637_674_343_000), timezone: undefined },
+    { instant: new Date(1637674343000), timezone: undefined },
     (result) => {
       expect(result.text).toBe("now");
-      expect(result.start).toBeDate(new Date(1_637_674_343_000));
+      expect(result.start).toBeDate(new Date(1637674343000));
       expect(result.start.isCertain("timezoneOffset")).toBe(false);
     }
   );

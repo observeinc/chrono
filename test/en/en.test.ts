@@ -138,8 +138,8 @@ test("Test - Random text", function () {
       expect(result.text).toBe("Monday afternoon to last night");
       expect(result.start.get("day")).toBe(3);
       expect(result.start.get("month")).toBe(7);
-      expect(result.end?.get("day")).toBe(7);
-      expect(result.end?.get("month")).toBe(7);
+      expect(result?.end?.get("day")).toBe(7);
+      expect(result?.end?.get("month")).toBe(7);
     }
   );
 

@@ -93,7 +93,6 @@ export class ParsingComponents implements ParsedComponents {
     this.imply("millisecond", 0);
   }
 
-  // TODO(james): Change get to return undefined value, this is a lie
   get(component: Component): number {
     if (component === "timezoneOffset") {
       return (
@@ -118,7 +117,7 @@ export class ParsingComponents implements ParsedComponents {
     return Object.keys(this.knownValues) as Component[];
   }
 
-  imply(component: Component, value: number): this {
+  imply(component: Component, value: number): ParsingComponents {
     if (component in this.knownValues) {
       return this;
     }
@@ -126,7 +125,7 @@ export class ParsingComponents implements ParsedComponents {
     return this;
   }
 
-  assign(component: Component, value: number): this {
+  assign(component: Component, value: number): ParsingComponents {
     this.knownValues[component] = value;
     delete this.impliedValues[component];
     return this;
@@ -230,12 +229,12 @@ export class ParsingComponents implements ParsedComponents {
     return this.luxon().toJSDate();
   }
 
-  addTag(tag: string): this {
+  addTag(tag: string): ParsingComponents {
     this._tags.add(tag);
     return this;
   }
 
-  addTags(tags: string[] | Set<string>): this {
+  addTags(tags: string[] | Set<string>): ParsingComponents {
     for (const tag of tags) {
       this._tags.add(tag);
     }

@@ -18,7 +18,7 @@ const PATTERN_NO_ABBR = new RegExp(
 );
 
 export default class ENTimeUnitCasualRelativeFormatParser extends AbstractParserWithWordBoundaryChecking {
-  constructor(private allowAbbreviations = true) {
+  constructor(private allowAbbreviations: boolean = true) {
     super();
   }
 
@@ -35,10 +35,9 @@ export default class ENTimeUnitCasualRelativeFormatParser extends AbstractParser
     switch (prefix) {
       case "last":
       case "past":
-      case "-": {
+      case "-":
         timeUnits = reverseTimeUnits(timeUnits);
         break;
-      }
     }
 
     return ParsingComponents.createRelativeFromReference(

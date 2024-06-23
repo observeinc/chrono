@@ -4,11 +4,39 @@
  * @module
  */
 
-import { Chrono } from "../../chrono";
-
-import { ParsedResult, ParsingOption, ParsingReference } from "../../types";
+import { Chrono, Parser, Refiner } from "../../chrono";
+import {
+  ParsingComponents,
+  ParsingResult,
+  ReferenceWithTimezone,
+} from "../../results";
+import {
+  Component,
+  Meridiem,
+  ParsedResult,
+  ParsingOption,
+  ParsingReference,
+  Weekday,
+} from "../../types";
 
 import ENDefaultConfiguration from "./configuration";
+
+export {
+  Chrono,
+  Meridiem,
+  ParsingComponents,
+  ParsingResult,
+  ReferenceWithTimezone,
+  Weekday,
+};
+export type {
+  Component,
+  ParsedResult,
+  Parser,
+  ParsingOption,
+  ParsingReference as ParsingReference,
+  Refiner,
+};
 
 export const configuration = new ENDefaultConfiguration();
 
@@ -36,10 +64,10 @@ export const GB = new Chrono(configuration.createCasualConfiguration(true));
  */
 export function parse(
   text: string,
-  reference?: ParsingReference | Date,
+  ref?: ParsingReference | Date,
   option?: ParsingOption
 ): ParsedResult[] {
-  return casual.parse(text, reference, option);
+  return casual.parse(text, ref, option);
 }
 
 /**
@@ -47,23 +75,8 @@ export function parse(
  */
 export function parseDate(
   text: string,
-  reference?: ParsingReference | Date,
+  ref?: ParsingReference | Date,
   option?: ParsingOption
 ): Date | undefined {
-  return casual.parseDate(text, reference, option);
+  return casual.parseDate(text, ref, option);
 }
-
-export { Chrono, type Parser, type Refiner } from "../../chrono";
-export {
-  ParsingComponents,
-  ParsingResult,
-  ReferenceWithTimezone,
-} from "../../results";
-export {
-  Meridiem,
-  Weekday,
-  type Component,
-  type ParsedResult,
-  type ParsingOption,
-  type ParsingReference,
-} from "../../types";

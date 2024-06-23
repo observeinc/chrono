@@ -7,7 +7,7 @@ import tseslint from "typescript-eslint";
 export default [
   ...tseslint.config(
     eslint.configs.recommended,
-    ...tseslint.configs.strictTypeChecked,
+    ...tseslint.configs.recommendedTypeChecked,
     ...tseslint.configs.stylisticTypeChecked,
     // @ts-ignore
     {
@@ -19,15 +19,7 @@ export default [
       },
     },
     {
-      ignores: [
-        "tsup.config.ts",
-        "dist/",
-        "eslint.config.js",
-        ".tsup/",
-        "jest.config.js",
-        "examples/",
-        "benchmark/",
-      ],
+      ignores: ["tsup.config.ts", "dist/", "eslint.config.js", ".tsup/"],
     },
     {
       rules: {
@@ -52,9 +44,7 @@ export default [
     rules: {
       "unicorn/filename-case": ["off"],
       "unicorn/no-array-reduce": ["off"],
-      "unicorn/prevent-abbreviations": ["warn"],
-      "@typescript-eslint/no-non-null-assertion": ["warn"],
-      "@typescript-eslint/no-base-to-string": ["warn"],
+      "unicorn/prevent-abbreviations": ["warning"],
     },
   },
 ];

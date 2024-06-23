@@ -3,7 +3,7 @@ import { measureMilliSec } from "../test_util";
 
 test("Test - Benchmarking against whitespace backtracking", () => {
   const time = measureMilliSec(() => {
-    const string_ =
+    const str =
       "BGR3                                                                                         " +
       "                                                                                        186          " +
       "                                      days                                                           " +
@@ -18,7 +18,7 @@ test("Test - Benchmarking against whitespace backtracking", () => {
       "                                                             01                                      " +
       "          seconds";
 
-    const results = chrono.parse(string_);
+    const results = chrono.parse(str);
     expect(results.length).toBe(0);
   });
 

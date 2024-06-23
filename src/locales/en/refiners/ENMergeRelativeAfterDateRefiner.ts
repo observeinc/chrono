@@ -27,7 +27,7 @@ export default class ENMergeRelativeAfterDateRefiner extends MergingRefiner {
     _: ParsingResult,
     nextResult: ParsingResult
   ): boolean {
-    if (!/^\s*$/i.test(textBetween)) {
+    if (!textBetween.match(/^\s*$/i)) {
       return false;
     }
 

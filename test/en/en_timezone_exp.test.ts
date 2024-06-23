@@ -360,7 +360,7 @@ test("Test - Parsing date with timezone abbreviation", function () {
 
 test("Test - Not parsing timezone from relative time", function () {
   {
-    const referenceInstant = new Date(
+    const refInstant = new Date(
       "Sun Nov 29 2020 13:24:13 GMT+0900 (Japan Standard Time)"
     );
     const expectedInstant = new Date(
@@ -370,11 +370,11 @@ test("Test - Not parsing timezone from relative time", function () {
     testSingleCase(
       chrono,
       "in 1 hour get eggs and milk",
-      referenceInstant,
+      refInstant,
       (result, _) => {
         expect(result.text).toBe("in 1 hour");
         expect(result.start.get("timezoneOffset")).toBe(
-          -referenceInstant.getTimezoneOffset()
+          -refInstant.getTimezoneOffset()
         );
         expect(result.start).toBeDate(expectedInstant);
       }
@@ -382,21 +382,21 @@ test("Test - Not parsing timezone from relative time", function () {
   }
 
   {
-    const referenceInstant = new Date(
+    const refInstant = new Date(
       "Sun Nov 29 2020 13:24:13 GMT+0900 (Japan Standard Time)"
     );
     const expectedInstant = new Date(
       "Sun Nov 29 2020 14:24:13 GMT+0900 (Japan Standard Time)"
     );
 
-    testSingleCase(chrono, "in 1 hour GMT", referenceInstant, (result, _) => {
+    testSingleCase(chrono, "in 1 hour GMT", refInstant, (result, _) => {
       // expect(result.text).toBe("in 1 hour"); known issue when running test in the GMT time
       expect(result.start).toBeDate(expectedInstant);
     });
   }
 
   {
-    const referenceInstant = new Date(
+    const refInstant = new Date(
       "Sun Nov 29 2020 13:24:13 GMT+0900 (Japan Standard Time)"
     );
     const expectedInstant = new Date(
@@ -406,7 +406,7 @@ test("Test - Not parsing timezone from relative time", function () {
     testSingleCase(
       chrono,
       "in 1 hour GMT",
-      { instant: referenceInstant, timezone: "JST" },
+      { instant: refInstant, timezone: "JST" },
       (result, _) => {
         // expect(result.text).toBe("in 1 hour");
         expect(result.start).toBeDate(expectedInstant);
@@ -415,7 +415,7 @@ test("Test - Not parsing timezone from relative time", function () {
   }
 
   {
-    const referenceInstant = new Date(
+    const refInstant = new Date(
       "Sun Nov 29 2020 13:24:13 GMT+0900 (Japan Standard Time)"
     );
     const expectedInstant = new Date(
@@ -425,7 +425,7 @@ test("Test - Not parsing timezone from relative time", function () {
     testSingleCase(
       chrono,
       "in 1 hour GMT",
-      { instant: referenceInstant, timezone: "BST" },
+      { instant: refInstant, timezone: "BST" },
       (result, _) => {
         // expect(result.text).toBe("in 1 hour");
         expect(result.start).toBeDate(expectedInstant);
@@ -435,52 +435,57 @@ test("Test - Not parsing timezone from relative time", function () {
 });
 
 test("Test - Relative time (Now) is not effected by timezone setting", function () {
-  const referenceInstant = new Date(1_637_674_343_000);
+  const refInstant = new Date(1637674343000);
 
-  testSingleCase(chrono, "now", { instant: referenceInstant }, (result) => {
+  testSingleCase(chrono, "now", { instant: refInstant }, (result) => {
     expect(result.text).toBe("now");
-    expect(result.start).toBeDate(referenceInstant);
+    expect(result.start).toBeDate(refInstant);
   });
 
   testSingleCase(
     chrono,
     "now",
-    { instant: referenceInstant, timezone: undefined },
+    { instant: refInstant, timezone: undefined },
     (result) => {
       expect(result.text).toBe("now");
-      expect(result.start).toBeDate(referenceInstant);
+      expect(result.start).toBeDate(refInstant);
     }
   );
 
   testSingleCase(
     chrono,
     "now",
-    { instant: referenceInstant, timezone: "BST" },
+    { instant: refInstant, timezone: "BST" },
     (result) => {
       expect(result.text).toBe("now");
-      expect(result.start).toBeDate(referenceInstant);
+      expect(result.start).toBeDate(refInstant);
     }
   );
 
   testSingleCase(
     chrono,
     "now",
-    { instant: referenceInstant, timezone: "JST" },
+    { instant: refInstant, timezone: "JST" },
     (result) => {
       expect(result.text).toBe("now");
-      expect(result.start).toBeDate(referenceInstant);
+      expect(result.start).toBeDate(refInstant);
     }
   );
 });
 
 test("Test - Relative time (2 hour later) is not effected by timezone setting", function () {
-  const referenceInstant = new Date(1_637_674_343_000);
-  const expectedInstant = new Date(1_637_674_343_000 + 2 * 60 * 60 * 1000);
+  const refInstant = new Date(1637674343000);
+  const expectedInstant = new Date(1637674343000 + 2 * 60 * 60 * 1000);
+
+  testSingleCase(chrono, "2 hour later", { instant: refInstant }, (result) => {
+    expect(result.text).toBe("2 hour later");
+    expect(result.start).toBeDate(expectedInstant);
+  });
 
   testSingleCase(
     chrono,
     "2 hour later",
-    { instant: referenceInstant },
+    { instant: refInstant, timezone: undefined },
     (result) => {
       expect(result.text).toBe("2 hour later");
       expect(result.start).toBeDate(expectedInstant);
@@ -490,7 +495,7 @@ test("Test - Relative time (2 hour later) is not effected by timezone setting", 
   testSingleCase(
     chrono,
     "2 hour later",
-    { instant: referenceInstant, timezone: undefined },
+    { instant: refInstant, timezone: "BST" },
     (result) => {
       expect(result.text).toBe("2 hour later");
       expect(result.start).toBeDate(expectedInstant);
@@ -500,17 +505,7 @@ test("Test - Relative time (2 hour later) is not effected by timezone setting", 
   testSingleCase(
     chrono,
     "2 hour later",
-    { instant: referenceInstant, timezone: "BST" },
-    (result) => {
-      expect(result.text).toBe("2 hour later");
-      expect(result.start).toBeDate(expectedInstant);
-    }
-  );
-
-  testSingleCase(
-    chrono,
-    "2 hour later",
-    { instant: referenceInstant, timezone: "JST" },
+    { instant: refInstant, timezone: "JST" },
     (result) => {
       expect(result.text).toBe("2 hour later");
       expect(result.start).toBeDate(expectedInstant);
@@ -519,21 +514,16 @@ test("Test - Relative time (2 hour later) is not effected by timezone setting", 
 });
 
 test("Test - Parsing timezone from relative date when valid", function () {
-  const referenceDate = new Date(2020, 11 - 1, 14, 13, 48, 22);
+  const refDate = new Date(2020, 11 - 1, 14, 13, 48, 22);
 
-  testSingleCase(
-    chrono,
-    "in 1 day get eggs and milk",
-    referenceDate,
-    (result, _) => {
-      expect(result.text).toBe("in 1 day");
-      expect(result.start.get("timezoneOffset")).toBe(
-        -referenceDate.getTimezoneOffset()
-      );
-    }
-  );
+  testSingleCase(chrono, "in 1 day get eggs and milk", refDate, (result, _) => {
+    expect(result.text).toBe("in 1 day");
+    expect(result.start.get("timezoneOffset")).toBe(
+      -refDate.getTimezoneOffset()
+    );
+  });
 
-  testSingleCase(chrono, "in 1 day GET", referenceDate, (result, _) => {
+  testSingleCase(chrono, "in 1 day GET", refDate, (result, _) => {
     expect(result.text).toBe("in 1 day GET");
     expect(result.start.get("timezoneOffset")).toBe(240);
   });

@@ -55,12 +55,12 @@ test("Test - Timezone difference on default timezone", function () {
 test("Test - Timezone difference on reference date", function () {
   // Sun Jun 06 2021 19:00:00 GMT+0900 (JST)
   // Sun Jun 06 2021 11:00:00 GMT+0100 (BST)
-  const referenceInstant = new Date("Sun Jun 06 2021 19:00:00 GMT+0900 (JST)");
+  const refInstant = new Date("Sun Jun 06 2021 19:00:00 GMT+0900 (JST)");
 
   testSingleCase(
     chrono,
     "At 4pm tomorrow",
-    { instant: referenceInstant, timezone: "BST" },
+    { instant: refInstant, timezone: "BST" },
     (result) => {
       const expectedInstant = new Date(
         "Mon Jun 07 2021 16:00:00 GMT+0100 (BST)"
@@ -72,7 +72,7 @@ test("Test - Timezone difference on reference date", function () {
   testSingleCase(
     chrono,
     "At 4pm tomorrow",
-    { instant: referenceInstant, timezone: "JST" },
+    { instant: refInstant, timezone: "JST" },
     (result) => {
       const expectedInstant = new Date(
         "Mon Jun 07 2021 16:00:00 GMT+0900 (JST)"
@@ -83,12 +83,12 @@ test("Test - Timezone difference on reference date", function () {
 });
 
 test("Test - Timezone difference on reference date #2", function () {
-  const referenceInstant = new Date("2024-02-21T10:00:00+1300");
+  const refInstant = new Date("2024-02-21T10:00:00+1300");
 
   testSingleCase(
     chrono,
     "yesterday 18:00",
-    { instant: referenceInstant, timezone: 780 },
+    { instant: refInstant, timezone: 780 },
     (_) => {
       // expect(result.start.get("year")).toBe(2024);
       // expect(result.start.get("month")).toBe(2);
@@ -101,14 +101,14 @@ test("Test - Timezone difference on reference date #2", function () {
 test("Test - Timezone difference on written date", function () {
   // Sun Jun 06 2021 19:00:00 GMT+0900 (JST)
   // Sun Jun 06 2021 11:00:00 GMT+0100 (BST)
-  const referenceInstant = new Date("Sun Jun 06 2021 19:00:00 GMT+0900 (JST)");
+  const refInstant = new Date("Sun Jun 06 2021 19:00:00 GMT+0900 (JST)");
 
   testSingleCase(
     chrono,
     "Sun Jun 06 2021 19:00:00",
     { timezone: "JST" },
     (result) => {
-      expect(result).toBeDate(referenceInstant);
+      expect(result).toBeDate(refInstant);
     }
   );
 
@@ -117,7 +117,7 @@ test("Test - Timezone difference on written date", function () {
     "Sun Jun 06 2021 11:00:00",
     { timezone: "BST" },
     (result) => {
-      expect(result).toBeDate(referenceInstant);
+      expect(result).toBeDate(refInstant);
     }
   );
 
@@ -126,68 +126,68 @@ test("Test - Timezone difference on written date", function () {
     "Sun Jun 06 2021 11:00:00",
     { timezone: 60 },
     (result) => {
-      expect(result).toBeDate(referenceInstant);
+      expect(result).toBeDate(refInstant);
     }
   );
 });
 
 test("Test - Precise [now] mentioned", function () {
-  const referenceDate = new Date(
+  const refDate = new Date(
     "Sat Mar 13 2021 14:22:14 GMT+0900 (Japan Standard Time)"
   );
 
-  testSingleCase(chrono, "now", referenceDate, (result) => {
-    expect(result).toBeDate(referenceDate);
+  testSingleCase(chrono, "now", refDate, (result) => {
+    expect(result).toBeDate(refDate);
   });
 
-  testSingleCase(chrono, "now", { instant: referenceDate }, (result) => {
-    expect(result).toBeDate(referenceDate);
+  testSingleCase(chrono, "now", { instant: refDate }, (result) => {
+    expect(result).toBeDate(refDate);
   });
 
   testSingleCase(
     chrono,
     "now",
-    { instant: referenceDate, timezone: 540 },
+    { instant: refDate, timezone: 540 },
     (result) => {
-      expect(result).toBeDate(referenceDate);
+      expect(result).toBeDate(refDate);
     }
   );
 
   testSingleCase(
     chrono,
     "now",
-    { instant: referenceDate, timezone: "JST" },
+    { instant: refDate, timezone: "JST" },
     (result) => {
-      expect(result).toBeDate(referenceDate);
+      expect(result).toBeDate(refDate);
     }
   );
 
   testSingleCase(
     chrono,
     "now",
-    { instant: referenceDate, timezone: -300 },
+    { instant: refDate, timezone: -300 },
     (result) => {
-      expect(result).toBeDate(referenceDate);
+      expect(result).toBeDate(refDate);
     }
   );
 });
 
 test("Test - Precise date/time mentioned", function () {
   const text = "Sat Mar 13 2021 14:22:14 GMT+0900";
-  const referenceDate = new Date();
+  const refDate = new Date();
 
-  testSingleCase(chrono, text, referenceDate, (result, text) => {
+  testSingleCase(chrono, text, refDate, (result, text) => {
     expect(result).toBeDate(new Date(text));
   });
 
-  testSingleCase(chrono, text, { instant: referenceDate }, (result) => {
+  testSingleCase(chrono, text, { instant: refDate }, (result) => {
     expect(result).toBeDate(new Date(text));
   });
 
   testSingleCase(
     chrono,
     text,
-    { instant: referenceDate, timezone: 540 },
+    { instant: refDate, timezone: 540 },
     (result) => {
       expect(result).toBeDate(new Date(text));
     }
@@ -196,7 +196,7 @@ test("Test - Precise date/time mentioned", function () {
   testSingleCase(
     chrono,
     text,
-    { instant: referenceDate, timezone: "JST" },
+    { instant: refDate, timezone: "JST" },
     (result) => {
       expect(result).toBeDate(new Date(text));
     }
@@ -205,7 +205,7 @@ test("Test - Precise date/time mentioned", function () {
   testSingleCase(
     chrono,
     text,
-    { instant: referenceDate, timezone: -300 },
+    { instant: refDate, timezone: -300 },
     (result) => {
       expect(result).toBeDate(new Date(text));
     }

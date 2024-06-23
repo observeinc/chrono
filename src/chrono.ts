@@ -155,11 +155,11 @@ export class Chrono {
 
       const parsedIndex = parsedResult.index;
       const parsedText = parsedResult.text;
-      context.debug(() => {
+      context.debug(() =>
         console.log(
           `${parser.constructor.name} extracted (at index=${parsedIndex}) '${parsedText}'`
-        );
-      });
+        )
+      );
 
       results.push(parsedResult);
       remainingText = originalText.slice(

@@ -298,16 +298,16 @@ test("Test - Future relative expressions", () => {
 });
 
 test("Test - Relative date components' certainty", () => {
-  const referenceDate = new Date(2016, 10 - 1, 7, 12);
+  const refDate = new Date(2016, 10 - 1, 7, 12);
 
-  testSingleCase(chrono, "next hour", referenceDate, (result, text) => {
+  testSingleCase(chrono, "next hour", refDate, (result, text) => {
     expect(result.text).toBe(text);
     expect(result.start.get("year")).toBe(2016);
     expect(result.start.get("month")).toBe(10);
     expect(result.start.get("day")).toBe(7);
     expect(result.start.get("hour")).toBe(13);
     expect(result.start.get("timezoneOffset")).toBe(
-      referenceDate.getTimezoneOffset() * -1
+      refDate.getTimezoneOffset() * -1
     );
 
     expect(result.start.isCertain("year")).toBe(true);
@@ -317,7 +317,7 @@ test("Test - Relative date components' certainty", () => {
     expect(result.start.isCertain("timezoneOffset")).toBe(true);
   });
 
-  testSingleCase(chrono, "next month", referenceDate, (result, text) => {
+  testSingleCase(chrono, "next month", refDate, (result, text) => {
     //const expectedDate = new Date(2016, 11, 7, 12);
 
     expect(result.text).toBe(text);
@@ -336,13 +336,13 @@ test("Test - Relative date components' certainty", () => {
 });
 
 test("Test - Relative date components' certainty and imply timezone", () => {
-  const referenceDate = new Date(
+  const refDate = new Date(
     "Sun Nov 29 2020 13:24:13 GMT+0900 (Japan Standard Time)"
   );
 
   {
     const text = "now";
-    const result = chrono.parse(text, referenceDate)[0] as ParsingResult;
+    const result = chrono.parse(text, refDate)[0] as ParsingResult;
 
     expect(result.text).toBe(text);
     result.start.imply("timezoneOffset", 60);
@@ -355,7 +355,7 @@ test("Test - Relative date components' certainty and imply timezone", () => {
 
   {
     const text = "tomorrow at 5pm";
-    const result = chrono.parse(text, referenceDate)[0] as ParsingResult;
+    const result = chrono.parse(text, refDate)[0] as ParsingResult;
 
     expect(result.text).toBe(text);
     result.start.imply("timezoneOffset", 60);
@@ -368,7 +368,7 @@ test("Test - Relative date components' certainty and imply timezone", () => {
 
   {
     const text = "in 10 minutes";
-    const result = chrono.parse(text, referenceDate)[0] as ParsingResult;
+    const result = chrono.parse(text, refDate)[0] as ParsingResult;
 
     expect(result.text).toBe(text);
     result.start.imply("timezoneOffset", 60);
@@ -382,7 +382,7 @@ test("Test - Relative date components' certainty and imply timezone", () => {
   {
     const text = "in 10 minutes";
     const result = chrono.parse(text, {
-      instant: referenceDate,
+      instant: refDate,
       timezone: "BST",
     })[0] as ParsingResult;
 
@@ -398,7 +398,7 @@ test("Test - Relative date components' certainty and imply timezone", () => {
   {
     const text = "in 10 minutes";
     const result = chrono.parse(text, {
-      instant: referenceDate,
+      instant: refDate,
       timezone: "JST",
     })[0] as ParsingResult;
 
@@ -414,7 +414,7 @@ test("Test - Relative date components' certainty and imply timezone", () => {
   {
     const text = "in 20 minutes";
     const result = chrono.parse(text, {
-      instant: referenceDate,
+      instant: refDate,
       timezone: undefined,
     })[0] as ParsingResult;
 

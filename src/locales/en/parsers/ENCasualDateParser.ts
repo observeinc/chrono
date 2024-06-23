@@ -24,35 +24,30 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
     let component = context.createParsingComponents();
 
     switch (lowerText) {
-      case "now": {
+      case "now":
         component = references.now(context.reference);
         break;
-      }
 
-      case "today": {
+      case "today":
         component = references.today(context.reference);
         break;
-      }
 
-      case "yesterday": {
+      case "yesterday":
         component = references.yesterday(context.reference);
         break;
-      }
 
       case "tomorrow":
       case "tmr":
-      case "tmrw": {
+      case "tmrw":
         component = references.tomorrow(context.reference);
         break;
-      }
 
-      case "tonight": {
+      case "tonight":
         component = references.tonight(context.reference);
         break;
-      }
 
-      default: {
-        if (/last\s*night/.test(lowerText)) {
+      default:
+        if (lowerText.match(/last\s*night/)) {
           if (targetDate.hour > 6) {
             targetDate = targetDate.plus({ day: -1 });
           }
@@ -61,7 +56,6 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
           component.imply("hour", 0);
         }
         break;
-      }
     }
     component.addTag("parser/ENCasualDateParser");
     return component;

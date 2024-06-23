@@ -33,7 +33,7 @@ test("Test - Single Expression", function () {
       expect(result.start.get("timezoneOffset")).toBe(-330);
       expect(result.text).toBe("1994-11-05T08:15:30-05:30");
 
-      expect(result.start).toBeDate(new Date(784_043_130_000));
+      expect(result.start).toBeDate(new Date(784043130000));
     }
   );
 
@@ -52,7 +52,7 @@ test("Test - Single Expression", function () {
       expect(result.start.get("timezoneOffset")).toBe(0);
       expect(result.text).toBe("1994-11-05T13:15:30");
 
-      expect(result.start).toBeDate(new Date(784_041_330_000));
+      expect(result.start).toBeDate(new Date(784041330000));
     }
   );
 
@@ -71,7 +71,7 @@ test("Test - Single Expression", function () {
       expect(result.start.get("timezoneOffset")).toBe(0);
       expect(result.text).toBe("2015-07-31T12:00:00");
 
-      expect(result.start).toBeDate(new Date(1_438_344_000_000));
+      expect(result.start).toBeDate(new Date(1438344000000));
     }
   );
 
@@ -90,7 +90,7 @@ test("Test - Single Expression", function () {
       expect(result.start.get("timezoneOffset")).toBe(0);
       expect(result.text).toBe("1994-11-05T13:15:30Z");
 
-      expect(result.start).toBeDate(new Date(784_041_330_000));
+      expect(result.start).toBeDate(new Date(784041330000));
     }
   );
 
@@ -109,7 +109,7 @@ test("Test - Single Expression", function () {
       expect(result.start.get("timezoneOffset")).toBe(0);
       expect(result.text).toBe("1994-11-05T13:15:30Z");
 
-      expect(result.start).toBeDate(new Date(784_041_330_000));
+      expect(result.start).toBeDate(new Date(784041330000));
     }
   );
 
@@ -130,7 +130,7 @@ test("Test - Single Expression", function () {
       expect(result.index).toBe(2);
       expect(result.text).toBe("1994-11-05T13:15:30Z");
 
-      expect(result.start).toBeDate(new Date(784_041_330_000));
+      expect(result.start).toBeDate(new Date(784041330000));
     }
   );
 
@@ -150,7 +150,7 @@ test("Test - Single Expression", function () {
 
       expect(result.text).toBe("2016-05-07T23:45:00.487+01:00");
 
-      expect(result.start).toBeDate(new Date(1_462_661_100_487));
+      expect(result.start).toBeDate(new Date(1462661100487));
     }
   );
 });

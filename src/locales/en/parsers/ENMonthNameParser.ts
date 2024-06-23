@@ -16,7 +16,7 @@ const PATTERN = new RegExp(
     `(?:` +
     `[,-]?\\s*(${YEAR_PATTERN})?` +
     ")?" +
-    String.raw`(?=[^\s\w]|\s+[^0-9]|\s+$|$)`,
+    "(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)",
   "i"
 );
 
@@ -41,7 +41,7 @@ export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChe
 
     // skip some unlikely words "jan", "mar", ..
     if (match[0].length <= 3 && !FULL_MONTH_NAME_DICTIONARY[monthName]) {
-      return;
+      return undefined;
     }
 
     const result = context.createParsingResult(
