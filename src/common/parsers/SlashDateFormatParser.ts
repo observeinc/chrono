@@ -71,16 +71,18 @@ export default class SlashDateFormatParser implements Parser {
         match[ENDING_GROUP]!.length
     );
 
+    // wengj9: Actually, we do want dot notation dates
     // '1.12', '1.12.12' is more like a version numbers
-    if (/^\d\.\d$/.test(text) || /^\d(?:\.\d{1,2}){2}\s*$/.test(text)) {
-      return undefined;
-    }
+    // if (/^\d\.\d$/.test(text) || /^\d(?:\.\d{1,2}){2}\s*$/.test(text)) {
+    //   return undefined;
+    // }
 
+    // wengj9: MM.dd is ok
     // MM/dd -> OK
     // MM.dd -> NG
-    if (!match[YEAR_GROUP] && !match[0].includes("/")) {
-      return undefined;
-    }
+    // if (!match[YEAR_GROUP] && !match[0].includes("/")) {
+    //   return undefined;
+    // }
 
     const result = context.createParsingResult(index, text);
     let month = Number.parseInt(match[this.groupNumberMonth]!);

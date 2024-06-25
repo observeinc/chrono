@@ -238,14 +238,6 @@ test("Test - Replace a parser example", () => {
 });
 
 test("Test - Compare with native js", () => {
-  const testByCompareWithNative = (text: string) => {
-    const expectedDate = new Date(text);
-    testSingleCase(chrono, text, (result) => {
-      expect(result.text).toBe(text);
-      expect(result).toBeDate(expectedDate);
-    });
-  };
-
   testByCompareWithNative("1994-11-05T13:15:30Z");
 
   testByCompareWithNative("1994-02-28T08:15:30-05:30");
@@ -274,3 +266,11 @@ test("Test - Compare with native js", () => {
 
   testByCompareWithNative("2014-12-14T18:22:14.759Z");
 });
+
+const testByCompareWithNative = (text: string) => {
+  const expectedDate = new Date(text);
+  testSingleCase(chrono, text, (result) => {
+    expect(result.text).toBe(text);
+    expect(result).toBeDate(expectedDate);
+  });
+};

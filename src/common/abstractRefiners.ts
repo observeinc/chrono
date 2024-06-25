@@ -66,9 +66,7 @@ export abstract class MergingRefiner implements Refiner {
       }
     });
 
-    if (currentResult !== undefined) {
-      mergedResults.push(currentResult);
-    }
+    mergedResults.push(currentResult);
 
     return mergedResults;
   }

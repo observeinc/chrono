@@ -8,7 +8,7 @@ export default class UnlikelyFormatFilter extends Filter {
   }
 
   isValid(context: ParsingContext, result: ParsingResult): boolean {
-    if (/^\d*(\.\d*)?$/.test(result.text.replace(" ", ""))) {
+    if (/^\d*$/.test(result.text.replace(" ", ""))) {
       context.debug(() => {
         console.log(`Removing unlikely result '${result.text}'`);
       });

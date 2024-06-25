@@ -34,28 +34,28 @@ export default class ENWeekdayParser extends AbstractParserWithWordBoundaryCheck
     const prefix = match[PREFIX_GROUP];
     const postfix = match[POSTFIX_GROUP];
     let modifierWord = prefix || postfix;
-    modifierWord = modifierWord || "";
+    modifierWord = modifierWord ?? "";
     modifierWord = modifierWord.toLowerCase();
 
     let modifier: "last" | "next" | "this" | undefined;
     switch (modifierWord) {
-    case "last": 
-    case "past": {
-      modifier = "last";
-    
-    break;
-    }
-    case "next": {
-      modifier = "next";
-    
-    break;
-    }
-    case "this": {
-      modifier = "this";
-    
-    break;
-    }
-    // No default
+      case "last":
+      case "past": {
+        modifier = "last";
+
+        break;
+      }
+      case "next": {
+        modifier = "next";
+
+        break;
+      }
+      case "this": {
+        modifier = "this";
+
+        break;
+      }
+      // No default
     }
 
     return createParsingComponentsAtWeekday(
