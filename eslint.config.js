@@ -54,6 +54,7 @@ export default [
       "unicorn/no-array-reduce": ["off"],
       "unicorn/prevent-abbreviations": ["warn"],
       "unicorn/prefer-raw-string": ["off"],
+      "unicorn/no-useless-undefined": ["off"],
       "@typescript-eslint/no-non-null-assertion": ["warn"],
       "@typescript-eslint/no-base-to-string": ["warn"],
     },

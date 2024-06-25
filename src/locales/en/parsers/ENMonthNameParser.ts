@@ -41,11 +41,11 @@ export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChe
 
     // skip some unlikely words "jan", "mar", ..
     if (match[0].length <= 3 && !FULL_MONTH_NAME_DICTIONARY[monthName]) {
-      return;
+      return undefined;
     }
 
     const result = context.createParsingResult(
-      match.index! + (match[PREFIX_GROUP] || "").length,
+      match.index! + (match[PREFIX_GROUP] ?? "").length,
       match.index! + match[0].length
     );
     result.start.imply("day", 1);

@@ -46,7 +46,7 @@ export default class ENMonthNameLittleEndianParser extends AbstractParserWithWor
     if (day > 31) {
       // e.g. "[96 Aug]" => "9[6 Aug]", we need to shift away from the next number
       match.index = match.index! + match[DATE_GROUP]!.length;
-      return;
+      return undefined;
     }
 
     result.start.assign("month", month);

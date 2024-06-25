@@ -41,10 +41,8 @@ export interface AmbiguousTimezoneMap {
 }
 
 /**
- * A map describing how timezone abbreviations should map to time offsets.
- * Supports both unambigous mappings abbreviation => offset,
- * and ambiguous mappings, where the offset will depend on whether the
- * time in question is during daylight savings time or not.
+ * A map describing how timezone abbreviations should map to IANA
+ * timezones
  */
 export type TimezoneAbbrMap = Record<string, number | AmbiguousTimezoneMap>;
 
@@ -120,7 +118,7 @@ export interface ParsedComponents {
   /**
    * Get the component value for either *Certain* or *Implied* value.
    */
-  get(component: Component): number | null;
+  get(component: Component): number | undefined;
 
   /**
    * @return a javascript date object.

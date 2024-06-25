@@ -20,6 +20,8 @@ import {
   implySimilarTime,
 } from "./utils/luxon";
 
+export const UNIX_EPOCH = DateTime.fromMillis(0);
+
 export class ReferenceWithTimezone {
   readonly instant: Date;
   private readonly timezone?: string;
@@ -98,7 +100,7 @@ export class ParsingComponents implements ParsedComponents {
       return (
         this.knownValues[component] ??
         this.impliedValues[component] ??
-        this.reference.zone?.offset(this.reference.instant.valueOf())!
+        this.reference.zone?.offset(this.luxon().toMillis()).valueOf()!
       );
     }
 
@@ -217,7 +219,7 @@ export class ParsingComponents implements ParsedComponents {
 
     if (this.isCertain("timezoneOffset")) {
       return naiveDateTime.setZone(
-        FixedOffsetZone.instance(this.getTimezoneOffset()!),
+        FixedOffsetZone.instance(this.getTimezoneOffset() ?? 0),
         { keepLocalTime: true }
       );
     }
@@ -257,7 +259,7 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     const components = new ParsingComponents(reference);
-    if (fragments.hour || fragments.minute || fragments.second) {
+    if (fragments.hour ?? fragments.minute ?? fragments.second) {
       assignSimilarTime(components, date);
       assignSimilarDate(components, date);
     } else {

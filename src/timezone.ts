@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import { Month, TimezoneAbbrMap, Weekday } from "./types";
 
+// TODO: Get three letter abbrevations and such
 export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
   ACDT: 630,
   ACST: 570,

@@ -42,7 +42,7 @@ export default class ENTimeUnitWithinFormatParser extends AbstractParserWithWord
   innerExtract(context: ParsingContext, match: RegExpMatchArray) {
     // Exclude "for the unit" phases, e.g. "for the year"
     if (/^for\s*the\s*\w+/.test(match[0])) {
-      return;
+      return undefined;
     }
 
     const timeUnits = parseTimeUnits(match[1]!);

@@ -59,17 +59,18 @@ export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWor
     const month = MONTH_DICTIONARY[match[MONTH_NAME_GROUP]!.toLowerCase()]!;
     const day = parseOrdinalNumberPattern(match[DATE_GROUP]!);
     if (day > 31) {
-      return;
+      return undefined;
     }
 
     // Skip the case where the day looks like a year (ex: January 21)
-    if (this.shouldSkipYearLikeDate && 
-        !match[DATE_TO_GROUP] &&
-        !match[YEAR_GROUP] &&
-        /^2[0-5]$/.test(match[DATE_GROUP]!)
-      ) {
-        return;
-      }
+    if (
+      this.shouldSkipYearLikeDate &&
+      !match[DATE_TO_GROUP] &&
+      !match[YEAR_GROUP] &&
+      /^2[0-5]$/.test(match[DATE_GROUP]!)
+    ) {
+      return undefined;
+    }
     const components = context
       .createParsingComponents({
         day: day,

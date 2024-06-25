@@ -34,7 +34,7 @@ export default class ENCasualYearMonthDayParser extends AbstractParserWithWordBo
       : MONTH_DICTIONARY[match[MONTH_NAME_GROUP]!.toLowerCase()]!;
 
     if (month < 1 || month > 12) {
-      return;
+      return undefined;
     }
 
     const year = Number.parseInt(match[YEAR_NUMBER_GROUP]!);
