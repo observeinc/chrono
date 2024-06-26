@@ -24,8 +24,8 @@ export const UNIX_EPOCH = DateTime.fromMillis(0);
 
 export class ReferenceWithTimezone {
   readonly instant: Date;
-  private readonly timezone?: string;
-  private readonly timezoneOffset?: number | undefined;
+  readonly timezone?: string;
+  readonly timezoneOffset?: number | undefined;
 
   constructor(input?: ParsingReference | Date) {
     input = input ?? new Date();
