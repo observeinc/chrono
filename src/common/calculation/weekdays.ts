@@ -72,10 +72,12 @@ export function getDaysToWeekdayClosest(
   referenceDate: Date,
   weekday: Weekday
 ): number {
+
   const backward = getBackwardDaysToWeekday(referenceDate, weekday);
   const forward = getDaysForwardToWeekday(referenceDate, weekday);
 
-  return forward < -backward ? forward : backward;
+  // If forward date is today, keep it - otherwise use the most recent occurrence of the weekday
+  return forward === 0 ? forward : backward;
 }
 
 export function getDaysForwardToWeekday(
