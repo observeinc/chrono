@@ -4,7 +4,7 @@
   "homepage": "http://github.com/wengj9/chrono",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wengj9/chrono.git"
+    "url": "https://github.com/obs-gh-jamesweng/chrono.git"
   },
   "type": "module",
   "files": [
