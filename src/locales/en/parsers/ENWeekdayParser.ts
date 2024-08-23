@@ -7,12 +7,12 @@ import { WEEKDAY_DICTIONARY } from "../constants";
 
 const PATTERN = new RegExp(
   String.raw`(?:(?:\,|\(|\（)\s*)?` +
-    String.raw`(?:on\s*?)?` +
-    String.raw`(?:(this|last|past|next)\s*)?` +
-    `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
-    String.raw`(?:\s*(?:\,|\)|\）))?` +
-    String.raw`(?:\s*(this|last|past|next)\s*week)?` +
-    String.raw`(?=\W|$)`,
+  String.raw`(?:on\s*?)?` +
+  String.raw`(?:(this|last|past|next)\s*)?` +
+  `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
+  String.raw`(?:\s*(?:\,|\)|\）))?` +
+  String.raw`(?:\s*(this|last|past|next)\s*week)?` +
+  String.raw`(?=\W|$)`,
   "i"
 );
 
@@ -59,7 +59,7 @@ export default class ENWeekdayParser extends AbstractParserWithWordBoundaryCheck
     }
 
     return createParsingComponentsAtWeekday(
-      context.reference,
+      context,
       weekday,
       modifier
     );

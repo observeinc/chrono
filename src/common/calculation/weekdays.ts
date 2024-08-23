@@ -1,4 +1,5 @@
-import { ParsingComponents, ReferenceWithTimezone } from "../../results";
+import { ParsingContext } from "../../chrono";
+import { ParsingComponents } from "../../results";
 import { Weekday } from "../../types";
 import { addImpliedTimeUnits } from "../../utils/timeunits";
 
@@ -10,14 +11,14 @@ import { addImpliedTimeUnits } from "../../utils/timeunits";
  * @param modifier "this", "next", "last" modifier word. If empty, returns the weekday closest to the `refDate`.
  */
 export function createParsingComponentsAtWeekday(
-  reference: ReferenceWithTimezone,
+  context: ParsingContext,
   weekday: Weekday,
   modifier?: "this" | "next" | "last"
 ): ParsingComponents {
-  const referenceDate = reference.getDateWithAdjustedTimezone();
-  const daysToWeekday = getDaysToWeekday(referenceDate, weekday, modifier);
+  const referenceDate = context.reference.getDateWithAdjustedTimezone();
+  const daysToWeekday = getDaysToWeekday(context, referenceDate, weekday, modifier);
 
-  let components = new ParsingComponents(reference);
+  let components = new ParsingComponents(context.reference);
   components = addImpliedTimeUnits(components, { day: daysToWeekday });
   components.assign("weekday", weekday);
 
@@ -31,6 +32,7 @@ export function createParsingComponentsAtWeekday(
  * @param modifier "this", "next", "last" modifier word. If empty, returns the weekday closest to the `refDate`.
  */
 export function getDaysToWeekday(
+  context: ParsingContext,
   referenceDate: Date,
   weekday: Weekday,
   modifier?: "this" | "next" | "last"
@@ -65,10 +67,11 @@ export function getDaysToWeekday(
         : getDaysForwardToWeekday(referenceDate, weekday) + 7;
     }
   }
-  return getDaysToWeekdayClosest(referenceDate, weekday);
+  return getDaysToWeekdayClosest(context, referenceDate, weekday);
 }
 
 export function getDaysToWeekdayClosest(
+  context: ParsingContext,
   referenceDate: Date,
   weekday: Weekday
 ): number {
@@ -76,7 +79,10 @@ export function getDaysToWeekdayClosest(
   const backward = getBackwardDaysToWeekday(referenceDate, weekday);
   const forward = getDaysForwardToWeekday(referenceDate, weekday);
 
-  // If forward date is today, keep it - otherwise use the most recent occurrence of the weekday
+  // If forwardDate, keep the "closer" date, otherwise pick the past date
+  if (context.option.forwardDate) {
+    return forward < -backward ? forward : backward;
+  }
   return forward === 0 ? forward : backward;
 }
 
