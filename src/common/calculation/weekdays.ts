@@ -79,9 +79,9 @@ export function getDaysToWeekdayClosest(
   const backward = getBackwardDaysToWeekday(referenceDate, weekday);
   const forward = getDaysForwardToWeekday(referenceDate, weekday);
 
-  // If forwardDate, keep the "closer" date, otherwise pick the past date
+  // If forwardDate, always return a date in the future 
   if (context.option.forwardDate) {
-    return forward < -backward ? forward : backward;
+    return forward;
   }
   return forward === 0 ? forward : backward;
 }
